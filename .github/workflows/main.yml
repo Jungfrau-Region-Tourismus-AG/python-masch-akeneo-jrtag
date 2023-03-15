@@ -1,0 +1,28 @@
+name: Run Script
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  #schedule:
+  # - cron: "*/5 * * * *" 
+
+env:
+  SECRET_TEST: ${{ secrets.SECRET_NAME }}
+
+jobs:
+  build:
+    name: Hello World
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install requests
+        run: pip install requests
+      - name: Run Script
+        run: python run.py
+      - name: Test
+        run: echo "::add-mask::$MY_NAME"
