@@ -25,4 +25,4 @@ jobs:
       - name: Run Script
         run: python run.py
       - name: Test
-        run: echo "::add-mask::$MY_NAME"
+        run: echo "::add-mask::$SECRET_TEST"
