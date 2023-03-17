@@ -23,6 +23,7 @@ jobs:
       - name: Install requests
         run: pip install requests
       - name: Run Script
-        run: python src/run.py
+        working-directory: ./src
+        run: python run.py
       - name: Test
         run: echo "Secret Variabel --> $SECRET_TEST"
