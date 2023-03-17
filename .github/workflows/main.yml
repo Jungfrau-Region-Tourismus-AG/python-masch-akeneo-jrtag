@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+      - name: Create Virtual Environment
+        run: |
+          echo "${{ secrets.SECRET_TEST }}" > .env
       - name: Install requests
         run: pip install requests
       - name: Run Script
