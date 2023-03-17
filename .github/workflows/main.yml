@@ -23,6 +23,8 @@ jobs:
       - name: Create Virtual Environment
         run: |
           echo "${{ secrets.SECRET_TEST }}" > .env
+      - name: Install python-dotenv
+        run: pip install python-dotenv
       - name: Install requests
         run: pip install requests
       - name: Run Script
