@@ -1,4 +1,7 @@
 import os
+from dotenv import find_dotenv, load_dotenv
+
+load_dotenv(find_dotenv())
 
 def __main__():
   print("Hello Word i run from run.py!")
