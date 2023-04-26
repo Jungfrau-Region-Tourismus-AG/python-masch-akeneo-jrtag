@@ -31,18 +31,36 @@ def getMaschPull():
 def extract():
   return getMaschPull()
 
+def setValue(data):
+    dataValue = {}
+    dataValue['data'] = data
+    dataValue['locale'] = None
+    dataValue['scope'] = None
+    return dataValue
+
 def transform(data):
   transformData = []
-
-  for item in data:
+  for item in data['records']:
     importProduct = {}
-    importProduct['identifier'] = uuid.uuid4()
-    importProduct['values']['maschId'][0]['data'] = item['record_id']
+    importProduct['identifier'] = str(uuid.uuid4())
+    print(item['record_id'])
+    importProduct['values'] = {}
+    importProduct['values']['maschId'] = []
+    dataValue = setValue(item['record_id'])
+    importProduct['values']['maschId'].append(dataValue)
     importProduct['family'] = "Place"
     importProduct['enabled'] = True
     importProduct['categories'] = ["masch"]
     transformData.append(importProduct)
   return transformData
+
+def transfromToAkeneo(data):
+  dataString = ''
+  for item in data:
+    dataString += str(item)
+    dataString += '\r\n'
+  return dataString
+
 
 def load(data):
   akeneo = Akeneo(
@@ -52,7 +70,10 @@ def load(data):
     AKENEO_USERNAME,
     AKENEO_PASSWORD
   )
-  return akeneo.patchProducts(data)
+  for item in data:
+    print(item)
+    akeneo.patchProductByCode(item['identifier'], item)
+    #akeneo.patchProducts(item)
 
 def __main__():
   print("STARTING")
@@ -60,9 +81,13 @@ def __main__():
   extractData = extract()
   print("TRANSFORMING")
   transformData = transform(extractData)
+  print(transformData)
+  
   print("LOADING")
+  transformData2 = transfromToAkeneo(transformData)
+  print(transformData2)
+
   loadData = load(transformData)
-  print(loadData)
   print("DONE")
 
 if __name__== "__main__":
