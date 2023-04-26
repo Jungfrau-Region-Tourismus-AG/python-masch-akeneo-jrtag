@@ -1,3 +1,4 @@
 .env
 tests/*
 examples/*
+src/__pycache__/*
