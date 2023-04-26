@@ -1,11 +1,16 @@
 import uuid
 
-def setValue(data):
+def setValue(data, locale = None, scope = None):
     dataValue = {}
     dataValue['data'] = data
-    dataValue['locale'] = None
-    dataValue['scope'] = None
+    dataValue['locale'] = locale
+    dataValue['scope'] = scope
     return dataValue
+
+def getFieldsValuebyKey(key, data):
+  for field in data['fields']:
+    if field["field_name"] == "teaser_title_hotel_name":
+      return field["field_value"]['de']
 
 def transform(data, indexAkeneo):
   transformData = []
@@ -20,6 +25,10 @@ def transform(data, indexAkeneo):
     importProduct['values']['maschId'] = []
     dataValue = setValue(item['record_id'])
     importProduct['values']['maschId'].append(dataValue)
+    importProduct['values']['name'] = []
+    name = getFieldsValuebyKey('teaser_title_hotel_name', item)
+    nameValue = setValue(name, 'de_CH')
+    importProduct['values']['name'].append(nameValue)
     importProduct['family'] = "Place"
     importProduct['enabled'] = True
     importProduct['categories'] = ["masch"]
