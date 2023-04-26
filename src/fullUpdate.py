@@ -12,10 +12,6 @@ def __main__():
   transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
   transformData = transform(extractData, transformDataAkeneo)
   
-  print(transformDataAkeneo[16042])
-  #transformData2 = transfromToAkeneo(transformData)
-  print(transformData)
-  
   print("LOADING")
   loadData = load(transformData)
   print("DONE")
