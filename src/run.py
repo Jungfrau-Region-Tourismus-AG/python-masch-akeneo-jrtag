@@ -28,6 +28,17 @@ def getMaschPull():
   r = requests.get(url, json=body)
   return r.json()
 
+def getAkeneoProducts():
+  akeneo = Akeneo(
+    AKENEO_HOST,
+    AKENEO_CLIENT_ID,
+    AKENEO_CLIENT_SECRET,
+    AKENEO_USERNAME,
+    AKENEO_PASSWORD
+  )
+  searchQuery = '{"maschId":[{"operator":"NOT EMPTY","value":""}]}'
+  return akeneo.getProducts(limit=100, search=searchQuery )
+
 def extract():
   return getMaschPull()
 
@@ -61,6 +72,10 @@ def transfromToAkeneo(data):
     dataString += '\r\n'
   return dataString
 
+def transformAkeneotoMasch(data):
+  for item in data:
+    print(item['identifier'])
+    print(item['values']['maschId'][0]['data'])
 
 def load(data):
   akeneo = Akeneo(
@@ -79,14 +94,14 @@ def __main__():
   print("STARTING")
   print("EXTRACTING")
   extractData = extract()
+  extractDataAkeneo = getAkeneoProducts()
+  
   print("TRANSFORMING")
   transformData = transform(extractData)
-  print(transformData)
+  transformAkeneotoMasch(extractDataAkeneo)
+  #transformData2 = transfromToAkeneo(transformData)
   
   print("LOADING")
-  transformData2 = transfromToAkeneo(transformData)
-  print(transformData2)
-
   loadData = load(transformData)
   print("DONE")
 
