@@ -49,11 +49,14 @@ def setValue(data):
     dataValue['scope'] = None
     return dataValue
 
-def transform(data):
+def transform(data, indexAkeneo):
   transformData = []
   for item in data['records']:
     importProduct = {}
-    importProduct['identifier'] = str(uuid.uuid4())
+    if item['record_id'] in indexAkeneo:
+      importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
+    else:
+      importProduct['identifier'] = str(uuid.uuid4())
     print(item['record_id'])
     importProduct['values'] = {}
     importProduct['values']['maschId'] = []
@@ -73,9 +76,15 @@ def transfromToAkeneo(data):
   return dataString
 
 def transformAkeneotoMasch(data):
+  transformData = {}
   for item in data:
+    importProduct = {}
+    importProduct['identifier'] = item['identifier']
     print(item['identifier'])
     print(item['values']['maschId'][0]['data'])
+    id = item['values']['maschId'][0]['data']
+    transformData[id] = importProduct
+  return transformData
 
 def load(data):
   akeneo = Akeneo(
@@ -97,9 +106,12 @@ def __main__():
   extractDataAkeneo = getAkeneoProducts()
   
   print("TRANSFORMING")
-  transformData = transform(extractData)
-  transformAkeneotoMasch(extractDataAkeneo)
+  transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
+  transformData = transform(extractData, transformDataAkeneo)
+  
+  print(transformDataAkeneo[16042])
   #transformData2 = transfromToAkeneo(transformData)
+  print(transformData)
   
   print("LOADING")
   loadData = load(transformData)
