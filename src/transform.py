@@ -118,11 +118,11 @@ def transform(data, indexAkeneo):
     email = getFieldsValuebyKey('blog_table_contact_email', item)
     emailValue = setValue(email, 'de_CH', 'ecommerce')
     importProduct['values']['email'] = emailValue
-    # phone
-    importProduct['values']['phone'] = []
-    phone = getFieldsValuebyKey('blog_table_contact_phone', item)
-    phoneValue = setValue(phone, 'de_CH', 'ecommerce')
-    importProduct['values']['phone'] = phoneValue
+    # telephone
+    importProduct['values']['telephone'] = []
+    telephone = getFieldsValuebyKey('blog_table_contact_phone', item)
+    telephoneValue = setValue(telephone, 'de_CH', 'ecommerce')
+    importProduct['values']['telephone'] = telephoneValue
     # addressLocality
     importProduct['values']['addressLocality'] = []
     addressLocality = getFieldsValuebyKey('blog_table_address_locality', item)
