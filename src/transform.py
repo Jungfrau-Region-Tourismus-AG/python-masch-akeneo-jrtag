@@ -1,5 +1,88 @@
 import uuid
 
+def setValue(data):
+  dataValue = []
+  value = {}
+  value['data'] = data
+  value['locale'] = None
+  value['scope'] = None
+  return data
+
+def setValueLocale(data):
+  dataValue = []
+  for key, value in data.items():
+      print(key)
+      print(value)
+      if key == 'de':
+        deValue = {}
+        deValue['data'] = value
+        deValue['locale'] = 'de_CH'
+        deValue['scope'] = None
+        dataValue.append(deValue)
+      elif key == 'en':
+        enValue = {}
+        enValue['data'] = value
+        enValue['locale'] = 'en_US'
+        enValue['scope'] = None
+        dataValue.append(enValue)
+      elif key == 'fr':
+        frValue = {}
+        frValue['data'] = value
+        frValue['locale'] = 'fr_FR'
+        frValue['scope'] = None
+        dataValue.append(frValue)
+  return dataValue
+
+def setValueScope(data, locale = None, scope = None):
+  dataValue = []
+  for key, value in data.items():
+      print(key)
+      print(value)
+      if key == 'de':
+        deValue = {}
+        deValue['data'] = value
+        deValue['locale'] = locale
+        deValue['scope'] = scope
+        dataValue.append(deValue)
+      elif key == 'en':
+        enValue = {}
+        enValue['data'] = value
+        enValue['locale'] = locale
+        enValue['scope'] = scope
+        dataValue.append(enValue)
+      elif key == 'fr':
+        frValue = {}
+        frValue['data'] = value
+        frValue['locale'] = locale
+        frValue['scope'] = scope
+        dataValue.append(frValue)
+  return dataValue
+
+def setValue(data, locale, scope):
+  dataValue = []
+  for key, value in data.items():
+      print(key)
+      print(value)
+      if key == 'de':
+        deValue = {}
+        deValue['data'] = value
+        deValue['locale'] = None
+        deValue['scope'] = 'ecommerce'
+        dataValue.append(deValue)
+      elif key == 'en':
+        enValue = {}
+        enValue['data'] = value
+        enValue['locale'] = None
+        enValue['scope'] = 'ecommerce'
+        dataValue.append(enValue)
+      elif key == 'fr':
+        frValue = {}
+        frValue['data'] = value
+        frValue['locale'] = None
+        frValue['scope'] = 'ecommerce'
+        dataValue.append(frValue)
+  return dataValue
+
 def setValue(data, locale = None, scope = None):
   if type(data) is str:
     dataValue = []
@@ -111,17 +194,17 @@ def transform(data, indexAkeneo):
     # url
     importProduct['values']['url'] = []
     url = getFieldsValuebyKey('metaserver_hotel_website', item)
-    urlValue = setValue(url, 'de_CH', 'ecommerce')
+    urlValue = setValue(url, None, 'ecommerce')
     importProduct['values']['url'] = urlValue
     # email
     importProduct['values']['email'] = []
     email = getFieldsValuebyKey('blog_table_contact_email', item)
-    emailValue = setValue(email, 'de_CH', 'ecommerce')
+    emailValue = setValue(email, None, 'ecommerce')
     importProduct['values']['email'] = emailValue
     # telephone
     importProduct['values']['telephone'] = []
     telephone = getFieldsValuebyKey('blog_table_contact_phone', item)
-    telephoneValue = setValue(telephone, 'de_CH', 'ecommerce')
+    telephoneValue = setValue(telephone, None, 'ecommerce')
     importProduct['values']['telephone'] = telephoneValue
     # addressLocality
     importProduct['values']['addressLocality'] = []
