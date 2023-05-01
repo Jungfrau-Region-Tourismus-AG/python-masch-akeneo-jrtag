@@ -3,6 +3,7 @@ import uuid
 def setValue(data, locale = None, scope = None):
   if type(data) is str:
     dataValue = []
+    value = {}
     value['data'] = data
     value['locale'] = locale
     value['scope'] = scope
@@ -10,6 +11,7 @@ def setValue(data, locale = None, scope = None):
     return dataValue
   elif type(data) is int:
     dataValue = []
+    value = {}
     value['data'] = data
     value['locale'] = locale
     value['scope'] = scope
