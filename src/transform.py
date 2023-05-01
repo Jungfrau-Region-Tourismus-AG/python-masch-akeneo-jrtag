@@ -2,16 +2,18 @@ import uuid
 
 def setValue(data, locale = None, scope = None):
   if type(data) is str:
-    dataValue = {}
-    dataValue['data'] = data
-    dataValue['locale'] = locale
-    dataValue['scope'] = scope
+    dataValue = []
+    value['data'] = data
+    value['locale'] = locale
+    value['scope'] = scope
+    dataValue.append(value)
     return dataValue
   elif type(data) is int:
-    dataValue = {}
-    dataValue['data'] = data
-    dataValue['locale'] = locale
-    dataValue['scope'] = scope
+    dataValue = []
+    value['data'] = data
+    value['locale'] = locale
+    value['scope'] = scope
+    dataValue.append(value)
     return dataValue
   elif type(data) is dict:
     dataValue = []
