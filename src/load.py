@@ -27,3 +27,15 @@ def load(data):
     print(item)
     akeneo.patchProductByCode(item['identifier'], item)
     #akeneo.patchProducts(item)
+
+def loadImages(data):
+  akeneo = Akeneo(
+    AKENEO_HOST,
+    AKENEO_CLIENT_ID,
+    AKENEO_CLIENT_SECRET,
+    AKENEO_USERNAME,
+    AKENEO_PASSWORD
+  )
+  for item in data:
+    print(item)
+    akeneo.postMediaFileProduct(item['filePath'], item['identifier'], item['attribute'], item['locale'], item['scope'])
