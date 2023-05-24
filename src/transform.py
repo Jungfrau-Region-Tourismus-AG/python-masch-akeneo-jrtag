@@ -1,4 +1,5 @@
 import uuid
+import validators
 
 def setValue(data):
   dataValue = []
@@ -86,7 +87,7 @@ def setValue(data, locale, scope):
 def setValueStr(data, locale, scope):
   dataValue = []
   value = {}
-  value['data'] = data
+  value['data'] = str(data)
   value['locale'] = locale
   value['scope'] = scope
   dataValue.append(value)
@@ -102,6 +103,7 @@ def setValueInt(data, locale, scope):
   return dataValue
 
 def setValueDict(data, locale = None, scope = None):
+  print("setValueDict")
   dataValue = []
   for key, value in data.items():
       print(key)
@@ -126,22 +128,34 @@ def setValueDict(data, locale = None, scope = None):
           frValue['scope'] = scope
           dataValue.append(frValue)
       else:
-        newValue = {}
-        newValue['data'] = data
-        newValue['locale'] = locale
-        newValue['scope'] = scope
-        dataValue.append(newValue)
+        if key == 'de':
+          newValue = {}
+          newValue['data'] = value
+          newValue['locale'] = locale
+          newValue['scope'] = scope
+          dataValue.append(newValue)
   return dataValue
 
 def setValueList(data, locale = None, scope = None):
+  print("setValueList")
   dataValue = []
-  print("LIST Type")
   for key, value in data.items():
       print(key)
       print(value)
 
+def setValueFloat(data, locale = None, scope = None):
+  print("setValueFloat")
+  dataValue = []
+  value = {}
+  value['data'] = data
+  value['locale'] = locale
+  value['scope'] = scope
+  dataValue.append(value)
+  return dataValue
+
 
 def setValue(data, locale = None, scope = None):
+  print("setValue")
   if type(data) is str:
     return setValueStr(data, locale, scope)
   elif type(data) is int:
@@ -150,8 +164,11 @@ def setValue(data, locale = None, scope = None):
     return setValueDict(data, locale, scope)
   elif type(data) is list:
     return setValueList(data, locale, scope)
+  elif type(data) is float:
+    return setValueStr(data, locale, scope)
 
 def getFieldsValuebyKey(key, data):
+  print("getFieldsValuebyKey")
   for field in data['fields']:
     if field["field_name"] == key:
       print(field["field_name"])
@@ -164,11 +181,26 @@ def getFieldsValuebyKey(key, data):
         print (field["field_name"])
         return field["field_value"]
 
-def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope):
+def checkifValidUrl(url_string):
+  print("checkifValidUrl")
+  result = validators.url(url_string)
+  print(result)
+  return result
+
+def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check = None):
+  print("transformFieldtoAkeneoAttribut")
   field = getFieldsValuebyKey(maschProperty, maschData)
+  print (field)
   if field:
+      print(field['de'])
+      if check == 'url':
+        result = validators.url(field['de'])
+        print (result)
       fieldValue = setValue(field['de'], local, scope)
-      return fieldValue  
+      print(fieldValue)
+      return fieldValue
+  else:
+    print ("No field")
 
 def transform(data, indexAkeneo):
   transformData = []
@@ -194,7 +226,7 @@ def transform(data, indexAkeneo):
     # url
     # Locale : None, spezifisch/default (bspw. de_CH) or All
     # Scope : None, spezifisch/default (bspw. ecommerce) or All
-    importProduct['values']['url'] = transformFieldtoAkeneoAttribut('metaserver_hotel_website', item, None, 'ecommerce')
+    importProduct['values']['url'] = transformFieldtoAkeneoAttribut('metaserver_hotel_website', item, None, 'ecommerce', 'url')
     # email
     importProduct['values']['email'] = transformFieldtoAkeneoAttribut('blog_table_contact_email', item, None, 'ecommerce')
     # telephone
