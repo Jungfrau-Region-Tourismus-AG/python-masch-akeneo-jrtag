@@ -1,5 +1,7 @@
 import uuid
 import validators
+import os
+from urllib.parse import urlparse
 
 def setValue(data):
   dataValue = []
@@ -278,6 +280,9 @@ def transformImage(data, indexAkeneo, maschPropety, attribute, locale = None, sc
           importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
           print(filePath['de'])
           importProduct['filePath'] = filePath['de']
+          imagePath = urlparse(filePath['de'])
+          filename = os.path.basename(imagePath.path)
+          importProduct['filename'] = filename
           importProduct['attribute'] = attribute
           importProduct['locale'] = locale
           importProduct['scope'] = scope
