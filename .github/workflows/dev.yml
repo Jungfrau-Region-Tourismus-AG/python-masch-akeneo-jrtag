@@ -59,4 +59,4 @@ jobs:
         run: python fullUpdate.py
       - name: Run Script Image
         working-directory: ./src
-        run: python imagefullUpdate.py
+        run: python imageFullUpdate.py
