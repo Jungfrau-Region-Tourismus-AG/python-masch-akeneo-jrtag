@@ -185,27 +185,18 @@ def transform(data, indexAkeneo):
 
     # Values
     importProduct['values'] = {}
-    importProduct['values']['maschId'] = []
     dataValue = setValue(item['record_id'])
     importProduct['values']['maschId'] = dataValue
     # name
-    importProduct['values']['name'] = []
-    name = getFieldsValuebyKey('teaser_title_hotel_name', item)
-    if name:
-      nameValue = setValue(name['de'], 'de_CH')
-      importProduct['values']['name'] = nameValue
+    importProduct['values']['name'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_name', item, 'de_CH', None)
     # description
-    importProduct['values']['description'] = []
-    description = getFieldsValuebyKey('blog_table_description', item)
-    if description:
-      descriptionValue = setValue(description['de'], 'de_CH', 'ecommerce')
-      importProduct['values']['description'] = descriptionValue
+    importProduct['values']['description'] = transformFieldtoAkeneoAttribut('blog_table_description', item, 'de_CH', 'ecommerce')
     # url
     # Locale : None, spezifisch/default (bspw. de_CH) or All
     # Scope : None, spezifisch/default (bspw. ecommerce) or All
-    importProduct['values']['url'] = transformFieldtoAkeneoAttribut('metaserver_hotel_website', item, None, None)
+    importProduct['values']['url'] = transformFieldtoAkeneoAttribut('metaserver_hotel_website', item, None, 'ecommerce')
     # email
-    importProduct['values']['email'] = transformFieldtoAkeneoAttribut('blog_table_contact_email', item, None, None)
+    importProduct['values']['email'] = transformFieldtoAkeneoAttribut('blog_table_contact_email', item, None, 'ecommerce')
     # telephone
     # Not in MASCH
     #importProduct['values']['telephone'] = []
