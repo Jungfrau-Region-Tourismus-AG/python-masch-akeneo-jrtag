@@ -1,6 +1,6 @@
 from extract import extract, getAkeneoProducts
 from transform import transformImage, transformAkeneotoMasch
-from load import loadImages
+from load import downloadImages,loadImages
 
 def __main__():
   print("STARTING")
@@ -14,6 +14,9 @@ def __main__():
   
   print("LOADING")
   #loadData = load(transformData)
+  print("DOWNLOAD IMAGES")
+  downloadFiles = downloadImages(transformImageData)
+  print("LOAD IMAGES")
   loadData = loadImages(transformImageData)
   print("DONE")
 
