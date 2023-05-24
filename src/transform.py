@@ -269,13 +269,18 @@ def transform(data, indexAkeneo):
 def transformImage(data, indexAkeneo, maschPropety, attribute, locale = None, scope = None):
   transformData = []
   for item in data['records']:
-    importProduct = {}
     if item['record_id'] in indexAkeneo:
-      importProduct['sku'] = indexAkeneo[item['record_id']]['identifier']
-      importProduct['filePath'] = setValue(item[maschPropety])
-      importProduct['attribute'] = attribute
-      importProduct['locale'] = locale
-      importProduct['scope'] = scope
+      filePath = getFieldsValuebyKey(maschPropety, item)
+      print(item['record_id'])
+      if filePath:
+        if filePath['de']:
+          importProduct = {}
+          importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
+          print(filePath['de'])
+          importProduct['filePath'] = filePath['de']
+          importProduct['attribute'] = attribute
+          importProduct['locale'] = locale
+          importProduct['scope'] = scope
     transformData.append(importProduct)
   return transformData
 
