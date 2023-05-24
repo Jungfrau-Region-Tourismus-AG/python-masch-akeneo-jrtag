@@ -1,4 +1,4 @@
-name: Run Script De
+name: Run Script Dev
 
 on:
   push:
@@ -46,6 +46,8 @@ jobs:
         run: pip install python-dotenv
       - name: Install requests
         run: pip install requests
+      - name: Install akeneo
+        run: pip install -i https://test.pypi.org/simple/ akeneo
       - name: Run Script
         working-directory: ./src
         run: python fullUpdate.py
