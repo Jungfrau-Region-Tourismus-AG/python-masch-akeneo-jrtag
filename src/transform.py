@@ -187,20 +187,32 @@ def checkifValidUrl(url_string):
   print(result)
   return result
 
+def getNoneData():
+  dataValue = []
+  value = {}
+  value['data'] = None
+  value['locale'] = None
+  value['scope'] = None
+  dataValue.append(value)
+  return dataValue
+
 def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check = None):
   print("transformFieldtoAkeneoAttribut")
   field = getFieldsValuebyKey(maschProperty, maschData)
   print (field)
   if field:
-      print(field['de'])
-      if check == 'url':
-        result = validators.url(field['de'])
-        print (result)
-      fieldValue = setValue(field['de'], local, scope)
-      print(fieldValue)
-      return fieldValue
+      if field['de']:
+        print(field['de'])
+        if check == 'url':
+          result = validators.url(field['de'])
+          print (result)
+        fieldValue = setValue(field['de'], local, scope)
+        print(fieldValue)
+        return fieldValue
+      else:
+        return getNoneData()
   else:
-    print ("No field")
+    return getNoneData()
 
 def transform(data, indexAkeneo):
   transformData = []
@@ -218,7 +230,9 @@ def transform(data, indexAkeneo):
     # Values
     importProduct['values'] = {}
     dataValue = setValue(item['record_id'])
-    importProduct['values']['maschId'] = dataValue
+    importProduct['values']['maschId'] = setValue(item['record_id'])
+    importProduct['values']['license'] = setValue('copyrightHolder')
+    importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
     importProduct['values']['name'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_name', item, 'de_CH', None)
     # description
