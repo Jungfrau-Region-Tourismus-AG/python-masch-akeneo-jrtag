@@ -3,7 +3,7 @@ from urllib.parse import urlparse
 from dotenv import find_dotenv, load_dotenv
 from akeneo.akeneo import Akeneo
 import requests
-import os
+import os, shutil
 load_dotenv(find_dotenv())
 
 AKENEO_HOST = getenv('AKENEO_HOST')
@@ -40,25 +40,38 @@ def loadImages(data):
   )
   for item in data:
     print(item)
-    akeneo.postMediaFileProduct(item['filePath'], item['identifier'], item['attribute'], item['locale'], item['scope'])
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    print(dir_path)
+    PATH = dir_path+'/downloads/'+item['identifier']+'/'+item['filename']
+    print(PATH)
+    akeneo.postMediaFileProduct(PATH, item['identifier'], item['attribute'], item['locale'], item['scope'])
 
 def downloadImages(data):
   print("Remove Folders")
   removeAllFilesinFolder('downloads')
   print("Download Images")
   for item in data:
-    print(item)
-    if not item['filePath']:
+    if item['filePath']:
       imagePath = urlparse(item['filePath'])
       filename = os.path.basename(imagePath.path)
       print(filename)
+      dir_path = os.path.dirname(os.path.realpath(__file__))
+      print(dir_path)
       r = requests.get(item['filePath'], allow_redirects=True)
-      PATH = '/downloads/'+item['identifier']+'/'
+      print(r.status_code)
+      PATH = dir_path+'/downloads/'+item['identifier']+'/'
+      print(PATH)
       if not os.path.exists(PATH):
         os.makedirs(PATH)
       open(PATH+filename, 'wb').write(r.content)
 
 def removeAllFilesinFolder(folder):
-  filelist = [ f for f in os.listdir(folder) ]
-  for f in filelist:
-    os.remove(os.path.join(folder, f))
+  for filename in os.listdir(folder):
+    file_path = os.path.join(folder, filename)
+    try:
+        if os.path.isfile(file_path) or os.path.islink(file_path):
+            os.unlink(file_path)
+        elif os.path.isdir(file_path):
+            shutil.rmtree(file_path)
+    except Exception as e:
+        print('Failed to delete %s. Reason: %s' % (file_path, e))
