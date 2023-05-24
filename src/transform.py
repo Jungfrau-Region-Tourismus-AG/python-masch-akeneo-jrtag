@@ -1,7 +1,13 @@
+from os import getenv
+from dotenv import find_dotenv, load_dotenv
 import uuid
 import validators
 import os
 from urllib.parse import urlparse
+load_dotenv(find_dotenv())
+
+AKENEO_CATEGORIES = getenv('AKENEO_CATEGORIES')
+AKENEO_FAMILY = getenv('AKENEO_FAMILY')
 
 def setValue(data):
   dataValue = []
@@ -225,9 +231,9 @@ def transform(data, indexAkeneo):
     else:
       importProduct['identifier'] = str(uuid.uuid4())
     print(item['record_id'])
-    importProduct['family'] = "Place"
+    importProduct['family'] = AKENEO_FAMILY
     importProduct['enabled'] = True
-    importProduct['categories'] = ["masch"]
+    importProduct['categories'] = AKENEO_CATEGORIES
 
     # Values
     importProduct['values'] = {}
