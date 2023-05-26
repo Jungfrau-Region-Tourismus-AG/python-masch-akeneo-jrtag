@@ -203,6 +203,8 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
             fieldValue = setValue(field['de'], local, scope)
           else:
             fieldValue = getNoneData()
+        else:
+          fieldValue = setValue(field['de'], local, scope)
         return fieldValue
       else:
         return getNoneData()
