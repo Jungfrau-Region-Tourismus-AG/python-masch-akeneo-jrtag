@@ -26,6 +26,7 @@ def load(data):
     AKENEO_PASSWORD
   )
   for item in data:
+    print(item['identifier'])
     akeneo.patchProductByCode(item['identifier'], item)
     #akeneo.patchProducts(item)
 
@@ -38,6 +39,7 @@ def loadImages(data):
     AKENEO_PASSWORD
   )
   for item in data:
+    print(item['identifier'])
     dir_path = os.path.dirname(os.path.realpath(__file__))
     PATH = dir_path+'/downloads/'+item['identifier']+'/'+item['filename']
     akeneo.postMediaFileProduct(PATH, item['identifier'], item['attribute'], item['locale'], item['scope'])
