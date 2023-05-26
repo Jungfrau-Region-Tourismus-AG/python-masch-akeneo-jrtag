@@ -8,6 +8,20 @@ on:
   schedule:
     - cron: "* 19 * * *" # every day at 19:00 UTC
 
+env:
+  AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
+  AKENEO_CLIENT_ID: ${{ secrets.AKENEO_CLIENT_ID }}
+  AKENEO_CLIENT_SECRET: ${{ secrets.AKENEO_CLIENT_SECRET }}
+  AKENEO_USERNAME: ${{ secrets.AKENEO_USERNAME }}
+  AKENEO_PASSWORD: ${{ secrets.AKENEO_PASSWORD }}
+  MASCH_URL: ${{ secrets.MASCH_URL }}
+  MASCH_PULL_URL: ${{ secrets.MASCH_PULL_URL }}
+  MASCH_PUSH_URL: ${{ secrets.MASCH_PUSH_URL }}
+  MASCH_USER: ${{ secrets.MASCH_USER }}
+  MASCH_PASSWORD: ${{ secrets.MASCH_PASSWORD }}
+  AKENEO_CATEGORIES: ${{ secrets.AKENEO_CATEGORIES }}
+  AKENEO_FAMILY: ${{ secrets.AKENEO_FAMILY }}
+
 jobs:
   build:
     environment: dev
