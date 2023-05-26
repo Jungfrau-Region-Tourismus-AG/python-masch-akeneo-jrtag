@@ -20,8 +20,6 @@ def setValue(data):
 def setValueLocale(data):
   dataValue = []
   for key, value in data.items():
-      print(key)
-      print(value)
       if key == 'de':
         deValue = {}
         deValue['data'] = value
@@ -45,8 +43,6 @@ def setValueLocale(data):
 def setValueScope(data, locale = None, scope = None):
   dataValue = []
   for key, value in data.items():
-      print(key)
-      print(value)
       if key == 'de':
         deValue = {}
         deValue['data'] = value
@@ -70,8 +66,6 @@ def setValueScope(data, locale = None, scope = None):
 def setValue(data, locale, scope):
   dataValue = []
   for key, value in data.items():
-      print(key)
-      print(value)
       if key == 'de':
         deValue = {}
         deValue['data'] = value
@@ -179,20 +173,14 @@ def getFieldsValuebyKey(key, data):
   print("getFieldsValuebyKey")
   for field in data['fields']:
     if field["field_name"] == key:
-      print(field["field_name"])
-      print (type(field["field_value"]))
-      print (field["field_value"])
       if not field["field_value"]:
         return ''
       else:
-        print (type(field["field_value"]))
-        print (field["field_name"])
         return field["field_value"]
 
 def checkifValidUrl(url_string):
   print("checkifValidUrl")
   result = validators.url(url_string)
-  print(result)
   return result
 
 def getNoneData():
@@ -207,15 +195,11 @@ def getNoneData():
 def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check = None):
   print("transformFieldtoAkeneoAttribut")
   field = getFieldsValuebyKey(maschProperty, maschData)
-  print (field)
   if field:
       if field['de']:
-        print(field['de'])
         if check == 'url':
           result = validators.url(field['de'])
-          print (result)
         fieldValue = setValue(field['de'], local, scope)
-        print(fieldValue)
         return fieldValue
       else:
         return getNoneData()
@@ -284,7 +268,6 @@ def transformImage(data, indexAkeneo, maschPropety, attribute, locale = None, sc
         if filePath['de']:
           importProduct = {}
           importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
-          print(filePath['de'])
           importProduct['filePath'] = filePath['de']
           imagePath = urlparse(filePath['de'])
           filename = os.path.basename(imagePath.path)

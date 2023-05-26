@@ -26,7 +26,6 @@ def load(data):
     AKENEO_PASSWORD
   )
   for item in data:
-    print(item)
     akeneo.patchProductByCode(item['identifier'], item)
     #akeneo.patchProducts(item)
 
@@ -39,11 +38,8 @@ def loadImages(data):
     AKENEO_PASSWORD
   )
   for item in data:
-    print(item)
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    print(dir_path)
     PATH = dir_path+'/downloads/'+item['identifier']+'/'+item['filename']
-    print(PATH)
     akeneo.postMediaFileProduct(PATH, item['identifier'], item['attribute'], item['locale'], item['scope'])
 
 def downloadImages(data):
@@ -54,13 +50,9 @@ def downloadImages(data):
     if item['filePath']:
       imagePath = urlparse(item['filePath'])
       filename = os.path.basename(imagePath.path)
-      print(filename)
       dir_path = os.path.dirname(os.path.realpath(__file__))
-      print(dir_path)
       r = requests.get(item['filePath'], allow_redirects=True)
-      print(r.status_code)
       PATH = dir_path+'/downloads/'+item['identifier']+'/'
-      print(PATH)
       if not os.path.exists(PATH):
         os.makedirs(PATH)
       open(PATH+filename, 'wb').write(r.content)
