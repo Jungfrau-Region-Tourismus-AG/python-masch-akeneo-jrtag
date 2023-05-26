@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     environment: prod
-    name: RUN SCRIPT
+    name: RUN SCRIPT PROD
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
