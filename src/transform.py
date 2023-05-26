@@ -202,7 +202,8 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
           if result == True:
             fieldValue = setValue(field['de'], local, scope)
           else:
-            fieldValue = getNoneData()
+            newURL = 'https://' + field['de']
+            fieldValue = setValue(newURL, local, scope)
         else:
           fieldValue = setValue(field['de'], local, scope)
         return fieldValue
