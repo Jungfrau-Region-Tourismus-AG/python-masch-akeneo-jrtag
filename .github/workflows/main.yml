@@ -1,28 +1,12 @@
 name: Run Script Prod
 
 on:
-  # push:
-  #  branches: [ master ]
-  # pull_request:
-  #  branches: [ master ]
-  #schedule:
-  #  - cron: "* 19 * * *" # every day at 19:00 UTC
-
-env:
-  AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
-  AKENEO_CLIENT_ID: ${{ secrets.AKENEO_CLIENT_ID }}
-  AKENEO_CLIENT_SECRET: ${{ secrets.AKENEO_CLIENT_SECRET }}
-  AKENEO_USERNAME: ${{ secrets.AKENEO_USERNAME }}
-  AKENEO_PASSWORD: ${{ secrets.AKENEO_PASSWORD }}
-  MASCH_URL: ${{ secrets.MASCH_URL }}
-  MASCH_PULL_URL: ${{ secrets.MASCH_PULL_URL }}
-  MASCH_PUSH_URL: ${{ secrets.MASCH_PUSH_URL }}
-  MASCH_USER: ${{ secrets.MASCH_USER }}
-  MASCH_PASSWORD: ${{ secrets.MASCH_PASSWORD }}
+  schedule:
+    - cron: "* 19 * * *" # every day at 19:00 UTC
 
 jobs:
   build:
-    environment: production
+    environment: prod
     name: RUN SCRIPT
     runs-on: ubuntu-latest
     steps:
@@ -42,13 +26,23 @@ jobs:
           echo "${{ secrets.MASCH_PUSH_URL }}" > .env
           echo "${{ secrets.MASCH_USER }}" > .env
           echo "${{ secrets.MASCH_PASSWORD }}" > .env
+          echo "${{ secrets.AKENEO_CATEGORIES }}" > .env
+          echo "${{ secrets.AKENEO_FAMILY }}" > .env
       - name: Install python-dotenv
         run: pip install python-dotenv
       - name: Install requests
         run: pip install requests
+      - name: Install oauthlib
+        run: pip install oauthlib
+      - name: Install requests_oauthlib
+        run: pip install requests_oauthlib
+      - name: Install validators
+        run: pip install validators
+      - name: Install akeneo
+        run: pip install -i https://test.pypi.org/simple/ akeneo
       - name: Run Script
         working-directory: ./src
         run: python fullUpdate.py
       - name: Run Script Image
         working-directory: ./src
-        run: python imagefullUpdate.py
+        run: python imageFullUpdate.py
