@@ -17,7 +17,6 @@ env:
   MASCH_PASSWORD: ${{ secrets.MASCH_PASSWORD }}
   AKENEO_CATEGORIES: ${{ secrets.AKENEO_CATEGORIES }}
   AKENEO_FAMILY: ${{ secrets.AKENEO_FAMILY }}
-    
 
 jobs:
   build:
