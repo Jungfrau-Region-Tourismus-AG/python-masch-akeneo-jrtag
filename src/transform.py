@@ -210,18 +210,22 @@ def transform(data, indexAkeneo):
   transformData = []
   for item in data['records']:
     importProduct = {}
+    print(item['record_id'])
     if item['record_id'] in indexAkeneo:
+      print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
+      importProduct['categories'] = indexAkeneo[item['record_id']]['categories']
+      importProduct['family'] = indexAkeneo[item['record_id']]['family']
+      importProduct['enabled'] = True
     else:
       importProduct['identifier'] = str(uuid.uuid4())
-    print(item['record_id'])
-    importProduct['family'] = AKENEO_FAMILY
-    importProduct['enabled'] = True
-    importProduct['categories'] = AKENEO_CATEGORIES
-
+      importProduct['categories'] = AKENEO_CATEGORIES
+      importProduct['enabled'] = True
+      importProduct['family'] = AKENEO_FAMILY
+    
+    print(importProduct['categories'])
     # Values
     importProduct['values'] = {}
-    dataValue = setValue(item['record_id'])
     importProduct['values']['maschId'] = setValue(item['record_id'])
     importProduct['values']['license'] = setValue('copyrightHolder')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
@@ -290,6 +294,9 @@ def transformAkeneotoMasch(data):
   for item in data:
     importProduct = {}
     importProduct['identifier'] = item['identifier']
+    importProduct['categories'] = item['categories']
+    importProduct['family'] = item['family']
+    importProduct['enabled'] = item['enabled']
     print(item['identifier'])
     print(item['values']['maschId'][0]['data'])
     id = item['values']['maschId'][0]['data']
