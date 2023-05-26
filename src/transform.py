@@ -214,7 +214,9 @@ def transform(data, indexAkeneo):
     if item['record_id'] in indexAkeneo:
       print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
-      importProduct['categories'] = indexAkeneo[item['record_id']]['categories']
+      categorieArray = indexAkeneo[item['record_id']]['categories']
+      categorieArray.append(AKENEO_CATEGORIES)
+      importProduct['categories'] = categorieArray
       importProduct['family'] = indexAkeneo[item['record_id']]['family']
       importProduct['enabled'] = True
     else:
