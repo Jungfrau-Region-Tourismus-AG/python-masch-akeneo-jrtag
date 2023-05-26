@@ -199,7 +199,10 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
       if field['de']:
         if check == 'url':
           result = validators.url(field['de'])
-        fieldValue = setValue(field['de'], local, scope)
+          if result == True:
+            fieldValue = setValue(field['de'], local, scope)
+          else:
+            fieldValue = getNoneData()
         return fieldValue
       else:
         return getNoneData()
@@ -236,8 +239,6 @@ def transform(data, indexAkeneo):
     # description
     importProduct['values']['description'] = transformFieldtoAkeneoAttribut('blog_table_description', item, 'de_CH', 'ecommerce')
     # url
-    # Locale : None, spezifisch/default (bspw. de_CH) or All
-    # Scope : None, spezifisch/default (bspw. ecommerce) or All
     importProduct['values']['url'] = transformFieldtoAkeneoAttribut('metaserver_hotel_website', item, None, 'ecommerce', 'url')
     # email
     importProduct['values']['email'] = transformFieldtoAkeneoAttribut('blog_table_contact_email', item, None, 'ecommerce')
