@@ -227,7 +227,9 @@ def transform(data, indexAkeneo):
       importProduct['enabled'] = True
     else:
       importProduct['identifier'] = str(uuid.uuid4())
-      importProduct['categories'] = AKENEO_CATEGORIES
+      categorieArray = []
+      categorieArray.append(AKENEO_CATEGORIES)
+      importProduct['categories'] = categorieArray
       importProduct['enabled'] = True
       importProduct['family'] = AKENEO_FAMILY
     
