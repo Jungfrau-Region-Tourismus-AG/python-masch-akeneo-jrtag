@@ -221,7 +221,8 @@ def checkIfCategoryInCategories(categories, category):
 
 def transform(data, indexAkeneo):
   transformData = []
-  for item in data['records']:
+  dataList = data.copy()
+  for item in dataList['records']:
     importProduct = {}
     print(item['record_id'])
     if item['record_id'] in indexAkeneo:
