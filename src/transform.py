@@ -211,6 +211,13 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
         return getNoneData()
   else:
     return getNoneData()
+  
+def checkIfCategoryInCategories(categories, category):
+  print("checkifCategoryinCategories")
+  for cat in categories:
+    if cat == category:
+      return True
+  return False
 
 def transform(data, indexAkeneo):
   transformData = []
@@ -221,7 +228,7 @@ def transform(data, indexAkeneo):
       print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
       categoriesArray = indexAkeneo[item['record_id']]['categories']
-      if not AKENEO_CATEGORIES in categoriesArray:
+      if checkIfCategoryInCategories(categoriesArray, AKENEO_CATEGORIES) == False:
         categoriesArray.append(AKENEO_CATEGORIES)
       importProduct['categories'] = categoriesArray
       importProduct['family'] = indexAkeneo[item['record_id']]['family']
