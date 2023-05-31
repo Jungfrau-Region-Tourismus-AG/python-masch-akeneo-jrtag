@@ -221,7 +221,7 @@ def transform(data, indexAkeneo):
       print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
       categoriesArray = indexAkeneo[item['record_id']]['categories']
-      if not AKENEO_CATEGORIES in categorieArray:
+      if not AKENEO_CATEGORIES in categoriesArray:
         categoriesArray.append(AKENEO_CATEGORIES)
       importProduct['categories'] = categoriesArray
       importProduct['family'] = indexAkeneo[item['record_id']]['family']
