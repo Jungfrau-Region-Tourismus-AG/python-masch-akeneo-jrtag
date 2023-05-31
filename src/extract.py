@@ -24,6 +24,7 @@ def getMaschPull():
       "start_time": "2023-03-01 00:00:00"
   }
   r = requests.get(url, json=body)
+  print(r.status_code)
   return r.json()
 
 def getAkeneoProducts():
@@ -38,4 +39,5 @@ def getAkeneoProducts():
   return akeneo.getProducts(limit=100, search=searchQuery )
 
 def extract():
-  return getMaschPull()
+  data = getMaschPull()
+  return data
