@@ -220,16 +220,17 @@ def transform(data, indexAkeneo):
     if item['record_id'] in indexAkeneo:
       print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
-      categorieArray = indexAkeneo[item['record_id']]['categories']
-      categorieArray.append(AKENEO_CATEGORIES)
-      importProduct['categories'] = categorieArray
+      categoriesArray = indexAkeneo[item['record_id']]['categories']
+      if not AKENEO_CATEGORIES in categorieArray:
+        categoriesArray.append(AKENEO_CATEGORIES)
+      importProduct['categories'] = categoriesArray
       importProduct['family'] = indexAkeneo[item['record_id']]['family']
       importProduct['enabled'] = True
     else:
       importProduct['identifier'] = str(uuid.uuid4())
-      categorieArray = []
-      categorieArray.append(AKENEO_CATEGORIES)
-      importProduct['categories'] = categorieArray
+      categoriesArray = []
+      categoriesArray.append(AKENEO_CATEGORIES)
+      importProduct['categories'] = categoriesArray
       importProduct['enabled'] = True
       importProduct['family'] = AKENEO_FAMILY
     
