@@ -227,7 +227,7 @@ def transform(data, indexAkeneo):
     print(item['record_id'])
     print(item['record_name'])
     if item['record_id'] in indexAkeneo:
-      print(indexAkeneo[item['record_id']]
+      print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
       categoriesArray = indexAkeneo[item['record_id']]['categories']
       if checkIfCategoryInCategories(categoriesArray, AKENEO_CATEGORIES) == False:
