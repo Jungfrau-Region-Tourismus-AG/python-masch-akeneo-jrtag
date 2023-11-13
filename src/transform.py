@@ -246,6 +246,7 @@ def transform(data, indexAkeneo):
     # Values
     importProduct['values'] = {}
     importProduct['values']['maschId'] = setValue(item['record_id'])
+    importProduct['values']['maschName'] = setValue(item['record_name'])
     importProduct['values']['license'] = setValue('copyrightHolder')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
