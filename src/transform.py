@@ -211,7 +211,40 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
         return getNoneData()
   else:
     return getNoneData()
+
+def setValuebyLocaleScope(data, locale, scope):
   
+  dataValue = []
+  for row in data:
+    value = {}
+    value['data'] = row
+    value['locale'] = locale
+    value['scope'] = scope
+    dataValue.append(value)
+
+  return dataValue
+
+def transformFieldtoAkeneoAttributebyLocale(maschProperty, maschData, locale, scope):
+  field = getFieldsValuebyKey(maschProperty, maschData)
+  if field:
+      fieldValue = [
+        {
+          "locale": 'de_CH',
+          "scope": scope,
+          "data": field['de']
+        },
+        {
+          "locale": locale,
+        }
+      ]
+      if field['de']:
+        fieldValue = setValue(field['de'], locale, scope)
+        return fieldValue
+      else:
+        return getNoneData()
+  else:
+    return getNoneData()
+
 def checkIfCategoryInCategories(categories, category):
   print("checkifCategoryinCategories")
   for cat in categories:
@@ -279,6 +312,25 @@ def transform(data, indexAkeneo):
     importProduct['values']['longitude'] = transformFieldtoAkeneoAttribut('blog_seo_longitude', item, None, None)
     # blog_table_video_url_link
     # teaser_video_id
+    # Call-To-Action
+    importProduct['values']['action_button_url'] = transformFieldtoAkeneoAttribut('teaser_booking_button_url_mobil', item, None, None)
+    importProduct['values']['action_button_text'] = [
+      {
+        "locale": "de_CH",
+        "scope": "ecommerce",
+        "data": "booking"
+      },
+      {
+        "locale": "en_US",
+        "scope": "ecommerce",
+        "data": "booking"
+      },
+      {
+        "locale": "fr_FR",
+        "scope": "ecommerce",
+        "data": "booking"
+      }
+    ]
 
     transformData.append(importProduct)
   return transformData
