@@ -251,7 +251,9 @@ def transform(data, indexAkeneo):
     importProduct['values']['license'] = setValue('copyrightHolder')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
+    ## Mehrsprachigkeit
     importProduct['values']['name'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_name', item, 'de_CH', None)
+    ## Mehrsprachigkeit
     # description
     importProduct['values']['description'] = transformFieldtoAkeneoAttribut('blog_table_description', item, 'de_CH', 'ecommerce')
     # url
@@ -265,11 +267,11 @@ def transform(data, indexAkeneo):
     #telephoneValue = setValue(telephone['de'], None, 'ecommerce')
     #importProduct['values']['telephone'] = telephoneValue
     # addressLocality / teaser_title_hotel_place - Alternative: metaserver_city
-    importProduct['values']['addressLocality'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_place', item, None, None)
+    #importProduct['values']['addressLocality'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_place', item, None, None)
     # streetAddress / metaserver_address
-    importProduct['values']['streetAddress'] = transformFieldtoAkeneoAttribut('metaserver_address', item, None, None)
+    #importProduct['values']['streetAddress'] = transformFieldtoAkeneoAttribut('metaserver_address', item, None, None)
     # addressCountry / metaserver_country
-    importProduct['values']['addressCountry'] = transformFieldtoAkeneoAttribut('metaserver_country', item, None, None)
+    #importProduct['values']['addressCountry'] = transformFieldtoAkeneoAttribut('metaserver_country', item, None, None)
     # Geo
     # latitude / blog_seo_latitude
     importProduct['values']['latitude'] = transformFieldtoAkeneoAttribut('blog_seo_latitude', item, None, None)
