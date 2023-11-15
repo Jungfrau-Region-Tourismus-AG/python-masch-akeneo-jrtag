@@ -313,7 +313,7 @@ def transform(data, indexAkeneo):
     # blog_table_video_url_link
     # teaser_video_id
     # Call-To-Action
-    importProduct['values']['action_button_url'] = transformFieldtoAkeneoAttribut('teaser_booking_button_url_mobil', item, None, None)
+    #importProduct['values']['action_button_url'] = transformFieldtoAkeneoAttribut('teaser_booking_button_url_mobil', item, None, None)
     importProduct['values']['action_button_text'] = [
       {
         "locale": "de_CH",
