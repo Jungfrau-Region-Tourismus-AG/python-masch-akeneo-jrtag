@@ -419,6 +419,13 @@ def transform(data, indexAkeneo):
         "data": "booking"
       }
     ]
+    importProduct['values']['starRating'] = [
+      {
+        "locale": None,
+        "scope": None,
+        "data": "starRating_"+getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'de', 'url')
+      }
+    ]
 
     transformData.append(importProduct)
   return transformData
