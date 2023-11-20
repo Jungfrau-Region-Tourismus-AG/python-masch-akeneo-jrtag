@@ -231,9 +231,27 @@ def transformFieldtoAkeneoAttributbyLanguage(maschProperty, maschData, Language,
         return getNoneData()
   else:
     return getNoneData()
+  
+def getFieldbyLanguage(maschProperty, maschData, Language, locale, scope, check = None):
+  field = getFieldsValuebyKey(maschProperty, maschData)
+  if field:
+      if field[Language]:
+        if check == 'url':
+          result = validators.url(field[Language])
+          if result == True:
+            fieldValue = field[Language]
+          else:
+            newURL = 'https://' + field[Language]
+            fieldValue = newURL
+        else:
+          fieldValue = field[Language]
+        return fieldValue
+      else:
+        return getNoneData()
+  else:
+    return getNoneData()
 
 def setValuebyLocaleScope(data, locale, scope):
-  
   dataValue = []
   for row in data:
     value = {}
@@ -338,17 +356,17 @@ def transform(data, indexAkeneo):
       {
         "locale": "de_CH",
         "scope": "ecommerce",
-        "data": transformFieldtoAkeneoAttributbyLanguage('teaser_booking_button_url_mobil', item, 'de', None, None, 'url')
+        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'de', None, None, 'url')
       },
       {
         "locale": "en_US",
         "scope": "ecommerce",
-        "data": transformFieldtoAkeneoAttributbyLanguage('teaser_booking_button_url_mobil', item, 'en', None, None, 'url')
+        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'en', None, None, 'url')
       },
       {
         "locale": "fr_FR",
         "scope": "ecommerce",
-        "data": transformFieldtoAkeneoAttributbyLanguage('teaser_booking_button_url_mobil', item, 'fr', None, None, 'url')
+        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'fr', None, None, 'url')
       }
     ]
     importProduct['values']['action_button_text'] = [
