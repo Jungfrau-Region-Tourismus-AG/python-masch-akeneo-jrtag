@@ -422,6 +422,7 @@ def transform(data, indexAkeneo):
     ]
     stars = getFieldbyLanguage('metaserver_swiss_star', item, 'de')
     print(stars)
+    print("starRating_"+stars)
     if stars:
       print("starRating_"+stars)
       importProduct['values']['starRating'] = [
