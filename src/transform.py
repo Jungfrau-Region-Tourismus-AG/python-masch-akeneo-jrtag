@@ -232,7 +232,7 @@ def transformFieldtoAkeneoAttributbyLanguage(maschProperty, maschData, Language,
   else:
     return getNoneData()
   
-def getFieldbyLanguage(maschProperty, maschData, Language, locale, scope, check = None):
+def getFieldbyLanguage(maschProperty, maschData, Language, check = None):
   field = getFieldsValuebyKey(maschProperty, maschData)
   if field:
       if field[Language]:
@@ -322,11 +322,44 @@ def transform(data, indexAkeneo):
     importProduct['values']['license'] = setValue('copyrightHolder')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
-    ## Mehrsprachigkeit
-    importProduct['values']['name'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_name', item, 'de_CH', None)
+    #importProduct['values']['name'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_name', item, 'de_CH', None)
+    importProduct['values']['name'] = [
+      {
+        "locale": "de_CH",
+        "scope": None,
+        "data": getFieldbyLanguage('teaser_title_hotel_name', item, 'de')
+      },
+      {
+        "locale": "en_US",
+        "scope": None,
+        "data": getFieldbyLanguage('teaser_title_hotel_name', item, 'en')
+      },
+      {
+        "locale": "fr_FR",
+        "scope": None,
+        "data": getFieldbyLanguage('teaser_title_hotel_name', item, 'fr')
+      }
+    ]
     ## Mehrsprachigkeit
     # description
-    importProduct['values']['description'] = transformFieldtoAkeneoAttribut('blog_table_description', item, 'de_CH', 'ecommerce')
+    #importProduct['values']['description'] = transformFieldtoAkeneoAttribut('blog_table_description', item, 'de_CH', 'ecommerce')
+    importProduct['values']['description'] = [
+      {
+        "locale": "de_CH",
+        "scope": "ecommerce",
+        "data": getFieldbyLanguage('blog_table_description', item, 'de')
+      },
+      {
+        "locale": "en_US",
+        "scope": "ecommerce",
+        "data": getFieldbyLanguage('blog_table_description', item, 'en')
+      },
+      {
+        "locale": "fr_FR",
+        "scope": "ecommerce",
+        "data": getFieldbyLanguage('blog_table_description', item, 'fr')
+      }
+    ]
     # url
     importProduct['values']['url'] = transformFieldtoAkeneoAttribut('metaserver_hotel_website', item, None, 'ecommerce', 'url')
     # email
@@ -356,17 +389,17 @@ def transform(data, indexAkeneo):
       {
         "locale": "de_CH",
         "scope": "ecommerce",
-        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'de', None, None, 'url')
+        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'de', 'url')
       },
       {
         "locale": "en_US",
         "scope": "ecommerce",
-        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'en', None, None, 'url')
+        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'en', 'url')
       },
       {
         "locale": "fr_FR",
         "scope": "ecommerce",
-        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'fr', None, None, 'url')
+        "data": getFieldbyLanguage('teaser_booking_button_url_mobil', item, 'fr', 'url')
       }
     ]
     importProduct['values']['action_button_text'] = [
