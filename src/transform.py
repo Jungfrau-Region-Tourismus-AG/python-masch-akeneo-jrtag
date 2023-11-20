@@ -171,6 +171,7 @@ def setValue(data, locale = None, scope = None):
 
 def getFieldsValuebyKey(key, data):
   print("getFieldsValuebyKey")
+  print(key)
   for field in data['fields']:
     if field["field_name"] == key:
       if not field["field_value"]:
