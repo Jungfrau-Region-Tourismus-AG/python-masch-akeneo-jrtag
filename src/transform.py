@@ -420,7 +420,7 @@ def transform(data, indexAkeneo):
         "data": "booking"
       }
     ]
-    stars = getFieldbyLanguage('starRating', item, 'de')
+    stars = getFieldbyLanguage('metaserver_swiss_star', item, 'de')
     if stars:
       importProduct['values']['starRating'] = [
         {
