@@ -211,6 +211,26 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
         return getNoneData()
   else:
     return getNoneData()
+  
+def transformFieldtoAkeneoAttributbyLanguage(maschProperty, maschData, Language, locale, scope, check = None):
+  print("transformFieldtoAkeneoAttribut")
+  field = getFieldsValuebyKey(maschProperty, maschData)
+  if field:
+      if field[Language]:
+        if check == 'url':
+          result = validators.url(field[Language])
+          if result == True:
+            fieldValue = setValue(field[Language], locale, scope)
+          else:
+            newURL = 'https://' + field[Language]
+            fieldValue = setValue(newURL, locale, scope)
+        else:
+          fieldValue = setValue(field[Language], locale, scope)
+        return fieldValue
+      else:
+        return getNoneData()
+  else:
+    return getNoneData()
 
 def setValuebyLocaleScope(data, locale, scope):
   
@@ -314,6 +334,23 @@ def transform(data, indexAkeneo):
     # teaser_video_id
     # Call-To-Action
     #importProduct['values']['action_button_url'] = transformFieldtoAkeneoAttribut('teaser_booking_button_url_mobil', item, None, None)
+    importProduct['values']['action_button_url'] = [
+      {
+        "locale": "de_CH",
+        "scope": "ecommerce",
+        "data": transformFieldtoAkeneoAttributbyLanguage('teaser_booking_button_url_mobil', item, 'de', None, None, 'url')
+      },
+      {
+        "locale": "en_US",
+        "scope": "ecommerce",
+        "data": transformFieldtoAkeneoAttributbyLanguage('teaser_booking_button_url_mobil', item, 'en', None, None, 'url')
+      },
+      {
+        "locale": "fr_FR",
+        "scope": "ecommerce",
+        "data": transformFieldtoAkeneoAttributbyLanguage('teaser_booking_button_url_mobil', item, 'fr', None, None, 'url')
+      }
+    ]
     importProduct['values']['action_button_text'] = [
       {
         "locale": "de_CH",
