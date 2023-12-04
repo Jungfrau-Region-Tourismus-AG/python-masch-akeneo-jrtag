@@ -425,13 +425,14 @@ def transform(data, indexAkeneo):
     stars = getFieldbyLanguage('metaserver_swiss_star', item, 'de')
     if stars:
       if type(stars) is int:
-        importProduct['values']['starRating'] = [
-          {
-            "locale": None,
-            "scope": None,
-            "data": "starRating_"+str(stars)
-          }
-        ]
+        if stars <=5 and stars >= 1:
+          importProduct['values']['starRating'] = [
+            {
+              "locale": None,
+              "scope": None,
+              "data": "starRating_"+str(stars)
+            }
+          ]
 
     # Ausstattungen
     # metaserver_hotel_features <-> features
@@ -441,7 +442,7 @@ def transform(data, indexAkeneo):
     print("Set features Variable")
     print(features)
 
-    if(features):
+    if features:
       print("features is not None")
       newFeatures = checkFeatures(features, None)
       print(type(newFeatures))
