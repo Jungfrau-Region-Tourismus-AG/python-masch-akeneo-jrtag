@@ -377,6 +377,7 @@ def transform(data, indexAkeneo):
     #importProduct['values']['streetAddress'] = transformFieldtoAkeneoAttribut('metaserver_address', item, None, None)
     # addressCountry / metaserver_country
     #importProduct['values']['addressCountry'] = transformFieldtoAkeneoAttribut('metaserver_country', item, None, None)
+    
     # Geo
     # latitude / blog_seo_latitude
     importProduct['values']['latitude'] = transformFieldtoAkeneoAttribut('blog_seo_latitude', item, None, None)
@@ -384,6 +385,7 @@ def transform(data, indexAkeneo):
     importProduct['values']['longitude'] = transformFieldtoAkeneoAttribut('blog_seo_longitude', item, None, None)
     # blog_table_video_url_link
     # teaser_video_id
+
     # Call-To-Action
     #importProduct['values']['action_button_url'] = transformFieldtoAkeneoAttribut('teaser_booking_button_url_mobil', item, None, None)
     importProduct['values']['action_button_url'] = [
@@ -431,6 +433,17 @@ def transform(data, indexAkeneo):
           }
         ]
 
+    # Ausstattungen
+    # metaserver_hotel_features <-> features
+    #importProduct['values']['features'] = transformFieldtoAkeneoAttribut('metaserver_hotel_features', item, None, None)
+    features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
+    newFeatures = checkFeatures(features, None)
+    importProduct['values']['features'] = [{
+      "locale": None,
+      "scope": None,
+      "data": newFeatures
+    }]
+
     transformData.append(importProduct)
   return transformData
 
@@ -474,3 +487,21 @@ def transformAkeneotoMasch(data):
     id = item['values']['maschId'][0]['data']
     transformData[id] = importProduct
   return transformData
+
+def checkFeatures(data, checklist):
+  result = []
+  checklist = {
+    "003-lift" : "elevators",
+    "006-wellness": "health_club",
+    "005-pets": "pets_welcome",
+    "009-kids-welcome": "family_friendly",
+    "010-hotel-restaurant": "restaurant"
+  }
+    
+  for value in data:
+    print(value)
+    if value in checklist:
+      result.append(checklist[value])
+
+  print(result)
+  return result
