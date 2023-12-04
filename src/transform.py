@@ -3,6 +3,7 @@ from dotenv import find_dotenv, load_dotenv
 import uuid
 import validators
 import os
+import features as featuresChecklist
 from urllib.parse import urlparse
 load_dotenv(find_dotenv())
 
@@ -444,7 +445,7 @@ def transform(data, indexAkeneo):
 
     if features:
       print("features is not None")
-      newFeatures = checkFeatures(features, None)
+      newFeatures = checkFeatures(features, featuresChecklist.features)
       print(type(newFeatures))
       importProduct['values']['features'] = [{
         "locale": None,
@@ -497,15 +498,7 @@ def transformAkeneotoMasch(data):
   return transformData
 
 def checkFeatures(data, checklist):
-  result = []
-  checklist = {
-    "003-lift" : "elevators",
-    "006-wellness": "health_club",
-    "005-pets": "pets_welcome",
-    "009-kids-welcome": "family_friendly",
-    "010-hotel-restaurant": "restaurant"
-  }
-    
+  result = []    
   for value in data:
     print(value)
     if value in checklist:
