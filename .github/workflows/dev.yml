@@ -65,3 +65,9 @@ jobs:
       - name: Run Script Image
         working-directory: ./src
         run: python imageFullUpdate.py
+      - name: Run Script Image Summer
+        working-directory: ./src
+        run: python imageSummerFullUpdate.py
+      - name: Run Script Image Winter
+        working-directory: ./src
+        run: python imageWinterFullUpdate.py
