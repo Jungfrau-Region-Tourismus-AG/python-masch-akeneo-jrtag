@@ -248,9 +248,9 @@ def getFieldbyLanguage(maschProperty, maschData, Language, check = None):
           fieldValue = field[Language]
         return fieldValue
       else:
-        return getNoneData()
+        return None
   else:
-    return getNoneData()
+    return None
 
 def setValuebyLocaleScope(data, locale, scope):
   dataValue = []
