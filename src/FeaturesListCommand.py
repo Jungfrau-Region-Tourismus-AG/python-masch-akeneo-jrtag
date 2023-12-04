@@ -25,7 +25,7 @@ def getFieldbyLanguage(maschProperty, maschData, Language, check = None):
     return None
   
 def arrayToCsv(array, filepath):
-    with open(filepath, 'w', newline="") as csvfile:
+    with open(filepath, 'w', newline="\n") as csvfile:
         writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         writer.writerows(array)
 
