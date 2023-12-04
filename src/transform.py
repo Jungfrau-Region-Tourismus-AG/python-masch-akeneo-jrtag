@@ -437,7 +437,9 @@ def transform(data, indexAkeneo):
     # metaserver_hotel_features <-> features
     #importProduct['values']['features'] = transformFieldtoAkeneoAttribut('metaserver_hotel_features', item, None, None)
     features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
+    print(features)
     newFeatures = checkFeatures(features, None)
+    print(type(newFeatures))
     importProduct['values']['features'] = [{
       "locale": None,
       "scope": None,
