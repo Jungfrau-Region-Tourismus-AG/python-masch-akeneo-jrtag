@@ -307,13 +307,13 @@ def transform(data, indexAkeneo):
         categoriesArray.append(AKENEO_CATEGORIES)
       importProduct['categories'] = categoriesArray
       importProduct['family'] = indexAkeneo[item['record_id']]['family']
-      importProduct['enabled'] = True
+      #importProduct['enabled'] = True
     else:
       importProduct['identifier'] = str(uuid.uuid4())
       categoriesArray = []
       categoriesArray.append(AKENEO_CATEGORIES)
       importProduct['categories'] = categoriesArray
-      importProduct['enabled'] = True
+      #importProduct['enabled'] = True
       importProduct['family'] = AKENEO_FAMILY
     
     print(importProduct['categories'])
