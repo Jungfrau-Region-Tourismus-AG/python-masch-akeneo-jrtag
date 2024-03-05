@@ -198,7 +198,13 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
   print("transformFieldtoAkeneoAttribut")
   field = getFieldsValuebyKey(maschProperty, maschData)
   if field:
-      if field['de']:
+      print(field)
+      print(type(field))
+      if type(field) is str:
+        return setValue(field, local, scope)
+      elif type(field) is int:
+        return setValue(field, local, scope)
+      elif field['de']:
         if check == 'url':
           result = validators.url(field['de'])
           if result == True:
@@ -210,10 +216,11 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
           fieldValue = setValue(field['de'], local, scope)
         return fieldValue
       else:
-        return getNoneData()
+        return setValue(field, local, scope)
+        #return getNoneData()
   else:
-    return setValue(field, local, scope)
-    #return getNoneData()
+    #return setValue(field, local, scope)
+    return getNoneData()
   
 def transformFieldtoAkeneoAttributbyLanguage(maschProperty, maschData, Language, locale, scope, check = None):
   print("transformFieldtoAkeneoAttribut")
@@ -424,7 +431,8 @@ def transform(data, indexAkeneo):
         "data": "booking"
       }
     ]
-    stars = getFieldbyLanguage('metaserver_swiss_star', item, 'de')
+    #stars = getFieldbyLanguage('metaserver_swiss_star', item, 'de')
+    stars = getFieldsValuebyKey('metaserver_swiss_star', item)
     if stars:
       if type(stars) is int:
         if stars <=5 and stars >= 1:
@@ -440,7 +448,8 @@ def transform(data, indexAkeneo):
     # metaserver_hotel_features <-> features
     #importProduct['values']['features'] = transformFieldtoAkeneoAttribut('metaserver_hotel_features', item, None, None)
     print("Features DEBUG")
-    features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
+    #features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
+    features = getFieldsValuebyKey('metaserver_hotel_features', item)
     print("Set features Variable")
     print(features)
 
