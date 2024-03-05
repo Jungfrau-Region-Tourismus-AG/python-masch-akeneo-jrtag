@@ -212,7 +212,8 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
       else:
         return getNoneData()
   else:
-    return getNoneData()
+    return setValue(field, local, scope)
+    #return getNoneData()
   
 def transformFieldtoAkeneoAttributbyLanguage(maschProperty, maschData, Language, locale, scope, check = None):
   print("transformFieldtoAkeneoAttribut")
