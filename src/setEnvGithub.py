@@ -78,7 +78,7 @@ def getSecrets(environment):
     env_vars['OBJECTSTORAGE_ACCESS_KEY'] = getenv('OBJECTSTORAGE_ACCESS_KEY')
     env_vars['OBJECTSTORAGE_SECRET_ACCESS_KEY'] = getenv('OBJECTSTORAGE_SECRET_ACCESS_KEY')
     env_vars['OBJECTSTORAGE_EXPORT_PATH'] = getenv('OBJECTSTORAGE_EXPORT_PATH')
-    env_vars['OBJECTSTORAGE_CDN'] = getenv('CDN_ENDPOINT')
+    env_vars['OBJECTSTORAGE_CDN'] = getenv('OBJECTSTORAGE_CDN')
     env_vars['MASCH_URL'] = getenv('MASCH_URL')
     env_vars['MASCH_PULL_URL'] = getenv('MASCH_PULL_URL')
     env_vars['MASCH_PUSH_URL'] = getenv('MASCH_PUSH_URL')
