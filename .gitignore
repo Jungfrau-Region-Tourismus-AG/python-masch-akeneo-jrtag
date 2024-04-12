@@ -3,3 +3,5 @@ tests/*
 examples/*
 src/__pycache__/*
 src/downloads/*
+*.env*
+/env/*
