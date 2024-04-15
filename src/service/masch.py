@@ -51,6 +51,7 @@ def transformAkeneotoMasch(akeneoProducts):
     transformedProducts = {}
     transformedProducts['user_login'] = MASCH_USER
     transformedProducts['user_password'] = MASCH_PASSWORD
+    transformedProducts['records'] = []
     for product in akeneoProducts:
         print("Product")
         print(product)
