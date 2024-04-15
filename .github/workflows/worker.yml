@@ -24,40 +24,42 @@ env:
     AKENEO_FAMILY: ${{ secrets.AKENEO_FAMILY }}
 
 jobs:
-  build:
-    environment: ziggy
-    name: MASCH Worker Ziggy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - name: Create Virtual Environment
-        run: |
-          echo "${{ secrets.AKENEO_HOST }}" > .env
-          echo "${{ secrets.AKENEO_CLIENT_ID }}" > .env
-          echo "${{ secrets.AKENEO_CLIENT_SECRET }}" > .env
-          echo "${{ secrets.AKENEO_USERNAME }}" > .env
-          echo "${{ secrets.AKENEO_PASSWORD }}" > .env
-          echo "${{ secrets.MASCH_URL }}" > .env
-          echo "${{ secrets.MASCH_PULL_URL }}" > .env
-          echo "${{ secrets.MASCH_PUSH_URL }}" > .env
-          echo "${{ secrets.MASCH_USER }}" > .env
-          echo "${{ secrets.MASCH_PASSWORD }}" > .env
-          echo "${{ secrets.AKENEO_CATEGORIES }}" > .env
-          echo "${{ secrets.AKENEO_FAMILY }}" > .env
-      - name: Install python-dotenv
-        run: pip install python-dotenv
-      - name: Install requests
-        run: pip install requests
-      - name: Install oauthlib
-        run: pip install oauthlib
-      - name: Install requests_oauthlib
-        run: pip install requests_oauthlib
-      - name: Install validators
-        run: pip install validators
-      - name: Run Script
-        working-directory: ./src/command
-        run: python worker.py
+    build:
+        environment: ziggy
+        name: MASCH Worker Ziggy
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - uses: actions/setup-python@v4
+              with:
+                python-version: '3.11'
+            - name: Create Virtual Environment
+              run: |
+                echo "${{ secrets.AKENEO_HOST }}" > .env
+                echo "${{ secrets.AKENEO_CLIENT_ID }}" > .env
+                echo "${{ secrets.AKENEO_CLIENT_SECRET }}" > .env
+                echo "${{ secrets.AKENEO_USERNAME }}" > .env
+                echo "${{ secrets.AKENEO_PASSWORD }}" > .env
+                echo "${{ secrets.MASCH_URL }}" > .env
+                echo "${{ secrets.MASCH_PULL_URL }}" > .env
+                echo "${{ secrets.MASCH_PUSH_URL }}" > .env
+                echo "${{ secrets.MASCH_USER }}" > .env
+                echo "${{ secrets.MASCH_PASSWORD }}" > .env
+                echo "${{ secrets.AKENEO_CATEGORIES }}" > .env
+                echo "${{ secrets.AKENEO_FAMILY }}" > .env
+            - name: Install python-dotenv
+              run: pip install python-dotenv
+            - name: Install boto3
+              run: pip install boto3
+            - name: Install requests
+              run: pip install requests
+            - name: Install oauthlib
+              run: pip install oauthlib
+            - name: Install requests_oauthlib
+              run: pip install requests_oauthlib
+            - name: Install validators
+              run: pip install validators
+            - name: Run Script
+              working-directory: ./src/command
+              run: python worker.py
   
