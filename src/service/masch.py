@@ -88,7 +88,7 @@ def postObjecttoMasch(product):
     r = requests.post(url, json=product, headers=headers)
     print(r.status_code)
     print(r.text)
-    print(json.decode(r.json()))
+    print(json.decoder(r.json()))
     return r.json()
 
 def loadObjectstoMasch(products):
