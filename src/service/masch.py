@@ -66,12 +66,14 @@ def transformAkeneotoMasch(akeneoProducts):
         # blog_seo_latitude
         transformedProduct["fields"][0] = {}
         transformedProduct["fields"][0]['field_name'] = "blog_seo_latitude"
+        transformedProduct["fields"][0]['field_value'] = {}
         transformedProduct["fields"][0]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
         transformedProduct["fields"][0]['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
         transformedProduct["fields"][0]['field_value']['fr'] = akeneoProducts[product]["values"]['latitude'][0]['data']
         # blog_seo_longitude
         transformedProduct["fields"][1] = {}
         transformedProduct["fields"][1]['field_name'] = "blog_seo_longitude"
+        transformedProduct["fields"][1]['field_value'] = {}
         transformedProduct["fields"][1]['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
         transformedProduct["fields"][1]['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
         transformedProduct["fields"][1]['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
