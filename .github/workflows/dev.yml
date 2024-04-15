@@ -1,4 +1,4 @@
-name: Run Script Dev
+name: Run Script Ziggy
 
 on:
   workflow_dispatch:
@@ -25,8 +25,8 @@ env:
 
 jobs:
   build:
-    environment: dev
-    name: RUN SCRIPT DEV
+    environment: ziggy
+    name: RUN SCRIPT Ziggy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
