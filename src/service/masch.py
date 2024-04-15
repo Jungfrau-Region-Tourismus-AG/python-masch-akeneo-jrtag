@@ -52,6 +52,7 @@ def transformAkeneotoMasch(akeneoProducts):
     transformedProducts['user_login'] = MASCH_USER
     transformedProducts['user_password'] = MASCH_PASSWORD
     for product in akeneoProducts:
+        print(product['identifier'])
         transformedProduct = {}
         #transformedProduct["identifier"] = product["identifier"]
         transformedProduct["record_id"] = product["values"]['maschId'][0]['data']

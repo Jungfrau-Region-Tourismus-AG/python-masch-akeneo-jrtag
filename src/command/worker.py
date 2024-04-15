@@ -13,6 +13,7 @@ def __main__():
     productList = getObjects(updateList)
 
     print("TRANSFORMING from Akeneo to MASCH")
+    print (productList)
     transformDataMASCH= transformAkeneotoMasch(productList)
   
     print("LOADING to MASCH")
