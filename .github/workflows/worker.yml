@@ -1,4 +1,4 @@
-name: Masch Worker Ziggy
+name: Worker Masch Ziggy
 
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ env:
 jobs:
     build:
         environment: ziggy
-        name: MASCH Worker Ziggy
+        name: Worker MASCH  Ziggy
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
