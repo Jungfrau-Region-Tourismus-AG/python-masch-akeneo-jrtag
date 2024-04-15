@@ -80,6 +80,8 @@ def transformAkeneotoMasch(akeneoProducts):
         transformedProduct["fields"][1]['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
         transformedProduct["fields"][1]['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
         transformedProducts['records'].append(transformedProduct)
+        print(transformedProduct)
+    print(transformedProducts)
     return transformedProducts
 
 def postObjecttoMasch(product):
