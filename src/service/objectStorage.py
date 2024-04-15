@@ -87,7 +87,8 @@ def getObjects(uploadList):
     productList = {}
     for product in uploadList:
         print(product)
-        productList[product] = getObject(OBJECTSTORAGE_EXPORT_PATH+product+"/index.json")
+        print(OBJECTSTORAGE_EXPORT_PATH_PRODUCTS+product+"/index.json")
+        productList[product] = getObject(OBJECTSTORAGE_EXPORT_PATH_PRODUCTS+product+"/index.json")
     return productList
 
 # remove Object from Object Storage
