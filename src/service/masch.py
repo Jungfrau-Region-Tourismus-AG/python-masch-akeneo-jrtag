@@ -93,5 +93,7 @@ def postObjecttoMasch(product):
 
 def loadObjectstoMasch(products):
     for product in products:
+        print("Send Product to Masch")
+        print(product)
         postObjecttoMasch(product)
     print("DONE")
