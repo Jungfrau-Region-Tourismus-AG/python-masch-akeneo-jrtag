@@ -55,24 +55,24 @@ def transformAkeneotoMasch(akeneoProducts):
         print("Product")
         print(product)
         print("In Product List")
-        print(akeneoProducts[product])
+        print(akeneoProducts[product]['identifier'])
         #print(product["values"]['maschId'][0]['data'])
         transformedProduct = {}
         #transformedProduct["identifier"] = product["identifier"]
-        transformedProduct["record_id"] = product["values"]['maschId'][0]['data']
-        transformedProduct["created"] = product["created"]
-        transformedProduct["last_modifield"] = product["updated"]
+        transformedProduct["record_id"] = akeneoProducts[product]["values"]['maschId'][0]['data']
+        transformedProduct["created"] = akeneoProducts[product]["created"]
+        transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
         transformedProduct["fields"] = {}
         # blog_seo_latitude
         transformedProduct["fields"][0]['field_name'] = "blog_seo_latitude"
-        transformedProduct["fields"][0]['field_value']['de'] = product["values"]['latitude'][0]['data']
-        transformedProduct["fields"][0]['field_value']['en'] = product["values"]['latitude'][0]['data']
-        transformedProduct["fields"][0]['field_value']['fr'] = product["values"]['latitude'][0]['data']
+        transformedProduct["fields"][0]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+        transformedProduct["fields"][0]['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+        transformedProduct["fields"][0]['field_value']['fr'] = akeneoProducts[product]["values"]['latitude'][0]['data']
         # blog_seo_longitude
         transformedProduct["fields"][1]['field_name'] = "blog_seo_longitude"
-        transformedProduct["fields"][1]['field_value']['de'] = product["values"]['longitude'][0]['data']
-        transformedProduct["fields"][1]['field_value']['en'] = product["values"]['longitude'][0]['data']
-        transformedProduct["fields"][1]['field_value']['fr'] = product["values"]['longitude'][0]['data']
+        transformedProduct["fields"][1]['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+        transformedProduct["fields"][1]['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+        transformedProduct["fields"][1]['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
         transformedProducts['records'].append(transformedProduct)
     return transformedProducts
 
