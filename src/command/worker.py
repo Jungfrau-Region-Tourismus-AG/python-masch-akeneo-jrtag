@@ -9,6 +9,7 @@ def __main__():
     print("STARTING - WORKER")
     print("GET MASCH UPDATES")
     updateList = getMaschUpdateJobs()
+    print(updateList)
     productList = getObjects(updateList)
 
     print("TRANSFORMING from Akeneo to MASCH")
