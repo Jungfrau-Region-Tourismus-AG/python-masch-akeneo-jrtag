@@ -47,12 +47,6 @@ def checkProductsMasch(updateList):
     print(updateListMasch)
     putObject(updateListMasch, 'export/contentdesk/job/masch/updates/index.json')
 
-def setField(fieldname, field, value):
-    field["fields"][0] = {}
-    field["fields"][0]['field_name'] = fieldname
-    field["fields"][0]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-    return field
-
 def getValuebyLanguageScope(productAttribute, language, scope):
     for attribute in productAttribute:
         if attribute['locale'] == language and attribute['scope'] == scope:
@@ -95,6 +89,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "name" in akeneoProducts[product]["values"]:
             nameValue = {}
             nameValue['field_name'] = "teaser_title_hotel_name"
+            nameValue['field_type'] = "1_line_text"
             nameValue['field_value'] = {}
             nameValue['field_value']['de'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "de_CH")
             nameValue['field_value']['en'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "en_US")
@@ -105,6 +100,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "disambiguatingDescription" in akeneoProducts[product]["values"]:
             disambiguatingDescription = {}
             disambiguatingDescription['field_name'] = "teaser_text_desktop"
+            disambiguatingDescription['field_type'] = "multiline_text"
             disambiguatingDescription['field_value'] = {}
             disambiguatingDescription['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "de_CH", "ecommerce")
             disambiguatingDescription['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "en_US", "ecommerce")
@@ -114,6 +110,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "description" in akeneoProducts[product]["values"]:
             description = {}
             description['field_name'] = "blog_table_description"
+            description['field_type'] = "multiline_text"
             description['field_value'] = {}
             description['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
             description['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
@@ -123,6 +120,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "latitude" in akeneoProducts[product]["values"]:
             latitude = {}
             latitude['field_name'] = "blog_seo_latitude"
+            latitude['field_type'] = "1_line_text"
             latitude['field_value'] = {}
             latitude['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
             latitude['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
@@ -132,6 +130,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "longitude" in akeneoProducts[product]["values"]:
             longitude = {}
             longitude['field_name'] = "blog_seo_longitude"
+            longitude['field_type'] = "1_line_text"
             longitude['field_value'] = {}
             longitude['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
             longitude['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
@@ -141,6 +140,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "addressLocality" in akeneoProducts[product]["values"]:
             addressLocality = {}
             addressLocality['field_name'] = "teaser_title_hotel_place"
+            addressLocality['field_type'] = "1_line_text"
             addressLocality['field_value'] = {}
             addressLocality['field_value']['de'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
             addressLocality['field_value']['en'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
@@ -150,6 +150,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "telephone" in akeneoProducts[product]["values"]:
             telephone = {}
             telephone['field_name'] = "blog_table_contact_details_phone"
+            telephone['field_type'] = "1_line_text"
             telephone['field_value'] = {}
             telephone['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
             telephone['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
@@ -159,6 +160,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "email" in akeneoProducts[product]["values"]:
             email = {}
             email['field_name'] = "blog_table_contact_email"
+            email['field_type'] = "url_link"
             email['field_value'] = {}
             email['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
             email['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
@@ -168,6 +170,7 @@ def transformAkeneotoMasch(akeneoProducts):
         if "url" in akeneoProducts[product]["values"]:
             url = {}
             url['field_name'] = "metaserver_hotel_website"
+            url['field_type'] = "url_link"
             url['field_value'] = {}
             url['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
             url['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
