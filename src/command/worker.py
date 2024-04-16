@@ -1,4 +1,5 @@
 # Update to MASCH
+import json
 import sys
 sys.path.append("..")
 
@@ -15,6 +16,11 @@ def __main__():
     print("TRANSFORMING from Akeneo to MASCH")
     #print (productList)
     transformDataMASCH = transformAkeneotoMasch(productList)
+
+    # Add transformDataMASCH to json file in output folder
+    print("WRITING to output/transformDataMasch.json")
+    with open("../../output/transformDataMasch.json", "w") as file:
+        file.write(json.dumps(transformDataMASCH, indent=4))
   
     print("LOADING to MASCH")
     loadData = loadObjectstoMasch(transformDataMASCH)
