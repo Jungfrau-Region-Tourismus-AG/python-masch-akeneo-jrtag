@@ -81,8 +81,10 @@ def transformAkeneotoMasch(akeneoProducts):
         transformedProduct = {}
         #transformedProduct["identifier"] = product["identifier"]
         transformedProduct["record_id"] = akeneoProducts[product]["values"]['maschId'][0]['data']
-        transformedProduct["created"] = akeneoProducts[product]["created"]
-        transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
+        #transformedProduct["created"] = akeneoProducts[product]["created"]
+        #transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
+        transformedProduct["external_uid"] = akeneoProducts[product]['identifier']
+        transformedProduct["active"] = 1
         transformedProduct["fields"] = []
         i = 0
         # MASCH: teaser_title_hotel_name / Akeneo: name
@@ -121,6 +123,7 @@ def transformAkeneotoMasch(akeneoProducts):
             latitude = {}
             latitude['field_name'] = "blog_seo_latitude"
             latitude['field_type'] = "1_line_text"
+            latitude['readonly'] = 0
             latitude['field_value'] = {}
             latitude['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
             latitude['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
@@ -131,6 +134,7 @@ def transformAkeneotoMasch(akeneoProducts):
             longitude = {}
             longitude['field_name'] = "blog_seo_longitude"
             longitude['field_type'] = "1_line_text"
+            longitude['readonly'] = 0
             longitude['field_value'] = {}
             longitude['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
             longitude['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
