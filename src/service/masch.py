@@ -94,8 +94,5 @@ def postObjecttoMasch(product):
     return r.status_code
 
 def loadObjectstoMasch(products):
-    for product in products:
-        print("Send Product to Masch")
-        print(product)
-        postObjecttoMasch(product)
+    postObjecttoMasch(products)
     print("DONE")

@@ -24,6 +24,10 @@ def __main__():
   
     print("LOADING to MASCH")
     loadData = loadObjectstoMasch(transformDataMASCH)
+
+    print ("CLEAR MASCH UPDATE LIST")
+    updateList = {}
+    #putObject(updateList, 'export/contentdesk/job/masch/updates/index.json')
     print("DONE")
 
 if __name__== "__main__":
