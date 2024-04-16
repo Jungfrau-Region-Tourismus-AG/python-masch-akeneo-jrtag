@@ -89,89 +89,90 @@ def transformAkeneotoMasch(akeneoProducts):
         transformedProduct["record_id"] = akeneoProducts[product]["values"]['maschId'][0]['data']
         transformedProduct["created"] = akeneoProducts[product]["created"]
         transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
-        transformedProduct["fields"] = {}
+        transformedProduct["fields"] = []
         i = 0
         # MASCH: teaser_title_hotel_name / Akeneo: name
         if "name" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "teaser_title_hotel_name"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "de_CH")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "en_US")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "fr_FR")
+            nameValue = {}
+            nameValue['field_name'] = "teaser_title_hotel_name"
+            nameValue['field_value'] = {}
+            nameValue['field_value']['de'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "de_CH")
+            nameValue['field_value']['en'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "en_US")
+            nameValue['field_value']['fr'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "fr_FR")
+            transformedProduct["fields"].append(nameValue)
             i = i + 1
         # teaser_text_desktop / disambiguatingDescription
         if "disambiguatingDescription" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "teaser_text_desktop"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "de_CH", "ecommerce")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "en_US", "ecommerce")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "fr_FR", "ecommerce")
-            i = i + 1
+            disambiguatingDescription = {}
+            disambiguatingDescription['field_name'] = "teaser_text_desktop"
+            disambiguatingDescription['field_value'] = {}
+            disambiguatingDescription['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "de_CH", "ecommerce")
+            disambiguatingDescription['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "en_US", "ecommerce")
+            disambiguatingDescription['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "fr_FR", "ecommerce")
+            transformedProduct["fields"].append(disambiguatingDescription)
         # blog_table_description / description
         if "description" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "blog_table_description"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "fr_FR", "ecommerce")
-            i = i + 1
+            description = {}
+            description['field_name'] = "blog_table_description"
+            description['field_value'] = {}
+            description['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
+            description['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
+            description['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "fr_FR", "ecommerce")
+            transformedProduct["fields"].append(description)
         # blog_seo_latitude / latitude
         if "latitude" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "blog_seo_latitude"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-            transformedProduct["fields"][i]['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-            transformedProduct["fields"][i]['field_value']['fr'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-            i = i + 1
+            latitude = {}
+            latitude['field_name'] = "blog_seo_latitude"
+            latitude['field_value'] = {}
+            latitude['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+            latitude['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+            latitude['field_value']['fr'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+            transformedProduct["fields"].append(latitude)
         # blog_seo_longitude / longitude
         if "longitude" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "blog_seo_longitude"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
-            transformedProduct["fields"][i]['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
-            transformedProduct["fields"][i]['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
-            i = i + 1
+            longitude = {}
+            longitude['field_name'] = "blog_seo_longitude"
+            longitude['field_value'] = {}
+            longitude['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+            longitude['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+            longitude['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+            transformedProduct["fields"].append(longitude)
         # teaser_title_hotel_place / addressLocality
         if "addressLocality" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "teaser_title_hotel_place"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
-            transformedProduct["fields"][i]['field_value']['en'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
-            transformedProduct["fields"][i]['field_value']['fr'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
-            i = i + 1
+            addressLocality = {}
+            addressLocality['field_name'] = "teaser_title_hotel_place"
+            addressLocality['field_value'] = {}
+            addressLocality['field_value']['de'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            addressLocality['field_value']['en'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            addressLocality['field_value']['fr'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            transformedProduct["fields"].append(addressLocality)
         # blog_table_contact_details_phone / telephone
         if "telephone" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "blog_table_contact_details_phone"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
-            i = i + 1
+            telephone = {}
+            telephone['field_name'] = "blog_table_contact_details_phone"
+            telephone['field_value'] = {}
+            telephone['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
+            telephone['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
+            telephone['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
+            transformedProduct["fields"].append(telephone)
         # blog_table_contact_email / email
         if "email" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "blog_table_contact_email"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
-            i = i + 1
+            email = {}
+            email['field_name'] = "blog_table_contact_email"
+            email['field_value'] = {}
+            email['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
+            email['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
+            email['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
+            transformedProduct["fields"].append(email)
         # metaserver_hotel_website / url
         if "url" in akeneoProducts[product]["values"]:
-            transformedProduct["fields"][i] = {}
-            transformedProduct["fields"][i]['field_name'] = "metaserver_hotel_website"
-            transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
-            i = i + 1
+            url = {}
+            url['field_name'] = "metaserver_hotel_website"
+            url['field_value'] = {}
+            url['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
+            url['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
+            url['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
+            transformedProduct["fields"].append(url)
         # TODO metaserver_trustyou_id / trustyouId
 
 
