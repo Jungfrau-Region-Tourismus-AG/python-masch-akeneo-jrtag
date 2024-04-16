@@ -11,6 +11,7 @@ from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
 MASCH_URL = getenv('MASCH_URL')
 MASCH_PULL_URL = getenv('MASCH_PULL_URL')
+MASCH_PUSH_URL = getenv('MASCH_PUSH_URL')
 MASCH_USER = getenv('MASCH_USER')
 MASCH_PASSWORD = getenv('MASCH_PASSWORD')
 
@@ -185,18 +186,18 @@ def transformAkeneotoMasch(akeneoProducts):
             transformedProduct["fields"].append(url)
         # TODO metaserver_trustyou_id / trustyouId
 
-
         transformedProducts['records'].append(transformedProduct)
         print(transformedProduct)
     #print(transformedProducts)
     return transformedProducts
 
 def postObjecttoMasch(product):
-    url = MASCH_URL + MASCH_PULL_URL
+    url = MASCH_URL + MASCH_PUSH_URL
     headers = {'Content-Type': 'application/json'}
-    response = requests.patch(url, json=product, headers=headers)
+    payload = json.dumps(product)
+    response = requests.request("PATCH", url, headers=headers, data=payload)
     print(response.status_code)
-    #print(r.text)
+    #print(response.text)
     #print(json.decoder(r.json()))
     # get response body
     #print(response.json())
