@@ -112,9 +112,9 @@ def transformAkeneotoMasch(akeneoProducts):
             description['field_name'] = "blog_table_description"
             description['field_type'] = "multiline_text"
             description['field_value'] = {}
-            description['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
-            description['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
-            description['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "fr_FR", "ecommerce")
+            description['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['description'], "de_CH", "ecommerce")
+            description['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['description'], "en_US", "ecommerce")
+            description['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['description'], "fr_FR", "ecommerce")
             transformedProduct["fields"].append(description)
         # blog_seo_latitude / latitude
         if "latitude" in akeneoProducts[product]["values"]:
