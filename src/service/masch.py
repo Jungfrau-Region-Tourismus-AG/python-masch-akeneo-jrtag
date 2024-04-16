@@ -96,9 +96,9 @@ def transformAkeneotoMasch(akeneoProducts):
             transformedProduct["fields"][i] = {}
             transformedProduct["fields"][i]['field_name'] = "teaser_title_hotel_name"
             transformedProduct["fields"][i]['field_value'] = {}
-            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
-            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
-            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "fr_FR", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "de_CH")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "en_US")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "fr_FR")
             i = i + 1
         # teaser_text_desktop / disambiguatingDescription
         if "disambiguatingDescription" in akeneoProducts[product]["values"]:
