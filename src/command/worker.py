@@ -6,6 +6,12 @@ sys.path.append("..")
 from service.objectStorage import getObject, getObjects, putObject, countFilesInFolder, folderExist
 from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch
 
+def debugJSONfile(transfromDataMASCH):
+    # Add transformDataMASCH to json file in output folder
+    print("WRITING to output/transformDataMasch.json")
+    with open("../../output/transformDataMasch.json", "w") as file:
+        file.write(json.dumps(transfromDataMASCH, indent=4))
+
 def __main__():
     print("STARTING - WORKER")
     print("GET MASCH UPDATES")
@@ -17,10 +23,7 @@ def __main__():
     #print (productList)
     transformDataMASCH = transformAkeneotoMasch(productList)
 
-    # Add transformDataMASCH to json file in output folder
-    print("WRITING to output/transformDataMasch.json")
-    with open("../../output/transformDataMasch.json", "w") as file:
-        file.write(json.dumps(transformDataMASCH, indent=4))
+    #debugJSONfile(transformDataMASCH)
   
     print("LOADING to MASCH")
     loadData = loadObjectstoMasch(transformDataMASCH)
