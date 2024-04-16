@@ -47,6 +47,31 @@ def checkProductsMasch(updateList):
     print(updateListMasch)
     putObject(updateListMasch, 'export/contentdesk/job/masch/updates/index.json')
 
+def setField(fieldname, field, value):
+    field["fields"][0] = {}
+    field["fields"][0]['field_name'] = fieldname
+    field["fields"][0]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+    return field
+
+def getValuebyLanguageScope(productAttribute, language, scope):
+    for attribute in productAttribute:
+        if attribute['locale'] == language and attribute['scope'] == scope:
+            return attribute['data']
+    return ""
+
+def getValuebyLanguage(productAttribute, language):
+    for attribute in productAttribute:
+        if attribute['locale'] == language:
+            return attribute['data']
+    return ""
+
+def getValuebyScope(productAttribute, scope):
+    for attribute in productAttribute:
+        if attribute['scope'] == scope:
+            return attribute['data']
+    return ""
+
+
 def transformAkeneotoMasch(akeneoProducts):
     print("Transforming Akeneo to Masch - transformAkeneotoMasch()")
     transformedProducts = {}
@@ -65,20 +90,91 @@ def transformAkeneotoMasch(akeneoProducts):
         transformedProduct["created"] = akeneoProducts[product]["created"]
         transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
         transformedProduct["fields"] = {}
-        # blog_seo_latitude
-        transformedProduct["fields"][0] = {}
-        transformedProduct["fields"][0]['field_name'] = "blog_seo_latitude"
-        transformedProduct["fields"][0]['field_value'] = {}
-        transformedProduct["fields"][0]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-        transformedProduct["fields"][0]['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-        transformedProduct["fields"][0]['field_value']['fr'] = akeneoProducts[product]["values"]['latitude'][0]['data']
-        # blog_seo_longitude
-        transformedProduct["fields"][1] = {}
-        transformedProduct["fields"][1]['field_name'] = "blog_seo_longitude"
-        transformedProduct["fields"][1]['field_value'] = {}
-        transformedProduct["fields"][1]['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
-        transformedProduct["fields"][1]['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
-        transformedProduct["fields"][1]['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+        i = 0
+        # MASCH: teaser_title_hotel_name / Akeneo: name
+        if "name" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "teaser_title_hotel_name"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguage(akeneoProducts[product]["values"]['name'], "fr_FR", "ecommerce")
+            i = i + 1
+        # teaser_text_desktop / disambiguatingDescription
+        if "disambiguatingDescription" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "teaser_text_desktop"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "de_CH", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "en_US", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['disambiguatingDescription'], "fr_FR", "ecommerce")
+            i = i + 1
+        # blog_table_description / description
+        if "description" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "blog_table_description"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "de_CH", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "en_US", "ecommerce")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyLanguageScope(akeneoProducts[product]["values"]['name'], "fr_FR", "ecommerce")
+            i = i + 1
+        # blog_seo_latitude / latitude
+        if "latitude" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "blog_seo_latitude"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+            transformedProduct["fields"][i]['field_value']['en'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+            transformedProduct["fields"][i]['field_value']['fr'] = akeneoProducts[product]["values"]['latitude'][0]['data']
+            i = i + 1
+        # blog_seo_longitude / longitude
+        if "longitude" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "blog_seo_longitude"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+            transformedProduct["fields"][i]['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+            transformedProduct["fields"][i]['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
+            i = i + 1
+        # teaser_title_hotel_place / addressLocality
+        if "addressLocality" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "teaser_title_hotel_place"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            transformedProduct["fields"][i]['field_value']['en'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            transformedProduct["fields"][i]['field_value']['fr'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            i = i + 1
+        # blog_table_contact_details_phone / telephone
+        if "telephone" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "blog_table_contact_details_phone"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['telephone'], "ecommerce")
+            i = i + 1
+        # blog_table_contact_email / email
+        if "email" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "blog_table_contact_email"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['email'], "ecommerce")
+            i = i + 1
+        # metaserver_hotel_website / url
+        if "url" in akeneoProducts[product]["values"]:
+            transformedProduct["fields"][i] = {}
+            transformedProduct["fields"][i]['field_name'] = "metaserver_hotel_website"
+            transformedProduct["fields"][i]['field_value'] = {}
+            transformedProduct["fields"][i]['field_value']['de'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
+            transformedProduct["fields"][i]['field_value']['en'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
+            transformedProduct["fields"][i]['field_value']['fr'] = getValuebyScope(akeneoProducts[product]["values"]['url'], "ecommerce")
+            i = i + 1
+        # TODO metaserver_trustyou_id / trustyouId
+
+
         transformedProducts['records'].append(transformedProduct)
         print(transformedProduct)
     print(transformedProducts)
