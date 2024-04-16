@@ -5,3 +5,8 @@ src/__pycache__/*
 src/downloads/*
 *.env*
 /env/*
+output/*
+
+*/__pycache__/*
+src/service/__pycache__/masch.cpython-311.pyc
+src/service/__pycache__/objectStorage.cpython-311.pyc
