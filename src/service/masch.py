@@ -194,11 +194,13 @@ def transformAkeneotoMasch(akeneoProducts):
 def postObjecttoMasch(product):
     url = MASCH_URL + MASCH_PULL_URL
     headers = {'Content-Type': 'application/json'}
-    r = requests.patch(url, json=product, headers=headers)
-    print(r.status_code)
-    print(r.text)
+    response = requests.patch(url, json=product, headers=headers)
+    print(response.status_code)
+    #print(r.text)
     #print(json.decoder(r.json()))
-    return r.status_code
+    # get response body
+    #print(response.json())
+    return response.status_code
 
 def loadObjectstoMasch(products):
     postObjecttoMasch(products)
