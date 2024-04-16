@@ -89,7 +89,7 @@ def postObjecttoMasch(product):
     headers = {'Content-Type': 'application/json'}
     r = requests.post(url, json=product, headers=headers)
     print(r.status_code)
-    print(r.text)
+    #print(r.text)
     #print(json.decoder(r.json()))
     return r.status_code
 
