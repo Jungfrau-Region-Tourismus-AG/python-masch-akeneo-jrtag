@@ -177,7 +177,7 @@ def transformAkeneotoMasch(akeneoProducts):
 
         transformedProducts['records'].append(transformedProduct)
         print(transformedProduct)
-    print(transformedProducts)
+    #print(transformedProducts)
     return transformedProducts
 
 def postObjecttoMasch(product):
