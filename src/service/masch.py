@@ -78,13 +78,11 @@ def transformAkeneotoMasch(akeneoProducts):
         print(product)
         print("In Product List")
         print(akeneoProducts[product]['identifier'])
-        #print(product["values"]['maschId'][0]['data'])
         transformedProduct = {}
-        #transformedProduct["identifier"] = product["identifier"]
         transformedProduct["record_name"] = akeneoProducts[product]["values"]['maschName'][0]['data']
         transformedProduct["record_id"] = akeneoProducts[product]["values"]['maschId'][0]['data']
-        #transformedProduct["created"] = akeneoProducts[product]["created"]
-        #transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
+        transformedProduct["created"] = akeneoProducts[product]["created"]
+        transformedProduct["last_modifield"] = akeneoProducts[product]["updated"]
         transformedProduct["external_uid"] = akeneoProducts[product]['identifier']
         transformedProduct["active"] = 1
         transformedProduct["fields"] = []
