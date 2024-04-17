@@ -23,7 +23,7 @@ def __main__():
     #print (productList)
     transformDataMASCH = transformAkeneotoMasch(productList)
 
-    #debugJSONfile(transformDataMASCH)
+    debugJSONfile(transformDataMASCH)
   
     print("LOADING to MASCH")
     loadData = loadObjectstoMasch(transformDataMASCH)

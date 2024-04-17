@@ -142,6 +142,16 @@ def transformAkeneotoMasch(akeneoProducts):
             longitude['field_value']['en'] = akeneoProducts[product]["values"]['longitude'][0]['data']
             longitude['field_value']['fr'] = akeneoProducts[product]["values"]['longitude'][0]['data']
             transformedProduct["fields"].append(longitude)
+        # metaserver_address / streetAddress --> critical Field
+        if "streetAddress" in akeneoProducts[product]["values"]:
+            streetAddress = {}
+            streetAddress['field_name'] = "metaserver_address"
+            streetAddress['field_type'] = "1_line_text"
+            streetAddress['field_value'] = {}
+            streetAddress['field_value']['de'] = akeneoProducts[product]["values"]['streetAddress'][0]['data']
+            streetAddress['field_value']['en'] = akeneoProducts[product]["values"]['streetAddress'][0]['data']
+            streetAddress['field_value']['fr'] = akeneoProducts[product]["values"]['streetAddress'][0]['data']
+            transformedProduct["fields"].append(streetAddress)
         # teaser_title_hotel_place / addressLocality
         if "addressLocality" in akeneoProducts[product]["values"]:
             addressLocality = {}
@@ -152,6 +162,15 @@ def transformAkeneotoMasch(akeneoProducts):
             addressLocality['field_value']['en'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
             addressLocality['field_value']['fr'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
             transformedProduct["fields"].append(addressLocality)
+            # metaserver_city / addressLocality --> critical Field
+            city = {}
+            city['field_name'] = "metaserver_city"
+            city['field_type'] = "1_line_text"
+            city['field_value'] = {}
+            city['field_value']['de'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            city['field_value']['en'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            city['field_value']['fr'] = akeneoProducts[product]["values"]['addressLocality'][0]['data']
+            transformedProduct["fields"].append(city)
         # blog_table_contact_details_phone / telephone
         if "telephone" in akeneoProducts[product]["values"]:
             telephone = {}
@@ -185,7 +204,7 @@ def transformAkeneotoMasch(akeneoProducts):
         # TODO metaserver_trustyou_id / trustyouId
 
         transformedProducts['records'].append(transformedProduct)
-        print(transformedProduct)
+        #print(transformedProduct)
     #print(transformedProducts)
     return transformedProducts
 
