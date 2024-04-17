@@ -1,9 +1,13 @@
-name: Run Script Prod
+name: Full Update Ziggy
 
 on:
   workflow_dispatch:
-  # schedule:
-  #  - cron: "* 19 * * *" # every day at 19:00 UTC
+  #push:
+  #  branches: [ master ]
+  # pull_request:
+  #  branches: [ master ]
+  schedule:
+    - cron: "* 19 * * *" # every day at 19:00 UTC
 
 env:
   AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
@@ -21,8 +25,8 @@ env:
 
 jobs:
   build:
-    environment: prod
-    name: RUN SCRIPT PROD
+    environment: ziggy
+    name: Full Update Ziggy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3

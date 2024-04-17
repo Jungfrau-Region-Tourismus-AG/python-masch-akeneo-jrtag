@@ -1,13 +1,9 @@
-name: Run Script Ziggy
+name: Full Update JRTAG
 
 on:
   workflow_dispatch:
-  #push:
-  #  branches: [ master ]
-  # pull_request:
-  #  branches: [ master ]
-  schedule:
-    - cron: "* 19 * * *" # every day at 19:00 UTC
+  # schedule:
+  #  - cron: "* 19 * * *" # every day at 19:00 UTC
 
 env:
   AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
@@ -25,8 +21,8 @@ env:
 
 jobs:
   build:
-    environment: ziggy
-    name: RUN SCRIPT Ziggy
+    environment: prod
+    name: Full Update JRTAG
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
