@@ -72,6 +72,11 @@ def getSecrets(environment):
     load_dotenv(dotenvPath, override=True)
     # Set the environment variables
     env_vars = {}
+    env_vars['AKENEO_HOST'] = getenv('AKENEO_HOST')
+    env_vars['AKENEO_CLIENT_ID'] = getenv('AKENEO_CLIENT_ID')
+    env_vars['AKENEO_CLIENT_SECRET'] = getenv('AKENEO_CLIENT_SECRET')
+    env_vars['AKENEO_USERNAME'] = getenv('AKENEO_USERNAME')
+    env_vars['AKENEO_PASSWORD'] = getenv('AKENEO_PASSWORD')
     env_vars['OBJECTSTORAGE_ENDPOINT'] = getenv('OBJECTSTORAGE_ENDPOINT')
     env_vars['OBJECTSTORAGE_BUCKET'] = getenv('OBJECTSTORAGE_BUCKET')
     env_vars['OBJECTSTORAGE_REGION'] = getenv('OBJECTSTORAGE_REGION')
