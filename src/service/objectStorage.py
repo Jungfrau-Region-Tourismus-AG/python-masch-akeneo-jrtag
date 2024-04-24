@@ -113,3 +113,7 @@ def folderExist(folder):
         return True
     else:
         return False
+    
+# give Url from Object Storage
+def getObjectUrl(filephat):
+    return 'https://sos-'+OBJECTSTORAGE_REGION+'.'+OBJECTSTORAGE_ENDPOINT+'/'+OBJECTSTORAGE_BUCKET+'/'+filephat
