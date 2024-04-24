@@ -4,7 +4,7 @@ import sys
 sys.path.append("..")
 
 from service.objectStorage import getObject, getObjects, putObject, countFilesInFolder, folderExist
-from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch
+from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch, postImagestoMasch
 
 def debugJSONfile(transfromDataMASCH):
     # Add transformDataMASCH to json file in output folder
@@ -26,9 +26,9 @@ def __main__():
     #debugJSONfile(transformDataMASCH)
   
     print("LOADING to MASCH")
-    loadData = loadObjectstoMasch(transformDataMASCH)
-    print("Upload Images to MASCH")
-    
+    loadObjectstoMasch(transformDataMASCH)
+    print("POSTING IMAGES to MASCH")
+    postImagestoMasch(productList)
 
     print ("CLEAR MASCH UPDATE LIST")
     updateList = {}

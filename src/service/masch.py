@@ -209,32 +209,31 @@ def transformAkeneotoMasch(akeneoProducts):
     #print(transformedProducts)
     return transformedProducts
 
-def postImagestoMasch(product):
+def postImagestoMasch(akeneoProducts):
+    for product in akeneoProducts:
+        maschName = product[product]["values"]['maschName'][0]['data']
+        image = product['values']['image'][0]['data']
+        sku = product[product]['identifier']
+        filepath = "catalog/"+image
+        file = getObjectUrl(filepath)
 
-    maschName = product[product]["values"]['maschName'][0]['data']
-    image = product['values']['image'][0]['data']
-    sku = product[product]['identifier']
-    filepath = "catalog/"+image
-    file = getObjectUrl(filepath)
-
-    url = MASCH_URL + "/api/cn/push_record_pictures.php"
-    payload = {'user_login': MASCH_USER,
-               'user_password': MASCH_PASSWORD,
-               'target_record': maschName,
-               'target_fields[]': 'teaser_and_content_banner_picture_winter',
-               'target_fields[]': 'teaser_and_content_banner_picture_summer'}
-    files=[
-        ('pictures[]', 
-        (sku,
-         open(file,'rb'),
-             'application/octet-stream')
-        )]
-    headers = {
-        'Content-Type': 'application/json'
-    }
-    response = requests.request("POST", url, headers=headers, data=payload, files=files)
-    print(response.text)
-
+        url = MASCH_URL + "/api/cn/push_record_pictures.php"
+        payload = {'user_login': MASCH_USER,
+                'user_password': MASCH_PASSWORD,
+                'target_record': maschName,
+                'target_fields[]': 'teaser_and_content_banner_picture_winter',
+                'target_fields[]': 'teaser_and_content_banner_picture_summer'}
+        files=[
+            ('pictures[]', 
+            (sku,
+            open(file,'rb'),
+                'application/octet-stream')
+            )]
+        headers = {
+            'Content-Type': 'application/json'
+        }
+        response = requests.request("POST", url, headers=headers, data=payload, files=files)
+        print(response.text)
 
 def postObjecttoMasch(product):
     url = MASCH_URL + MASCH_PUSH_URL
