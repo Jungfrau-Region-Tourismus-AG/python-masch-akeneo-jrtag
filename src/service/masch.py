@@ -211,9 +211,12 @@ def transformAkeneotoMasch(akeneoProducts):
 
 def postImagestoMasch(akeneoProducts):
     for product in akeneoProducts:
-        maschName = product[product]["values"]['maschName'][0]['data']
-        image = product['values']['image'][0]['data']
-        sku = product[product]['identifier']
+        print("Product")
+        print(product)
+        maschName = akeneoProducts[product]["values"]['maschName'][0]['data']
+        image = akeneoProducts[product]['values']['image'][0]['data']
+        print (image)
+        sku = akeneoProducts[product]['identifier']
         filepath = "catalog/"+image
         file = getObjectUrl(filepath)
 
@@ -225,12 +228,10 @@ def postImagestoMasch(akeneoProducts):
                 'target_fields[]': 'teaser_and_content_banner_picture_summer'}
         files=[
             ('pictures[]', 
-            (sku,
-            open(file,'rb'),
-                'application/octet-stream')
+            (sku, requests.get(file).content,'application/octet-stream')
             )]
         headers = {
-            'Content-Type': 'application/json'
+            'Content-Type': 'multipart/form-data'
         }
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
         print(response.text)
