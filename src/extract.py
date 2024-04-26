@@ -20,8 +20,7 @@ def getMaschPull():
   url = MASCH_URL + MASCH_PULL_URL
   body = {
       "user_login": MASCH_USER,
-      "user_password": MASCH_PASSWORD,
-      "start_time": "2023-03-01 00:00:00"
+      "user_password": MASCH_PASSWORD
   }
   r = requests.get(url, json=body)
   print(r.status_code)
