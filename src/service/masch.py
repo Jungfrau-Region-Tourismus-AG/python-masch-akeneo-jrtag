@@ -216,8 +216,12 @@ def postImagestoMasch(akeneoProducts):
         print(product)
         if "maschName" in akeneoProducts[product]["values"]:
             maschName = akeneoProducts[product]["values"]['maschName'][0]['data']
-        image = akeneoProducts[product]['values']['image'][0]['data']
-        print (image)
+        if "image" in akeneoProducts[product]["values"]:
+            image = akeneoProducts[product]['values']['image'][0]['data']
+            print (image)
+        else:
+            print("No Image to Upload")
+            break
         sku = akeneoProducts[product]['identifier']
         filepath = "catalog/"+image
         file = getObjectUrl(filepath)
