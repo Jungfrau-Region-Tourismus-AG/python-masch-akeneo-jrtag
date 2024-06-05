@@ -7,7 +7,7 @@ on:
   # pull_request:
   #  branches: [ master ]
   schedule:
-    - cron: "* 19 * * *" # every day at 19:00 UTC
+    - cron: "* 3 * * *" # every day at 19:00 UTC
 
 env:
   AKENEO_HOST: ${{ secrets.AKENEO_HOST }}

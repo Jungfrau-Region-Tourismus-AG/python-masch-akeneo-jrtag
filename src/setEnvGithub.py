@@ -89,6 +89,7 @@ def getSecrets(environment):
     env_vars['MASCH_PUSH_URL'] = getenv('MASCH_PUSH_URL')
     env_vars['MASCH_USER'] = getenv('MASCH_USER')
     env_vars['MASCH_PASSWORD'] = getenv('MASCH_PASSWORD')
+    env_vars['AKENEO_CATEGORIES'] = getenv('AKENEO_CATEGORIES')
 
     return env_vars
 
