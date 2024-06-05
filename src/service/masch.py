@@ -214,7 +214,8 @@ def postImagestoMasch(akeneoProducts):
     for product in akeneoProducts:
         print("Product")
         print(product)
-        maschName = akeneoProducts[product]["values"]['maschName'][0]['data']
+        if "maschName" in akeneoProducts[product]["values"]:
+            maschName = akeneoProducts[product]["values"]['maschName'][0]['data']
         image = akeneoProducts[product]['values']['image'][0]['data']
         print (image)
         sku = akeneoProducts[product]['identifier']
@@ -247,8 +248,9 @@ def postObjecttoMasch(product):
     #print(json.decoder(r.json()))
     # get response body
     #print(response.json())
-    return response.status_code
+    return response
 
 def loadObjectstoMasch(products):
-    postObjecttoMasch(products)
+    response = postObjecttoMasch(products)
+    print(response.json())
     print("DONE")
