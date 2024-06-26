@@ -243,7 +243,8 @@ def postImagestoMasch(akeneoProducts):
             'Content-Type': 'multipart/form-data'
         }
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
-        print(response.text)
+        print(response.status_code)
+        print(response.json())
 
 def postObjecttoMasch(product):
     url = MASCH_URL + MASCH_PUSH_URL
