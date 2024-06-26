@@ -351,8 +351,25 @@ def transform(data, indexAkeneo):
       }
     ]
     ## Mehrsprachigkeit
+    #disambiguatingDescription
+    importProduct['values']['disambiguatingDescription'] = [
+      {
+        "locale": "de_CH",
+        "scope": "ecommerce",
+        "data": getFieldbyLanguage('teaser_text_desktop', item, 'de')
+      },
+      {
+        "locale": "en_US",
+        "scope": "ecommerce",
+        "data": getFieldbyLanguage('teaser_text_desktop', item, 'en')
+      },
+      {
+        "locale": "fr_FR",
+        "scope": "ecommerce",
+        "data": getFieldbyLanguage('teaser_text_desktop', item, 'fr')
+      }
+    ]
     # description
-    #importProduct['values']['description'] = transformFieldtoAkeneoAttribut('blog_table_description', item, 'de_CH', 'ecommerce')
     importProduct['values']['description'] = [
       {
         "locale": "de_CH",
