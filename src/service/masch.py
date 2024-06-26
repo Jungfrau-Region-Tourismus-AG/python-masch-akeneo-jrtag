@@ -218,13 +218,13 @@ def postImagestoMasch(akeneoProducts):
             maschName = akeneoProducts[product]["values"]['maschName'][0]['data']
         else:
             print("No MaschName - no Upload")
-            break
+            continue
         if "image" in akeneoProducts[product]["values"]:
             image = akeneoProducts[product]['values']['image'][0]['data']
             print (image)
         else:
             print("No Image to Upload")
-            break
+            continue
         sku = akeneoProducts[product]['identifier']
         filepath = "catalog/"+image
         file = getObjectUrl(filepath)
@@ -259,6 +259,9 @@ def postObjecttoMasch(product):
     return response
 
 def loadObjectstoMasch(products):
+    print("Products")
+    print(products)
     response = postObjecttoMasch(products)
+    print("Response")
     print(response.json())
     print("DONE")
