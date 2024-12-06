@@ -16,9 +16,9 @@ def __main__():
   debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
   
   print("TRANSFORMING")
-  transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
-  debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "transformDataAkeneo", transformDataAkeneo)
-  transformData = transform(extractData, transformDataAkeneo)
+  transformAkeneotoMaschData = transformAkeneotoMasch(extractDataAkeneo)
+  debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "transformDataAkeneo", transformAkeneotoMaschData)
+  transformData = transform(extractData, transformAkeneotoMaschData)
   debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "transformData", transformData)
   
   print("LOADING")

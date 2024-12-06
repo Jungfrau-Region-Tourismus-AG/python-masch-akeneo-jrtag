@@ -12,9 +12,9 @@ from service.objectStorage import getObject, getObjects, putObject, countFilesIn
 import service.masch as masch
 #from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch, postImagestoMasch
 
-from extract import extract, getAkeneoProducts
-from transform import transform, transformAkeneotoMasch
-from load import load
+from service.extract import extract, getAkeneoProducts
+from service.transform import transform, transformAkeneotoMasch
+from service.load import load
 
 def getContentdeskUpdatedProducts(env):
     targetCon = loadEnv(env)
@@ -53,7 +53,7 @@ def updateContentdeskProducts(env, products):
                 ]
             }
         }
-        target.updateProduct(item['identifier'], body)
+        target.patchProductByCode(item['identifier'], body)
 
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
