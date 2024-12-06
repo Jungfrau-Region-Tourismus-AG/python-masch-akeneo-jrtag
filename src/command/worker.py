@@ -55,7 +55,7 @@ def updateContentdeskProducts(env, products):
         target.updateProduct(item['identifier'], body)
 
 def checkContentdeskProductsbyDatetime(products):
-    recentRecords = []
+    recentRecords = {}
     for record in products:
         # string to datetime
         print("    - Check Product: "+record['identifier'])
