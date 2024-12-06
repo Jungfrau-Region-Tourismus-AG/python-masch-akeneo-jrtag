@@ -329,7 +329,7 @@ def transform(data, indexAkeneo):
     importProduct['values'] = {}
     importProduct['values']['maschId'] = setValue(item['record_id'])
     importProduct['values']['maschName'] = setValue(item['record_name'])
-    importProduct['values']['license'] = setValue('copyrightHolder')
+    importProduct['values']['license'] = setValue('copyright')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
     #importProduct['values']['name'] = transformFieldtoAkeneoAttribut('teaser_title_hotel_name', item, 'de_CH', None)
