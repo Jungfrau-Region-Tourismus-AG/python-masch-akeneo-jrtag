@@ -18,17 +18,16 @@ def maschFlow():
         if len(maschRecords['records']) > 0:
             # Update to Contentdesk
             print("UPDATE to Contentdesk")
+            # TODO: Update to Contentdesk
         else:
             print("No new records.")
             
 def contentdeskFlow():
     print ("Contentdesk Flow")
+    # CHECK
     targetCon = loadEnv('ziggy')
     target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
     search = '{"labels":[{"operator":"NOT EMPTY","value":""}]}&attributes=labels'
-    # maschUpdated
-    # maschId
-    # maschName
     end_time = datetime.datetime.now()
     start_time = end_time - datetime.timedelta(minutes=5)
     startDay = end_time - datetime.timedelta(days=1)
@@ -38,6 +37,8 @@ def contentdeskFlow():
     print(search)
     contentdeskRecords = target.getProductBySearch(search)
     debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractProducts", contentdeskRecords)
+    
+    # Filter by datetime
     recentRecords = []
     for record in contentdeskRecords:
         # string to datetime
@@ -52,6 +53,7 @@ def contentdeskFlow():
             recentRecords.append(record)
     debug.addToFileFull("worker", "ziggy", "export", "maschId", "filterbyDatetimeProducts", recentRecords)
     
+    # Update to MASCH
 
 def __main__():
     print("STARTING - WORKER")
