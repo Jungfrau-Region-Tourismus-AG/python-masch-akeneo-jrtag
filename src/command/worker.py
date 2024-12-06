@@ -9,7 +9,8 @@ from service.masch import getMaschPull
 from service.loadEnv import loadEnv
 import service.debug as debug
 from service.objectStorage import getObject, getObjects, putObject, countFilesInFolder, folderExist
-from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch, postImagestoMasch
+import service.masch as masch
+#from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch, postImagestoMasch
 
 from extract import extract, getAkeneoProducts
 from transform import transform, transformAkeneotoMasch
@@ -55,7 +56,7 @@ def updateContentdeskProducts(env, products):
         target.updateProduct(item['identifier'], body)
 
 def checkContentdeskProductsbyDatetime(products):
-    recentRecords = {}
+    recentRecords = []
     for record in products:
         # string to datetime
         print("    - Check Product: "+record['identifier'])
@@ -94,12 +95,12 @@ def maschFlow():
             
             print("   - TRANSFORMING to Contentdesk")
             transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
-            transformData = transform(maschRecords, transformDataAkeneo)
-            debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataMasch", transformData)
+            transformData = transform(maschRecords['records'], transformDataAkeneo)
+            debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataAkeneo", transformData)
             
             print("   - LOAD - Update to Contentdesk")
             loadData = load(transformData)
-            debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadObjectstoMasch", loadData)
+            debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadData", loadData)
             
             print("   - DONE - UPDATE to Contentdesk")
         else:
@@ -122,12 +123,13 @@ def contentdeskFlow(env):
         return
     
     # Transform to MASCH
-    transformDataMASCH = transformAkeneotoMasch(recentRecords)
+    print("   - Transform to MASCH")
+    transformDataMASCH = masch.transformAkeneotoMasch(recentRecords)
     debug.addToFileFull("worker", env, "export", "maschId", "transformDataMASCH", transformDataMASCH)
     
     # Update to MASCH
     print("   - Update to MASCH")
-    loadObjectstoMasch(transformDataMASCH)
+    masch.loadObjectstoMasch(transformDataMASCH)
     
     ## Update Images to MASCH - Not needed
     print("   - POSTING IMAGES to MASCH")

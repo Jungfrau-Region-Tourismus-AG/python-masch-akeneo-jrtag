@@ -89,7 +89,7 @@ def transformAkeneotoMasch(akeneoProducts):
     transformedProducts['records'] = []
     for product in akeneoProducts:
         print("Product")
-        print(product)
+        #print(product)
         print("In Product List")
         print(akeneoProducts[product]['identifier'])
         transformedProduct = {}
