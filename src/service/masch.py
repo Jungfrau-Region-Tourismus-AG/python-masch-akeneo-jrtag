@@ -278,3 +278,4 @@ def loadObjectstoMasch(products):
     print("Response")
     print(response.json())
     print("DONE")
+    return response

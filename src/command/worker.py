@@ -9,6 +9,7 @@ from service.masch import getMaschPull
 from service.loadEnv import loadEnv
 import service.debug as debug
 from service.objectStorage import getObject, getObjects, putObject, countFilesInFolder, folderExist
+from service.masch import getMaschUpdateJobs, checkProductsMasch, transformAkeneotoMasch, loadObjectstoMasch, postImagestoMasch
 
 from extract import extract, getAkeneoProducts
 from transform import transform, transformAkeneotoMasch
@@ -35,6 +36,23 @@ def getContentdeskProducts(env):
     search = '{"maschId":[{"operator":"NOT EMPTY","value":""}]}'
     products = target.getProducts(limit=100, search=search )
     return products
+
+def updateContentdeskProducts(env, products):
+    targetCon = loadEnv(env)
+    target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
+    for item in products:
+        print("Update Product: "+item['identifier'])
+        body = {
+            "identifier": item['identifier'],
+            "values": {
+                "maschUpdated": [
+                    {
+                        "data": datetime.datetime.now().isoformat()
+                    }
+                ]
+            }
+        }
+        target.updateProduct(item['identifier'], body)
 
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
@@ -71,38 +89,53 @@ def maschFlow():
         if len(maschRecords['records']) > 0:
             # Update to Contentdesk
             print("START - UPDATE to Contentdesk")
-            # TODO: Update to Contentdesk
             extractDataAkeneo = getContentdeskProducts("ziggy")
+            debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
+            
             print("TRANSFORMING to Contentdesk")
             transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
             transformData = transform(maschRecords, transformDataAkeneo)
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataMasch", transformData)
-            print("LOADING to Contentdesk")
+            
+            print("LOAD - Update to Contentdesk")
             loadData = load(transformData)
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadObjectstoMasch", loadData)
-            print("DONE")
+            
+            print("DONE - UPDATE to Contentdesk")
         else:
             print("No new records.")
             
-def contentdeskFlow():
-    print ("Contentdesk Flow")
+def contentdeskFlow(env):
+    print ("Contentdesk Flow - START")
     # CHECK
-    contentdeskRecords = getContentdeskUpdatedProducts("ziggy")
-    debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
+    contentdeskRecords = getContentdeskUpdatedProducts(env)
+    debug.addToFileFull("worker", env, "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
     
     # FILTER by datetime  
     recentRecords = checkContentdeskProductsbyDatetime(contentdeskRecords)
-    debug.addToFileFull("worker", "ziggy", "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
+    debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
+    
+    # Transform to MASCH
+    transformDataMASCH = transformAkeneotoMasch(recentRecords)
+    debug.addToFileFull("worker", env, "export", "maschId", "transformDataMASCH", transformDataMASCH)
     
     # Update to MASCH
-
+    print("Update to MASCH")
+    loadObjectstoMasch(transformDataMASCH)
+    
+    ## Update Images to MASCH - Not needed
+    print("POSTING IMAGES to MASCH")
+    #postImagestoMasch(productList)
+    
+    # Update Contentesk Attribute MaschUpdated
+    updateContentdeskProducts(env, recentRecords)
+    
+    print("Contentdesk Flow - DONE")
+    
 def __main__():
     print("STARTING - WORKER")
     maschFlow()
-    contentdeskFlow()
-    
-    
-    
+    contentdeskFlow("ziggy")
     print("END - WORKER")
     
 if __name__== "__main__":
