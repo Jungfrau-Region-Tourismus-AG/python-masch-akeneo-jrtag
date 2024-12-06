@@ -94,8 +94,7 @@ def maschFlow():
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
             
             print("   - TRANSFORMING to Contentdesk")
-            transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
-            transformData = transform(maschRecords['records'], transformDataAkeneo)
+            transformData = transform(maschRecords['records'], extractDataAkeneo)
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataAkeneo", transformData)
             
             print("   - LOAD - Update to Contentdesk")
