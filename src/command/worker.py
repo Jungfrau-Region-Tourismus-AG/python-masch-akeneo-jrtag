@@ -117,6 +117,10 @@ def contentdeskFlow(env):
     recentRecords = checkContentdeskProductsbyDatetime(contentdeskRecords)
     debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
     
+    if len(recentRecords) == 0:
+        print("   - No new records to update.")
+        return
+    
     # Transform to MASCH
     transformDataMASCH = transformAkeneotoMasch(recentRecords)
     debug.addToFileFull("worker", env, "export", "maschId", "transformDataMASCH", transformDataMASCH)
