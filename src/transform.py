@@ -305,6 +305,8 @@ def transform(data, indexAkeneo):
   dataList = data.copy()
   for item in dataList['records']:
     importProduct = {}
+    if item['record_id'] == None:
+      continue
     print(item['record_id'])
     print(item['record_name'])
     if item['record_id'] in indexAkeneo:
@@ -327,7 +329,7 @@ def transform(data, indexAkeneo):
     print(importProduct['categories'])
     # Values
     importProduct['values'] = {}
-    importProduct['values']['maschId'] = setValue(item['record_id'])
+    importProduct['values']['maschId'] = setValue(str(item['record_id']))
     importProduct['values']['maschName'] = setValue(item['record_name'])
     importProduct['values']['license'] = setValue('copyright')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
@@ -520,7 +522,7 @@ def transformAkeneotoMasch(data):
     importProduct['enabled'] = item['enabled']
     print(item['identifier'])
     print(item['values']['maschId'][0]['data'])
-    id = item['values']['maschId'][0]['data']
+    id = str(item['values']['maschId'][0]['data'])
     transformData[id] = importProduct
   return transformData
 
