@@ -8,6 +8,7 @@ sys.path.append("..")
 from service.masch import getMaschPull
 from service.loadEnv import loadEnv
 import service.debug as debug
+from service.objectStorage import getObject, getObjects, putObject, countFilesInFolder, folderExist
 
 def maschFlow():
     print ("Masch Flow")
@@ -41,28 +42,14 @@ def contentdeskFlow():
     for record in contentdeskRecords:
         # string to datetime
         maschUpdatedStr = record['values']['maschUpdated'][0]['data']
-        print("maschUpdatedStr")
-        print(maschUpdatedStr)
         maschUpdated = datetime.datetime.fromisoformat(maschUpdatedStr)
         maschUpdated = maschUpdated.strftime('%Y-%m-%d %H:%M:%S')
-        #maschUpdated = datetime.datetime.strptime(maschUpdatedStr, '%Y-%m-%d %H:%M:%S')
-        #maschUpdated = datetime.datetime.strptime(record['values']['maschUpdated'][0]['data'], '%Y-%m-%d %H:%M:%S')
-        print("maschUpdated")
-        print(maschUpdated)
-        print("start_time")
-        print(start_time)
-        print("end_time")
-        print(end_time)
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M:%S')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M:%S')
-        print("startDayTime")
-        print(startDayTime)
-        print("endDayTime")
-        print(endDayTime)
+        print("Compare maschUpdated")
         if startDayTime <= maschUpdated <= endDayTime:
             print("OK")
             recentRecords.append(record)
-
     debug.addToFileFull("worker", "ziggy", "export", "maschId", "filterbyDatetimeProducts", recentRecords)
     
 
