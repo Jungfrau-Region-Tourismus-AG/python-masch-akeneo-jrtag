@@ -98,8 +98,9 @@ def maschFlow():
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataAkeneo", transformData)
             
             print("   - LOAD - Update to Contentdesk")
-            loadData = load(transformData)
-            debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadData", loadData)
+            #TODO: Implement load function
+            #loadData = load(transformData)
+            #debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadData", loadData)
             
             print("   - DONE - UPDATE to Contentdesk")
         else:
