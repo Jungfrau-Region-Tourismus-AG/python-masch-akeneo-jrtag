@@ -15,6 +15,19 @@ MASCH_PUSH_URL = getenv('MASCH_PUSH_URL')
 MASCH_USER = getenv('MASCH_USER')
 MASCH_PASSWORD = getenv('MASCH_PASSWORD')
 
+def getMaschPull():
+    url = MASCH_URL + MASCH_PULL_URL
+    end_time = datetime.datetime.now()
+    start_time = end_time - datetime.timedelta(minutes=5)
+    body = {
+        "user_login": MASCH_USER,
+        "user_password": MASCH_PASSWORD,
+        "start_time": start_time.strftime("%Y-%m-%d %H:%M:%S"),
+        "end_time": end_time.strftime("%Y-%m-%d %H:%M:%S")
+    }
+    r = requests.get(url, json=body)
+    print(r.status_code)
+    return r.json()
 
 def getMaschUpdateJobs():
     updateList = getObject('export/contentdesk/job/masch/updates/index.json')
