@@ -31,17 +31,18 @@ def contentdeskFlow():
     # maschName
     end_time = datetime.datetime.now()
     start_time = end_time - datetime.timedelta(minutes=5)
-    endTimeStr = end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
-    startTimeStr = start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    endTimeStr = end_time.strftime("%Y-%m-%dT%H:%M:%S")
+    startTimeStr = start_time.strftime("%Y-%m-%dT%H:%M:%S")
     search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":"[' + startTimeStr + ',' + endTimeStr + '"]}]}'
     print(search)
     contentdeskRecords = target.getProductBySearch(search)
+    print(contentdeskRecords)
     
 
 def __main__():
     print("STARTING - WORKER")
     maschFlow()
-    
+    contentdeskFlow()
     
     
     
