@@ -30,9 +30,10 @@ def contentdeskFlow():
     # maschName
     end_time = datetime.datetime.now()
     start_time = end_time - datetime.timedelta(minutes=5)
-    endTimeStr = end_time.strftime("%Y-%m-%d")
-    startTimeStr = start_time.strftime("%Y-%m-%d")
-    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":"[' + startTimeStr + ',' + endTimeStr + '"]}]}'
+    startDay = end_time - datetime.timedelta(day=1)
+    endDayStr = end_time.strftime("%Y-%m-%d")
+    startDayStr = startDay.strftime("%Y-%m-%d")
+    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":"[' + startDayStr + ',' + endDayStr + '"]}]}'
     print(search)
     contentdeskRecords = target.getProductBySearch(search)
     debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractProducts", contentdeskRecords)
