@@ -41,7 +41,7 @@ def updateContentdeskProducts(env, products):
     targetCon = loadEnv(env)
     target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
     for item in products:
-        print("Update Product: "+item['identifier'])
+        print("     - Update Product: "+item['identifier'])
         body = {
             "identifier": item['identifier'],
             "values": {
@@ -58,7 +58,7 @@ def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
     for record in products:
         # string to datetime
-        print("Check Product: "+record['identifier'])
+        print("    - Check Product: "+record['identifier'])
         end_time = datetime.datetime.now()
         start_time = end_time - datetime.timedelta(minutes=5)
         updatedDateStr = record['updated']
@@ -69,18 +69,18 @@ def checkContentdeskProductsbyDatetime(products):
         updatedDate = updatedDate.strftime('%Y-%m-%d %H:%M:%S')
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M:%S')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M:%S')
-        print ("Start Time: " + startDayTime + " - End Time: " + endDayTime)
-        print ("Updated: " + updatedDate)
-        print ("Masch Updated: " + maschUpdated)
+        print ("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
+        print ("    - Updated: " + updatedDate)
+        print ("    - Masch Updated: " + maschUpdated)
         if startDayTime <= updatedDate <= endDayTime:
-            print("Add record to Update")
+            print("     - Add record to Update")
             if updatedDate != maschUpdated:
-                print("Updated Date is not equal to Masch Updated Date")
+                print("     - Updated Date is not equal to Masch Updated Date")
                 recentRecords.append(record)
     return recentRecords
 
 def maschFlow():
-    print ("Masch Flow")
+    print (" - START: Masch Flow")
     maschRecords = getMaschPull()
     print(maschRecords)
     debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractObjectsMasch", maschRecords)
@@ -88,25 +88,27 @@ def maschFlow():
     if maschRecords['result'] == 'success':
         if len(maschRecords['records']) > 0:
             # Update to Contentdesk
-            print("START - UPDATE to Contentdesk")
+            print("   - START - UPDATE to Contentdesk")
             extractDataAkeneo = getContentdeskProducts("ziggy")
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
             
-            print("TRANSFORMING to Contentdesk")
+            print("   - TRANSFORMING to Contentdesk")
             transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
             transformData = transform(maschRecords, transformDataAkeneo)
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataMasch", transformData)
             
-            print("LOAD - Update to Contentdesk")
+            print("   - LOAD - Update to Contentdesk")
             loadData = load(transformData)
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadObjectstoMasch", loadData)
             
-            print("DONE - UPDATE to Contentdesk")
+            print("   - DONE - UPDATE to Contentdesk")
         else:
-            print("No new records.")
+            print("   - No new records.")
+            
+    print(" - DONE: Masch Flow")
             
 def contentdeskFlow(env):
-    print ("Contentdesk Flow - START")
+    print (" - START: Contentdesk Flow")
     # CHECK
     contentdeskRecords = getContentdeskUpdatedProducts(env)
     debug.addToFileFull("worker", env, "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
@@ -120,17 +122,17 @@ def contentdeskFlow(env):
     debug.addToFileFull("worker", env, "export", "maschId", "transformDataMASCH", transformDataMASCH)
     
     # Update to MASCH
-    print("Update to MASCH")
+    print("   - Update to MASCH")
     loadObjectstoMasch(transformDataMASCH)
     
     ## Update Images to MASCH - Not needed
-    print("POSTING IMAGES to MASCH")
+    print("   - POSTING IMAGES to MASCH")
     #postImagestoMasch(productList)
     
     # Update Contentesk Attribute MaschUpdated
     updateContentdeskProducts(env, recentRecords)
     
-    print("Contentdesk Flow - DONE")
+    print(" - DONE: Contentdesk Flow")
     
 def __main__():
     print("STARTING - WORKER")
