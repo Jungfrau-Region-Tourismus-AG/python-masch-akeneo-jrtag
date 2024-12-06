@@ -23,7 +23,8 @@ def getContentdeskUpdatedProducts(env):
     startDay = end_time - datetime.timedelta(days=1)
     endDayStr = end_time.strftime("%Y-%m-%d")
     startDayStr = startDay.strftime("%Y-%m-%d")
-    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":["' + startDayStr + '","' + endDayStr + '"]}]}'
+    #search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":["' + startDayStr + '","' + endDayStr + '"]}]}'
+    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":["' + startDayStr + '","' + endDayStr + '"]}],"updated":[{"operator":"SINCE LAST N DAYS","value":1}]}'
     print(search)
     contentdeskRecords = target.getProductBySearch(search)
     return contentdeskRecords
@@ -39,16 +40,25 @@ def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
     for record in products:
         # string to datetime
+        print("Check Product: "+record['identifier'])
         end_time = datetime.datetime.now()
         start_time = end_time - datetime.timedelta(minutes=5)
+        updatedDateStr = record['updated']
+        updatedDate = datetime.datetime.fromisoformat(updatedDateStr)
         maschUpdatedStr = record['values']['maschUpdated'][0]['data']
         maschUpdated = datetime.datetime.fromisoformat(maschUpdatedStr)
         maschUpdated = maschUpdated.strftime('%Y-%m-%d %H:%M:%S')
+        updatedDate = updatedDate.strftime('%Y-%m-%d %H:%M:%S')
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M:%S')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M:%S')
-        if startDayTime <= maschUpdated <= endDayTime:
+        print ("Start Time: " + startDayTime + " - End Time: " + endDayTime)
+        print ("Updated: " + updatedDate)
+        print ("Masch Updated: " + maschUpdated)
+        if startDayTime <= updatedDate <= endDayTime:
             print("Add record to Update")
-            recentRecords.append(record)
+            if updatedDate != maschUpdated:
+                print("Updated Date is not equal to Masch Updated Date")
+                recentRecords.append(record)
     return recentRecords
 
 def maschFlow():
