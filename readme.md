@@ -34,5 +34,5 @@ flowchart TD
     ChangeMasch -->|Yes| BackupContentdesk(Backup Product in ObjectStorage)
     ChangeMasch -->|No| End
     BackupContentdesk --> UpdateProductContentdesk(Update Product in Contentdesk)
-    UpdateProductContentdesk --> SetFromMaschCheck(Update Masch Update Date)
+    UpdateProductContentdesk --> SetFromMaschCheck(Update MaschUpdated)
 ```
