@@ -1,21 +1,48 @@
 # Update to MASCH all 5 minutes
 import json
+import datetime
+from akeneo.akeneo import Akeneo
 import sys
+
+
 sys.path.append("..")
 
 from service.masch import masch
+from service.loadEnv import loadEnv
+
+def maschFlow():
+    print ("Masch Flow")
+    maschRecords = masch.getMaschPull()
+    print(maschRecords)
+    if maschRecords['result'] == 'success':
+        if len(maschRecords['records']) > 0:
+            # Update to Contentdesk
+            print("UPDATE to Contentdesk")
+        else:
+            print("No new records.")
+            
+def contentdeskFlow():
+    print ("Contentdesk Flow")
+    targetCon = loadEnv('ziggy')
+    target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
+    search = '{"labels":[{"operator":"NOT EMPTY","value":""}]}&attributes=labels'
+    # maschUpdated
+    # maschId
+    # maschName
+    end_time = datetime.datetime.now()
+    start_time = end_time - datetime.timedelta(minutes=5)
+    endTimeStr = end_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    startTimeStr = start_time.strftime("%Y-%m-%dT%H:%M:%S.%fZ")
+    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":"[' + startTimeStr + ',' + endTimeStr + '"]}]}'
+    print(search)
+    contentdeskRecords = target.getProductBySearch(search)
+    
 
 def __main__():
     print("STARTING - WORKER")
-    # 1. Check last changes all Products with maschId in Akeneo
-    # 1. Check Masch 
-    maschRecords = masch.getMaschPull()
-    print(maschRecords)
-    if len(maschRecords['records']) > 0:
-        # Update to Contentdesk
-        print("UPDATE to Contentdesk")
-    else:
-        print("No new records")
+    maschFlow()
+    
+    
     
     
     print("END - WORKER")

@@ -2,6 +2,7 @@ from os import getenv
 from dotenv import find_dotenv, load_dotenv
 import uuid
 import validators
+import datetime
 import os
 import features as featuresChecklist
 from urllib.parse import urlparse
@@ -331,6 +332,14 @@ def transform(data, indexAkeneo):
     importProduct['values'] = {}
     importProduct['values']['maschId'] = setValue(str(item['record_id']))
     importProduct['values']['maschName'] = setValue(item['record_name'])
+    nowDatetime = datetime.datetime.now()
+    valueMaschUpdeted = str(nowDatetime.strftime("%Y-%m-%dT%H:%M:%S"))
+    print(valueMaschUpdeted)
+    importProduct['values']['maschUpdated'] = [{
+      "data": valueMaschUpdeted,
+      "locale": None,
+      "scope": None
+    }]
     importProduct['values']['license'] = setValue('copyright')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
