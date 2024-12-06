@@ -7,6 +7,7 @@ sys.path.append("..")
 
 from service.masch import getMaschPull
 from service.loadEnv import loadEnv
+import service.debug as debug
 
 def maschFlow():
     print ("Masch Flow")
@@ -34,7 +35,14 @@ def contentdeskFlow():
     search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":"[' + startTimeStr + ',' + endTimeStr + '"]}]}'
     print(search)
     contentdeskRecords = target.getProductBySearch(search)
-    print(contentdeskRecords)
+    debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractProducts", contentdeskRecords)
+    recentRecords = []
+    for record in contentdeskRecords:
+        maschUpdated = datetime.datetime.strptime(record['maschUpdated'], '%Y-%m-%dT%H:%M:%S')
+        if start_time <= maschUpdated <= end_time:
+            recentRecords.append(record)
+
+    debug.addToFileFull("worker", "ziggy", "export", "maschId", "filterbyDatetimeProducts", recentRecords)
     
 
 def __main__():
