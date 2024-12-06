@@ -3,16 +3,14 @@ import json
 import datetime
 from akeneo.akeneo import Akeneo
 import sys
-
-
 sys.path.append("..")
 
-from service.masch import masch
+from service.masch import getMaschPull
 from service.loadEnv import loadEnv
 
 def maschFlow():
     print ("Masch Flow")
-    maschRecords = masch.getMaschPull()
+    maschRecords = getMaschPull()
     print(maschRecords)
     if maschRecords['result'] == 'success':
         if len(maschRecords['records']) > 0:
