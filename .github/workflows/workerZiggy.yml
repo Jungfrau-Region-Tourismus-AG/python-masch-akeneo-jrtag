@@ -1,4 +1,4 @@
-name: Worker Masch Ziggy
+name: Worker Ziggy
 
 on:
   workflow_dispatch:
