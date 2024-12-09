@@ -9,7 +9,7 @@ import service.contentdeskFlow as contentdeskFlow
 def __main__():
     print("STARTING - WORKER")
     maschFlow.maschFlow()
-    contentdeskFlow.contentdeskFlow()
+    #contentdeskFlow.contentdeskFlow()
     print("END - WORKER")
     
 if __name__== "__main__":
