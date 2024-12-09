@@ -61,6 +61,8 @@ jobs:
               run: pip install requests_oauthlib
             - name: Install validators
               run: pip install validators
+            - name: Install akeneo
+              run: pip install -i https://test.pypi.org/simple/ akeneo
             - name: Run Script
               working-directory: ./src/command
               run: python worker.py
