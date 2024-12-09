@@ -15,10 +15,24 @@ import service.masch as masch
 from service.extract import extract, getAkeneoProducts
 from service.transform import transform, transformAkeneotoMasch
 from service.load import load
+from os import getenv
+from dotenv import find_dotenv, load_dotenv
+load_dotenv(find_dotenv())
 
-def getContentdeskUpdatedProducts(env):
-    targetCon = loadEnv(env)
-    target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
+AKENEO_HOST = getenv('AKENEO_HOST')
+AKENEO_CLIENT_ID = getenv('AKENEO_CLIENT_ID')
+AKENEO_CLIENT_SECRET = getenv('AKENEO_CLIENT_SECRET')
+AKENEO_USERNAME = getenv('AKENEO_USERNAME')
+AKENEO_PASSWORD = getenv('AKENEO_PASSWORD')
+
+MASCH_URL = getenv('MASCH_URL')
+MASCH_PULL_URL = getenv('MASCH_PULL_URL')
+MASCH_USER = getenv('MASCH_USER')
+MASCH_PASSWORD = getenv('MASCH_PASSWORD')
+
+def getContentdeskUpdatedProducts():
+    target = Akeneo(AKENEO_HOST, AKENEO_CLIENT_ID, AKENEO_CLIENT_SECRET, AKENEO_USERNAME, AKENEO_PASSWORD)
+    
     search = '{"labels":[{"operator":"NOT EMPTY","value":""}]}&attributes=labels'
     end_time = datetime.datetime.now()
     start_time = end_time - datetime.timedelta(minutes=5)
@@ -31,16 +45,16 @@ def getContentdeskUpdatedProducts(env):
     contentdeskRecords = target.getProductBySearch(search)
     return contentdeskRecords
 
-def getContentdeskProducts(env):
-    targetCon = loadEnv(env)
-    target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
+def getContentdeskProducts():
+    target = Akeneo(AKENEO_HOST, AKENEO_CLIENT_ID, AKENEO_CLIENT_SECRET, AKENEO_USERNAME, AKENEO_PASSWORD)
+    
     search = '{"maschId":[{"operator":"NOT EMPTY","value":""}]}'
     products = target.getProducts(limit=100, search=search )
     return products
 
-def updateContentdeskProducts(env, products):
-    targetCon = loadEnv(env)
-    target = Akeneo(targetCon["host"], targetCon["clientId"], targetCon["secret"], targetCon["user"], targetCon["passwd"])
+def updateContentdeskProducts(products):
+    target = Akeneo(AKENEO_HOST, AKENEO_CLIENT_ID, AKENEO_CLIENT_SECRET, AKENEO_USERNAME, AKENEO_PASSWORD)
+    
     for item in products:
         print("     - Update Product: "+item['identifier'])
         body = {
@@ -90,7 +104,7 @@ def maschFlow():
         if len(maschRecords['records']) > 0:
             # Update to Contentdesk
             print("   - START - UPDATE to Contentdesk")
-            extractDataAkeneo = getContentdeskProducts("ziggy")
+            extractDataAkeneo = getContentdeskProducts()
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
             
             print("   - TRANSFORMING to Contentdesk")
@@ -108,10 +122,12 @@ def maschFlow():
             
     print(" - DONE: Masch Flow")
             
-def contentdeskFlow(env):
+def contentdeskFlow():
     print (" - START: Contentdesk Flow")
+    # DEBUG
+    env = 'ziggy' 
     # CHECK
-    contentdeskRecords = getContentdeskUpdatedProducts(env)
+    contentdeskRecords = getContentdeskUpdatedProducts()
     debug.addToFileFull("worker", env, "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
     
     # FILTER by datetime  
@@ -136,14 +152,14 @@ def contentdeskFlow(env):
     #postImagestoMasch(productList)
     
     # Update Contentesk Attribute MaschUpdated
-    updateContentdeskProducts(env, recentRecords)
+    updateContentdeskProducts(recentRecords)
     
     print(" - DONE: Contentdesk Flow")
     
 def __main__():
     print("STARTING - WORKER")
     maschFlow()
-    contentdeskFlow("ziggy")
+    contentdeskFlow()
     print("END - WORKER")
     
 if __name__== "__main__":
