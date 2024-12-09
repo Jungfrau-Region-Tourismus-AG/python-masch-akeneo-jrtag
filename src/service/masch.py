@@ -4,11 +4,15 @@ import json
 import sys
 sys.path.append("..")
 
+import service.debug as debug
+import service.contentdesk as contentdesk
+from service.transform import transform, transformAkeneotoMasch
 from service.objectStorage import getObject, putObject, countFilesInFolder, folderExist, getObjectUrl
 
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
 load_dotenv(find_dotenv())
+
 MASCH_URL = getenv('MASCH_URL')
 MASCH_PULL_URL = getenv('MASCH_PULL_URL')
 MASCH_PUSH_URL = getenv('MASCH_PUSH_URL')
@@ -280,3 +284,31 @@ def loadObjectstoMasch(products):
     print(response.json())
     print("DONE")
     return response
+
+def maschFlow():
+    print (" - START: Masch Flow")
+    maschRecords = getMaschPull()
+    print(maschRecords)
+    debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractObjectsMasch", maschRecords)
+    
+    if maschRecords['result'] == 'success':
+        if len(maschRecords['records']) > 0:
+            # Update to Contentdesk
+            print("   - START - UPDATE to Contentdesk")
+            extractDataAkeneo = contentdesk.getContentdeskProducts()
+            debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
+            
+            print("   - TRANSFORMING to Contentdesk")
+            transformData = transform(maschRecords['records'], extractDataAkeneo)
+            debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataAkeneo", transformData)
+            
+            print("   - LOAD - Update to Contentdesk")
+            #TODO: Implement load function
+            #loadData = load(transformData)
+            #debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadData", loadData)
+            
+            print("   - DONE - UPDATE to Contentdesk")
+        else:
+            print("   - No new records.")
+            
+    print(" - DONE: Masch Flow")
