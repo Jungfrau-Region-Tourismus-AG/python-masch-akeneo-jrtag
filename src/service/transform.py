@@ -313,6 +313,7 @@ def transform(data, indexAkeneo):
     if item['record_id'] in indexAkeneo:
       print("Record ID in Akeneo")
       #print(indexAkeneo[item['record_id']])
+      print(indexAkeneo[item['record_id']]['identifier'])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
       categoriesArray = indexAkeneo[item['record_id']]['categories']
       if checkIfCategoryInCategories(categoriesArray, AKENEO_CATEGORIES) == False:
@@ -334,6 +335,7 @@ def transform(data, indexAkeneo):
     importProduct['values'] = {}
     importProduct['values']['maschId'] = setValue(str(item['record_id']))
     importProduct['values']['maschName'] = setValue(item['record_name'])
+    # maschUpdated
     nowDatetime = datetime.datetime.now()
     valueMaschUpdeted = str(nowDatetime.strftime("%Y-%m-%dT%H:%M:%S"))
     print(valueMaschUpdeted)
@@ -342,6 +344,7 @@ def transform(data, indexAkeneo):
       "locale": None,
       "scope": None
     }]
+    
     importProduct['values']['license'] = setValue('copyright')
     importProduct['values']['copyrightHolder'] = setValue('MASCH')
     # name
