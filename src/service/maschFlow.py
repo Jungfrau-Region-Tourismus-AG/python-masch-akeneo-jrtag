@@ -21,13 +21,14 @@ def compareModifiedDates(maschRecords, extractDataAkeneo):
         
         # Filter extractDataAkeneo by maschId
         akeneoObject = [product for product in extractDataAkeneo if 'values' in product and 'maschId' in product['values'] and product['values']['maschId'][0]['data'] == maschId]
+        print("      - Check Object Modified Date: "+str(maschId))
         if len(akeneoObject) > 0:
             print("   - Filtered by maschId: "+maschId)
             print(akeneoObject)
             updatedDateStr = akeneoObject[0]['updated']
             updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
             updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
-            
+            print("    - COMPARE - Updated: " + updatedDate + " - Masch Updated: " + maschUpdated)
             if updatedDate != maschUpdated:
                 time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
                 if time_difference > 2:
@@ -51,10 +52,8 @@ def maschFlow():
             debug.addToFileFull("worker", env, "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
             
             # COMPARE modified date
-            
-            
-            recentRecords = contentdeskFlow.checkContentdeskProductsbyDatetime(extractDataAkeneo)
-            debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
+            recentRecords = compareModifiedDates(maschRecords['records'], extractDataAkeneo)
+            debug.addToFileFull("worker", env, "export", "maschId", "compareModifiedDates", recentRecords)
             
             if len(recentRecords) == 0:
                 print("   - No new records to update.")
@@ -66,7 +65,8 @@ def maschFlow():
                 print("   - LOAD - Update to Contentdesk")
                 #TODO: Implement load function
                 #loadData = load(transformData)
-                #debug.addToFileFull("worker", "ziggy", "export", "maschId", "loadData", loadData)
+                contentdesk.updateContentdeskProducts(recentRecords)
+                debug.addToFileFull("worker", "ziggy", "export", "maschId", "MASCHupdateContentdeskProducts", recentRecords)
                     
                 print("   - DONE - UPDATE to Contentdesk")
         else:
