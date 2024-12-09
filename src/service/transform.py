@@ -311,7 +311,8 @@ def transform(data, indexAkeneo):
     print(item['record_id'])
     print(item['record_name'])
     if item['record_id'] in indexAkeneo:
-      print(indexAkeneo[item['record_id']])
+      print("Record ID in Akeneo")
+      #print(indexAkeneo[item['record_id']])
       importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
       categoriesArray = indexAkeneo[item['record_id']]['categories']
       if checkIfCategoryInCategories(categoriesArray, AKENEO_CATEGORIES) == False:
@@ -320,6 +321,7 @@ def transform(data, indexAkeneo):
       importProduct['family'] = indexAkeneo[item['record_id']]['family']
       #importProduct['enabled'] = True
     else:
+      print("Record ID not in Akeneo")
       importProduct['identifier'] = str(uuid.uuid4())
       categoriesArray = []
       categoriesArray.append(AKENEO_CATEGORIES)
@@ -546,7 +548,13 @@ def checkFeatures(data, checklist):
   return result
 
 def createHashAkeneo(data):
-  hashData = []
+  hashData = {}
   for item in data:
     hashData[item['identifier']] = item
+  return hashData
+
+def createHashMASCH(data):
+  hashData = {}
+  for item in data:
+    hashData[item['values']['maschId'][0]['data']] = item
   return hashData
