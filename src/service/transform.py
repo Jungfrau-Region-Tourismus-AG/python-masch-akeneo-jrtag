@@ -107,7 +107,7 @@ def setValueInt(data, locale, scope):
   return dataValue
 
 def setValueDict(data, locale = None, scope = None):
-  print("setValueDict")
+  #print("setValueDict")
   dataValue = []
   for key, value in data.items():
       print(key)
@@ -141,14 +141,14 @@ def setValueDict(data, locale = None, scope = None):
   return dataValue
 
 def setValueList(data, locale = None, scope = None):
-  print("setValueList")
+  #print("setValueList")
   dataValue = []
   for key, value in data.items():
       print(key)
       print(value)
 
 def setValueFloat(data, locale = None, scope = None):
-  print("setValueFloat")
+  #print("setValueFloat")
   dataValue = []
   value = {}
   value['data'] = data
@@ -159,7 +159,7 @@ def setValueFloat(data, locale = None, scope = None):
 
 
 def setValue(data, locale = None, scope = None):
-  print("setValue")
+  #print("setValue")
   if type(data) is str:
     return setValueStr(data, locale, scope)
   elif type(data) is int:
@@ -172,8 +172,8 @@ def setValue(data, locale = None, scope = None):
     return setValueStr(data, locale, scope)
 
 def getFieldsValuebyKey(key, data):
-  print("getFieldsValuebyKey")
-  print(key)
+  #print("getFieldsValuebyKey")
+  #print(key)
   for field in data['fields']:
     if field["field_name"] == key:
       if not field["field_value"]:
@@ -182,7 +182,7 @@ def getFieldsValuebyKey(key, data):
         return field["field_value"]
 
 def checkifValidUrl(url_string):
-  print("checkifValidUrl")
+  #print("checkifValidUrl")
   result = validators.url(url_string)
   return result
 
@@ -196,11 +196,11 @@ def getNoneData():
   return dataValue
 
 def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check = None):
-  print("transformFieldtoAkeneoAttribut")
+  #print("transformFieldtoAkeneoAttribut")
   field = getFieldsValuebyKey(maschProperty, maschData)
   if field:
-      print(field)
-      print(type(field))
+      #print(field)
+      #print(type(field))
       if type(field) is str:
         return setValue(field, local, scope)
       elif type(field) is int:
@@ -224,7 +224,7 @@ def transformFieldtoAkeneoAttribut(maschProperty, maschData, local, scope, check
     return getNoneData()
   
 def transformFieldtoAkeneoAttributbyLanguage(maschProperty, maschData, Language, locale, scope, check = None):
-  print("transformFieldtoAkeneoAttribut")
+  #print("transformFieldtoAkeneoAttribut")
   field = getFieldsValuebyKey(maschProperty, maschData)
   if field:
       if field[Language]:
@@ -295,7 +295,7 @@ def transformFieldtoAkeneoAttributebyLocale(maschProperty, maschData, locale, sc
     return getNoneData()
 
 def checkIfCategoryInCategories(categories, category):
-  print("checkifCategoryinCategories")
+  #print("checkifCategoryinCategories")
   for cat in categories:
     if cat == category:
       return True
@@ -330,7 +330,7 @@ def transform(data, indexAkeneo):
       #importProduct['enabled'] = True
       importProduct['family'] = AKENEO_FAMILY
     
-    print(importProduct['categories'])
+    #print(importProduct['categories'])
     # Values
     importProduct['values'] = {}
     importProduct['values']['maschId'] = setValue(str(item['record_id']))
@@ -338,7 +338,7 @@ def transform(data, indexAkeneo):
     # maschUpdated
     nowDatetime = datetime.datetime.now()
     valueMaschUpdeted = str(nowDatetime.strftime("%Y-%m-%dT%H:%M:%S"))
-    print(valueMaschUpdeted)
+    #print(valueMaschUpdeted)
     importProduct['values']['maschUpdated'] = [{
       "data": valueMaschUpdeted,
       "locale": None,
