@@ -310,6 +310,7 @@ def getItembyMaschId(data, maschId):
 def transform(data, indexAkeneo):
   transformData = []
   dataList = data.copy()
+  hashMasch = createHashMASCH(indexAkeneo)
   for item in dataList['records']:
     importProduct = {}
     if item['record_id'] == None:
@@ -317,10 +318,10 @@ def transform(data, indexAkeneo):
     print(item['record_id'])
     print(item['record_name'])
     #if item['record_id'] in indexAkeneo:
-    if item['record_id'] in indexAkeneo:
+    if str(item['record_id']) in hashMasch:
       print("Record ID in Akeneo")
       #print(indexAkeneo[item['record_id']])
-      akeneoProduct = [product for product in indexAkeneo if product['values']['maschId'][0]['data'] in item['record_id']]
+      akeneoProduct = [product for product in indexAkeneo if product['values']['maschId'][0]['data'] == str(item['record_id'])]
       print(akeneoProduct[0]['identifier'])
       importProduct['identifier'] = akeneoProduct[0]['identifier']
       categoriesArray = akeneoProduct[0]['categories']
@@ -566,6 +567,7 @@ def createHashAkeneo(data):
 
 def createHashMASCH(data):
   idSet = {item['values']['maschId'][0]['data'] for item in data}
+  print(idSet)
   hashData = []
   for item in data:
     hashData.append(item)

@@ -5,6 +5,7 @@ sys.path.append("..")
 from service.extract import extract, getAkeneoProducts
 from service.transform import transform, transformAkeneotoMasch, createHashAkeneo, createHashMASCH
 from service.load import load
+import json
 import service.debug as debug
 
 def __main__():
@@ -16,13 +17,15 @@ def __main__():
   debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
   
   #hashAkeneo = createHashAkeneo(extractDataAkeneo)
-  hashMasch = createHashMASCH(extractDataAkeneo)
-  debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "hashMasch", hashMasch)
+  #hashMasch = createHashMASCH(extractDataAkeneo)
+  # Convert hashMasch to JSON
+  #hashMasch_json = json.dumps(hashMasch, indent=4)
+  #debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "hashMasch", hashMasch_json)
   
   print("TRANSFORMING")
   #transformAkeneotoMaschData = transformAkeneotoMasch(extractDataAkeneo)
   #debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "transformDataAkeneo", transformAkeneotoMaschData)
-  transformData = transform(extractData, hashMasch)
+  transformData = transform(extractData, extractDataAkeneo)
   debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "transformData", transformData)
   
   print("LOADING")
