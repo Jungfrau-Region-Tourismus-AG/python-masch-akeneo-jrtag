@@ -480,11 +480,11 @@ def transform(data, indexAkeneo):
     # Ausstattungen
     # metaserver_hotel_features <-> features
     #importProduct['values']['features'] = transformFieldtoAkeneoAttribut('metaserver_hotel_features', item, None, None)
-    print("Features DEBUG")
+    #print("Features DEBUG")
     #features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
     features = getFieldsValuebyKey('metaserver_hotel_features', item)
-    print("Set features Variable")
-    print(features)
+    #print("Set features Variable")
+    #print(features)
 
     if features:
       print("features is not None")
