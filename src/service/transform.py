@@ -315,14 +315,13 @@ def transform(data, indexAkeneo):
     importProduct = {}
     if item['record_id'] == None:
       continue
-    print(item['record_id'])
-    print(item['record_name'])
+    print("    - CHECK: "+item['record_id']+" - "+item['record_name'])
     #if item['record_id'] in indexAkeneo:
     if str(item['record_id']) in hashMasch:
-      print("Record ID in Akeneo")
+      print("     - Record ID in Akeneo")
       #print(indexAkeneo[item['record_id']])
       akeneoProduct = [product for product in indexAkeneo if product['values']['maschId'][0]['data'] == str(item['record_id'])]
-      print(akeneoProduct[0]['identifier'])
+      print("     - Identifier: "+akeneoProduct[0]['identifier'])
       importProduct['identifier'] = akeneoProduct[0]['identifier']
       categoriesArray = akeneoProduct[0]['categories']
       if checkIfCategoryInCategories(categoriesArray, AKENEO_CATEGORIES) == False:
@@ -331,7 +330,7 @@ def transform(data, indexAkeneo):
       importProduct['family'] = akeneoProduct[0]['family']
       #importProduct['enabled'] = True
     else:
-      print("Record ID not in Akeneo")
+      print("      - Record ID not in Akeneo")
       importProduct['identifier'] = str(uuid.uuid4())
       categoriesArray = []
       categoriesArray.append(AKENEO_CATEGORIES)
@@ -567,9 +566,4 @@ def createHashAkeneo(data):
 
 def createHashMASCH(data):
   idSet = {item['values']['maschId'][0]['data'] for item in data}
-  print(idSet)
-  hashData = []
-  for item in data:
-    hashData.append(item)
-    #hashData[item['values']['maschId'][0]['data']] = item
   return idSet

@@ -10,7 +10,7 @@ from service.transform import transform, transformAkeneotoMasch
 def maschFlow():
     print (" - START: Masch Flow")
     maschRecords = masch.getMaschPull()
-    print(maschRecords)
+    #print(maschRecords)
     debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractObjectsMasch", maschRecords)
     
     if maschRecords['result'] == 'success':
@@ -21,7 +21,7 @@ def maschFlow():
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
             
             print("   - TRANSFORMING to Contentdesk")
-            transformData = transform(maschRecords['records'], extractDataAkeneo)
+            transformData = transform(maschRecords, extractDataAkeneo)
             debug.addToFileFull("worker", "ziggy", "export", "maschId", "transformDataAkeneo", transformData)
             
             print("   - LOAD - Update to Contentdesk")
