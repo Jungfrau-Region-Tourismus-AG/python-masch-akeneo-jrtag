@@ -4,16 +4,17 @@
 
 ```mermaid
 flowchart TD
-    check -->|all 5min| masch
-    check -->|all 5min!| contentdesk
-    ChangeContentdesk -->|Yes| CheckifFromMaschCheck(Check Masch Update Date)
-    ChangeContentdesk -->|No| End
-    CheckifFromMaschCheck -->|Yes| End
-    CheckifFromMaschCheck -->|No| UpdateToMasch
-    masch --> ChangeMasch{Change?}
-    contentdesk --> ChangeContentdesk{Change?}
-    ChangeMasch -->|Yes| BackupContentdesk(Backup Product in ObjectStorage)
-    ChangeMasch -->|No| End
-    BackupContentdesk --> UpdateProductContentdesk(Update Product in Contentdesk)
-    UpdateProductContentdesk --> SetFromMaschCheck(Update MaschUpdated)
+    contentdeskFlow -->|5min| ExtractContentdesk(Extrac: all Object in last Day from Contentdesk)
+    ExtractContentdesk --> ObjectChangeLast5min{Object change in last 5min?}
+    ObjectChangeLast5min --> |Yes| OBjectHasEqualDate{Object has eque Update Dates updated vs maschUpdated?}
+    OBjectHasEqualDate --> |Yes| UpdateContentdeskFlow
+    UpdateContentdeskFlow --> UpdateToMasch
+    UpdateToMasch --> UpdateMaschUpdatedDateToContentdesk(Update Objects maschUpdated Value)
+
+    maschFlow --> |5min| ExtractMasch(Extract all Object in last 5min from MASCH)
+    ExtractMasch --> ObjectMaschChange{Masch Records has change}
+    ObjectMaschChange --> |Yes| UpdatetoMaschFlow
+    UpdatetoMaschFlow --> BackupObjectContentdesk(Backup Objects to ObjectStorage)
+    BackupObjectContentdesk --> UpdateToContentdesk
+    UpdateToContentdesk --> UpdateMaschUpdatedDateToContentdesk
 ```
