@@ -3,12 +3,12 @@
 import sys
 sys.path.append("..")
 
-import service.masch as masch
+import service.maschFlow as maschFlow
 import service.contentdeskFlow as contentdeskFlow
     
 def __main__():
     print("STARTING - WORKER")
-    masch.maschFlow()
+    maschFlow.maschFlow()
     contentdeskFlow.contentdeskFlow()
     print("END - WORKER")
     

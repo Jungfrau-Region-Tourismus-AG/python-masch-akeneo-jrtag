@@ -6,7 +6,7 @@ sys.path.append("..")
 
 import service.debug as debug
 import service.contentdesk as contentdesk
-from service.transform import transform, transformAkeneotoMasch
+#from service.transform import transform, transformAkeneotoMasch
 from service.objectStorage import getObject, putObject, countFilesInFolder, folderExist, getObjectUrl
 
 from os import getenv

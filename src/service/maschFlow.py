@@ -6,7 +6,6 @@ import service.debug as debug
 import service.contentdesk as contentdesk
 import service.masch as masch
 from service.transform import transform, transformAkeneotoMasch
-from service.objectStorage import getObject, putObject, countFilesInFolder, folderExist, getObjectUrl
 
 def maschFlow():
     print (" - START: Masch Flow")
