@@ -57,5 +57,5 @@ def updateContentdeskProducts(products):
             }
         }
         response = target.patchProductByCode(item['identifier'], body)
-        print("    - Response: "+str(response))
+        print("   - Response: "+str(response))
     
