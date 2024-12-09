@@ -78,10 +78,12 @@ def contentdeskFlow():
         
         # Update to MASCH
         print("   - Update to MASCH")
+        print("   - TODO: Update to MASCH")
         #masch.loadObjectstoMasch(transformDataMASCH)
         
         ## Update Images to MASCH - Not needed
         print("   - POSTING IMAGES to MASCH")
+        print("   - TODO: POSTING IMAGES to MASCH")
         #postImagestoMasch(productList)
     
         # Update Contentesk Attribute MaschUpdated
