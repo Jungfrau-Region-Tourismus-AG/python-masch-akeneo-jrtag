@@ -26,7 +26,7 @@ def load(data):
     AKENEO_PASSWORD
   )
   for item in data:
-    print(item['identifier'])
+    print(item['identifier']+': '+item['values']['maschId'][0]['data'])
     akeneo.patchProductByCode(item['identifier'], item)
     #akeneo.patchProducts(item)
 
