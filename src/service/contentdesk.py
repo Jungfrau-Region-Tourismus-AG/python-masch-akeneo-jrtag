@@ -58,27 +58,33 @@ def updateContentdeskProducts(products):
 
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
-    for record in products:
+    for item in products:
         # string to datetime
-        print("    - Check Product: "+record['identifier'])
+        print("    - Check Product: "+item['identifier'])
         end_time = datetime.datetime.now()
         start_time = end_time - datetime.timedelta(minutes=5)
-        updatedDateStr = record['updated']
+        updatedDateStr = item['updated']
         updatedDate = datetime.datetime.fromisoformat(updatedDateStr)
-        maschUpdatedStr = record['values']['maschUpdated'][0]['data']
+        updatedDate = updatedDate.strftime('%Y-%m-%d %H:%M:%S')
+        
+        maschUpdatedStr = item['values']['maschUpdated'][0]['data']
         maschUpdated = datetime.datetime.fromisoformat(maschUpdatedStr)
         maschUpdated = maschUpdated.strftime('%Y-%m-%d %H:%M:%S')
-        updatedDate = updatedDate.strftime('%Y-%m-%d %H:%M:%S')
+
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M:%S')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M:%S')
         print ("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
         print ("    - Updated: " + updatedDate)
         print ("    - Masch Updated: " + maschUpdated)
+        
+        if updatedDate >= start_time.strftime('%Y-%m-%d %H:%M:%S') and updatedDate <= end_time.strftime('%Y-%m-%d %H:%M:%S'):
+            print("     - Item Updated in last 5min")
+        
         if startDayTime <= updatedDate <= endDayTime:
             print("     - Add record to Update")
             if updatedDate != maschUpdated:
                 print("     - Updated Date is not equal to Masch Updated Date")
-                recentRecords.append(record)
+                recentRecords.append(item)
     return recentRecords
 
 def contentdeskFlow():
