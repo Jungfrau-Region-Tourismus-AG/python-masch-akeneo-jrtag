@@ -544,3 +544,9 @@ def checkFeatures(data, checklist):
 
   print(result)
   return result
+
+def createHashAkeneo(data):
+  hashData = {}
+  for item in data:
+    hashData[item['identifier']] = item
+  return hashData
