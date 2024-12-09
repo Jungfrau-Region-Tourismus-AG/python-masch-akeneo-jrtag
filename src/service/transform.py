@@ -301,6 +301,12 @@ def checkIfCategoryInCategories(categories, category):
       return True
   return False
 
+def getItembyMaschId(data, maschId):
+  if maschId in data:
+    return data[maschId]
+  else:
+    return None
+
 def transform(data, indexAkeneo):
   transformData = []
   dataList = data.copy()
@@ -310,16 +316,18 @@ def transform(data, indexAkeneo):
       continue
     print(item['record_id'])
     print(item['record_name'])
+    #if item['record_id'] in indexAkeneo:
     if item['record_id'] in indexAkeneo:
       print("Record ID in Akeneo")
       #print(indexAkeneo[item['record_id']])
-      print(indexAkeneo[item['record_id']]['identifier'])
-      importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
-      categoriesArray = indexAkeneo[item['record_id']]['categories']
+      akeneoProduct = [product for product in indexAkeneo if product['values']['maschId'][0]['data'] in item['record_id']]
+      print(akeneoProduct[0]['identifier'])
+      importProduct['identifier'] = akeneoProduct[0]['identifier']
+      categoriesArray = akeneoProduct[0]['categories']
       if checkIfCategoryInCategories(categoriesArray, AKENEO_CATEGORIES) == False:
         categoriesArray.append(AKENEO_CATEGORIES)
       importProduct['categories'] = categoriesArray
-      importProduct['family'] = indexAkeneo[item['record_id']]['family']
+      importProduct['family'] = akeneoProduct[0]['family']
       #importProduct['enabled'] = True
     else:
       print("Record ID not in Akeneo")
@@ -484,7 +492,7 @@ def transform(data, indexAkeneo):
     #features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
     features = getFieldsValuebyKey('metaserver_hotel_features', item)
     #print("Set features Variable")
-    #print(features)
+    print(features)
 
     if features:
       print("features is not None")
@@ -557,7 +565,9 @@ def createHashAkeneo(data):
   return hashData
 
 def createHashMASCH(data):
-  hashData = {}
+  idSet = {item['values']['maschId'][0]['data'] for item in data}
+  hashData = []
   for item in data:
-    hashData[item['values']['maschId'][0]['data']] = item
-  return hashData
+    hashData.append(item)
+    #hashData[item['values']['maschId'][0]['data']] = item
+  return idSet
