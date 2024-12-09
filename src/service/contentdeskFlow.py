@@ -87,6 +87,7 @@ def contentdeskFlow():
         #postImagestoMasch(productList)
     
         # Update Contentesk Attribute MaschUpdated
+        print("   - Update Contentdesk Object - maschUpdated")
         contentdesk.updateContentdeskProducts(recentRecords)
     
     print(" - DONE: Contentdesk Flow")

@@ -43,7 +43,7 @@ def updateContentdeskProducts(products):
     target = Akeneo(AKENEO_HOST, AKENEO_CLIENT_ID, AKENEO_CLIENT_SECRET, AKENEO_USERNAME, AKENEO_PASSWORD)
     
     for item in products:
-        print("     - Update Product: "+item['identifier'])
+        #print("     - Update Product: "+item['identifier'])
         body = {
             "identifier": item['identifier'],
             "values": {
@@ -57,5 +57,5 @@ def updateContentdeskProducts(products):
             }
         }
         response = target.patchProductByCode(item['identifier'], body)
-        print(response)
+        print("    - Response: "+str(response))
     
