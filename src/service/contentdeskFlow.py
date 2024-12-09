@@ -21,12 +21,12 @@ def checkContentdeskProductsbyDatetime(products):
         end_time = datetime.datetime.now()
         start_time = end_time - datetime.timedelta(minutes=5)
         updatedDateStr = item['updated']
-        updatedDate = datetime.datetime.fromisoformat(updatedDateStr)
-        updatedDate = updatedDate.strftime('%Y-%m-%d %H:%M')
+        updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
+        updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
         
         maschUpdatedStr = item['values']['maschUpdated'][0]['data']
-        maschUpdated = datetime.datetime.fromisoformat(maschUpdatedStr)
-        maschUpdated = maschUpdated.strftime('%Y-%m-%d %H:%M')
+        maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
+        maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
 
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
@@ -41,8 +41,13 @@ def checkContentdeskProductsbyDatetime(products):
                 if startDayTime <= updatedDate <= endDayTime:
                     print("     - Add record to Update")
                     if updatedDate != maschUpdated:
+                        time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
+                        if time_difference > 2:
+                            print("     - Time difference is greater than 2 minutes")
+                            recentRecords.append(item)
+                        else:
+                            print("     - Time difference is not greater than 2 minutes")
                         print("     - Updated Date is not equal to Masch Updated Date")
-                        recentRecords.append(item)
                     else:
                         print("     - Updated Date is equal to Masch Updated Date")
                 else:
