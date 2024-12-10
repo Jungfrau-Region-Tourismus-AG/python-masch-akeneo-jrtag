@@ -10,6 +10,11 @@ on:
     - cron: "*/5 * * * *"
 
 env:
+    AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
+    AKENEO_CLIENT_ID: ${{ secrets.AKENEO_CLIENT_ID }}
+    AKENEO_CLIENT_SECRET: ${{ secrets.AKENEO_CLIENT_SECRET }}
+    AKENEO_USERNAME: ${{ secrets.AKENEO_USERNAME }}
+    AKENEO_PASSWORD: ${{ secrets.AKENEO_PASSWORD }}
     OBJECTSTORAGE_ENDPOINT: ${{ secrets.OBJECTSTORAGE_ENDPOINT }}
     OBJECTSTORAGE_BUCKET: ${{ secrets.OBJECTSTORAGE_BUCKET }}
     OBJECTSTORAGE_REGION: ${{ secrets.OBJECTSTORAGE_REGION }}
@@ -36,6 +41,11 @@ jobs:
                 python-version: '3.11'
             - name: Create Virtual Environment
               run: |
+                echo "${{ secrets.AKENEO_HOST }}" > .env
+                echo "${{ secrets.AKENEO_CLIENT_ID }}" > .env
+                echo "${{ secrets.AKENEO_CLIENT_SECRET }}" > .env
+                echo "${{ secrets.AKENEO_USERNAME }}" > .env
+                echo "${{ secrets.AKENEO_PASSWORD }}" > .env
                 echo "${{ secrets.OBJECTSTORAGE_ENDPOINT }}" > .env
                 echo "${{ secrets.OBJECTSTORAGE_BUCKET }}" > .env
                 echo "${{ secrets.OBJECTSTORAGE_REGION }}" > .env
