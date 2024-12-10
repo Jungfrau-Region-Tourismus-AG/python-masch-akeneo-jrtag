@@ -32,27 +32,20 @@ def checkContentdeskProductsbyDatetime(products):
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
         
         print("    - Updated Date: " + updatedDate + " >= " + start_time.strftime('%Y-%m-%d %H:%M') + " and <= " + end_time.strftime('%Y-%m-%d %H:%M'))
-        if updatedDate >= start_time.strftime('%Y-%m-%d %H:%M') and updatedDate <= end_time.strftime('%Y-%m-%d %H:%M'):
-            print("     - Item Updated in last 5min")
-            print ("    - COMPARE")
-            print ("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
-            print ("    - Updated: " + updatedDate)
-            print ("    - Masch Updated: " + maschUpdated)
+        if start_time <= updatedDateDatetime <= end_time:
+            print("    - Item Updated in last 10 minutes")
+            print("    - COMPARE")
+            print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
+            print("    - Updated: " + updatedDate)
+            print("    - Masch Updated: " + maschUpdated)
             if updatedDate != maschUpdated:
-                if startDayTime <= updatedDate <= endDayTime:
-                    print("     - Add record to Update")
-                    if updatedDate != maschUpdated:
-                        time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
-                        if time_difference > 5:
-                            print("     - Time difference is greater than 2 minutes")
-                            recentRecords.append(item)
-                        else:
-                            print("     - Time difference is not greater than 2 minutes")
-                        print("     - Updated Date is not equal to Masch Updated Date")
-                    else:
-                        print("     - Updated Date is equal to Masch Updated Date")
+                print("     - Add record to Update")
+                time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
+                if time_difference > 5:
+                    print("     - Time difference is greater than 5 minutes")
+                    recentRecords.append(item)
                 else:
-                    print("     - Updated Date is not in the last 5min")
+                    print("     - Time difference is not greater than 5 minutes")
             else:
                 print("     - Updated Date is equal to Masch Updated Date")
     return recentRecords
