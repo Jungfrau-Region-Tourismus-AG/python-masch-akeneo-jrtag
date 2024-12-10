@@ -31,8 +31,8 @@ def checkContentdeskProductsbyDatetime(products):
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
         
-        print("    - Updated Date: " + updatedDate + " >= " + start_time.strftime('%Y-%m-%d %H:%M') + " and <= " + end_time.strftime('%Y-%m-%d %H:%M'))
-        if start_time <= updatedDateDatetime <= end_time:
+        print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
+        if startDayTime <= updatedDate <= endDayTime:
             print("    - Item Updated in last 10 minutes")
             print("    - COMPARE")
             print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
@@ -72,13 +72,12 @@ def contentdeskFlow():
         
         # Update to MASCH
         print("   - Update to MASCH")
-        print("   - TODO: Update to MASCH")
         masch.loadObjectstoMasch(transformDataMASCH)
         
         ## Update Images to MASCH - Not needed
         print("   - POSTING IMAGES to MASCH")
         print("   - TODO: POSTING IMAGES to MASCH")
-        #postImagestoMasch(productList)
+        masch.postImagestoMasch(recentRecords)
     
         # Update Contentesk Attribute MaschUpdated
         print("   - Update Contentdesk Object - maschUpdated")
