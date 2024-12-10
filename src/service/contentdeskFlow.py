@@ -31,6 +31,7 @@ def checkContentdeskProductsbyDatetime(products):
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
         
+        print("    - Updated Date: " + updatedDate + " >= " + start_time.strftime('%Y-%m-%d %H:%M') + " and <= " + end_time.strftime('%Y-%m-%d %H:%M'))
         if updatedDate >= start_time.strftime('%Y-%m-%d %H:%M') and updatedDate <= end_time.strftime('%Y-%m-%d %H:%M'):
             print("     - Item Updated in last 5min")
             print ("    - COMPARE")
