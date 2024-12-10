@@ -19,7 +19,7 @@ def checkContentdeskProductsbyDatetime(products):
         # string to datetime
         print("    * CHECK Product: "+item['identifier'])
         end_time = datetime.datetime.now()
-        start_time = end_time - datetime.timedelta(minutes=5)
+        start_time = end_time - datetime.timedelta(minutes=10)
         updatedDateStr = item['updated']
         updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
         updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
@@ -42,7 +42,7 @@ def checkContentdeskProductsbyDatetime(products):
                     print("     - Add record to Update")
                     if updatedDate != maschUpdated:
                         time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
-                        if time_difference > 2:
+                        if time_difference > 5:
                             print("     - Time difference is greater than 2 minutes")
                             recentRecords.append(item)
                         else:
