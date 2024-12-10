@@ -36,6 +36,7 @@ def compareModifiedDates(maschRecords, extractDataAkeneo):
             updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
             print("    - COMPARE - Updated: " + updatedDate + " - Masch Updated: " + maschUpdated)
             if updatedDate != maschUpdated:
+                print("     - UpdatedDateTime "+str(updatedDate)+" - MaschUpdatedDateTime "+str(maschUpdated))
                 time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
                 if time_difference > 5:
                     recentRecords.append(akeneoObject[0])
