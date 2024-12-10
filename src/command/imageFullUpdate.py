@@ -12,8 +12,8 @@ def __main__():
   extractDataAkeneo = getAkeneoProducts()
   
   print("TRANSFORMING")
-  transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
-  transformImageData = transformImage(extractData, transformDataAkeneo, 'teaser_and_content_banner_picture_summer', 'image')
+  #transformDataAkeneo = transformAkeneotoMasch(extractDataAkeneo)
+  transformImageData = transformImage(extractData, extractDataAkeneo, 'teaser_and_content_banner_picture_summer', 'image')
   #transformImageDataSummer = transformImage(extractData, transformDataAkeneo, 'teaser_and_content_banner_picture_summer', 'image_summer')
   #transformImageDataWinter = transformImage(extractData, transformDataAkeneo, 'teaser_and_content_banner_picture_winter', 'image_winter')
   
