@@ -509,22 +509,30 @@ def transform(data, indexAkeneo):
 
 def transformImage(data, indexAkeneo, maschPropety, attribute, locale = None, scope = None):
   transformData = []
+  hashMasch = createHashMASCH(indexAkeneo)
   for item in data['records']:
-    if item['record_id'] in indexAkeneo:
+    print(" - CHECK: "+str(item['record_id'])+" - "+item['record_name'])
+    if str(item['record_id']) in hashMasch:
+      print("  - Record ID in Akeneo")
+      akeneoProduct = [product for product in indexAkeneo if product['values']['maschId'][0]['data'] == str(item['record_id'])]
       filePath = getFieldsValuebyKey(maschPropety, item)
-      print(item['record_id'])
+      print("record_id: "+str(item['record_id']))
       if filePath:
+        print("in FilePath")
         if filePath['de']:
-          importProduct = {}
-          importProduct['identifier'] = indexAkeneo[item['record_id']]['identifier']
-          importProduct['filePath'] = filePath['de']
+          print("in de")
+          productImage = {}
+          productImage['identifier'] = akeneoProduct[0]['identifier']
+          productImage['filePath'] = filePath['de']
           imagePath = urlparse(filePath['de'])
           filename = os.path.basename(imagePath.path)
-          importProduct['filename'] = filename
-          importProduct['attribute'] = attribute
-          importProduct['locale'] = locale
-          importProduct['scope'] = scope
-    transformData.append(importProduct)
+          productImage['filename'] = filename
+          productImage['attribute'] = attribute
+          productImage['locale'] = locale
+          productImage['scope'] = scope
+          print("Variabe productImage")
+          print(productImage)
+    transformData.append(productImage)
   return transformData
 
 def transfromToAkeneo(data):

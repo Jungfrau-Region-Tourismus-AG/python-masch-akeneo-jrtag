@@ -1,6 +1,9 @@
-from extract import extract, getAkeneoProducts
-from transform import transformImage, transformAkeneotoMasch
-from load import downloadImages,loadImages
+import sys
+sys.path.append("..")
+
+from service.extract import extract, getAkeneoProducts
+from service.transform import transformImage, transformAkeneotoMasch
+from service.load import downloadImages,loadImages
 
 def __main__():
   print("STARTING")
