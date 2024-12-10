@@ -27,7 +27,7 @@ def getContentdeskUpdatedProducts():
     endDayStr = end_time.strftime("%Y-%m-%d")
     startDayStr = startDay.strftime("%Y-%m-%d")
     #search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"maschUpdated":[{"operator":"BETWEEN","value":["' + startDayStr + '","' + endDayStr + '"]}]}'
-    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"updated":[{"operator":"SINCE LAST N DAYS","value":1}]}'
+    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}],"updated":[{"operator":"BETWEEN","value":["' + startDayStr + '","' + endDayStr + '"]}]}'
     print(search)
     contentdeskRecords = target.getProductBySearch(search)
     return contentdeskRecords
