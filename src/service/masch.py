@@ -22,7 +22,7 @@ MASCH_PASSWORD = getenv('MASCH_PASSWORD')
 def getMaschPull():
     url = MASCH_URL + MASCH_PULL_URL
     end_time = datetime.datetime.now()
-    start_time = end_time - datetime.timedelta(minutes=5)
+    start_time = end_time - datetime.timedelta(minutes=30)
     body = {
         "user_login": MASCH_USER,
         "user_password": MASCH_PASSWORD,

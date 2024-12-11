@@ -8,6 +8,7 @@ import service.contentdesk as contentdesk
 import service.contentdeskFlow as contentdeskFlow
 import service.masch as masch
 import service.objectStorage as objectStorage
+from service.load import load
 from service.transform import transform, transformAkeneotoMasch
 
 def getProductbyMaschId(maschId, extractDataAkeneo):
@@ -23,7 +24,7 @@ def compareModifiedDates(maschRecords, extractDataAkeneo):
         maschId = item['record_id']
         #sku = item['external_uid']
         maschUpdatedStr = item['last_modified']
-        maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
+        maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr).replace(tzinfo=datetime.timezone(datetime.timedelta(hours=1)))
         maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
         
         # Filter extractDataAkeneo by maschId
@@ -37,12 +38,38 @@ def compareModifiedDates(maschRecords, extractDataAkeneo):
             updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
             print("    - COMPARE - Updated: " + updatedDate + " - Masch Updated: " + maschUpdated)
             if updatedDate != maschUpdated:
-                print("     - UpdatedDateTime "+str(updatedDate)+" - MaschUpdatedDateTime "+str(maschUpdated))
-                #time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
-                #if time_difference > 5:
-                recentRecords.append(akeneoObject[0])
+                print("     - UpdatedDateTime "+str(updatedDateDatetime)+" - MaschUpdatedDateTime "+str(maschUpdatedDatetime))
+                time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
+                if time_difference > 5:
+                    recentRecords.append(akeneoObject)
     
     return recentRecords
+
+def newRecords(maschRecords, extractDataAkeneo):
+    env = 'ziggy'
+    # NEW RECORDS to Contentdesk
+    print("   - START NEW RECORDS to Contentdesk")
+    newRecords = {}
+    newRecords['records'] = []
+    for item in maschRecords['records']:
+        maschId = item['record_id']
+        akeneoObject = getProductbyMaschId(maschId, extractDataAkeneo)
+        if akeneoObject is None:
+            newRecords['records'].append(item)
+                    
+    debug.addToFileFull("worker", env, "export", "maschId", "newRecords", newRecords)
+            
+    # TRANSFORMING to Contentdesk
+    print("   - TRANSFORMING to Contentdesk")
+    transformDataNewRecords = transform(newRecords, extractDataAkeneo)
+    debug.addToFileFull("worker", env, "export", "maschId", "transformDataNewRecords", transformDataNewRecords)
+            
+    # LOAD - New Records to Contentdesk
+    print("   - LOAD - New Records to Contentdesk")
+    load(transformDataNewRecords)
+    debug.addToFileFull("worker", env, "export", "maschId", "MASCHupdateContentdeskProductsNewRecords", transformDataNewRecords)
+    
+    print("   - DONE - NEW RECORDS to Contentdesk")
 
 def maschFlow():
     print (" - START: Masch Flow")
@@ -59,10 +86,14 @@ def maschFlow():
             extractDataAkeneo = contentdesk.getContentdeskProducts()
             debug.addToFileFull("worker", env, "export", "maschId", "extractDataAkeneo", extractDataAkeneo)
             
+            # NEW RECORDS to Contentdesk
+            newRecords(maschRecords, extractDataAkeneo)
+            
             # COMPARE modified date
             recentRecords = compareModifiedDates(maschRecords['records'], extractDataAkeneo)
             debug.addToFileFull("worker", env, "export", "maschId", "compareModifiedDates", recentRecords)
             
+            # UPDATE to Contentdesk
             if len(recentRecords) == 0:
                 print("   - No new records to update.")
             else:

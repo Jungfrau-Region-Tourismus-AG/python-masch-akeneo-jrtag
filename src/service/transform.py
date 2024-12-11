@@ -167,6 +167,7 @@ def setValue(data, locale = None, scope = None):
   elif type(data) is dict:
     return setValueDict(data, locale, scope)
   elif type(data) is list:
+    print('setValueList')
     return setValueList(data, locale, scope)
   elif type(data) is float:
     return setValueStr(data, locale, scope)
@@ -492,7 +493,7 @@ def transform(data, indexAkeneo):
     #features = getFieldbyLanguage('metaserver_hotel_features', item, 'de')
     features = getFieldsValuebyKey('metaserver_hotel_features', item)
     #print("Set features Variable")
-    print(features)
+    #print(features)
 
     if features:
       print("features is not None")
