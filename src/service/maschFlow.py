@@ -70,7 +70,7 @@ def maschFlow():
                 print("   - Backup to Object Storage")
                 current_datetime = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
                 str_current_datetime = str(current_datetime)
-                objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/'+str_current_datetime, "maschExport")
+                objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/masschFlow/'+str_current_datetime, "maschExport")
                 
                 print("   - TRANSFORMING to Contentdesk")
                 transformData = transform(maschRecords, extractDataAkeneo)

@@ -74,7 +74,7 @@ def contentdeskFlow():
         print("   - Backup to Object Storage")
         current_datetime = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
         str_current_datetime = str(current_datetime)
-        objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/'+str_current_datetime, "contentdeskExport")
+        objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/contentdeskFlow/'+str_current_datetime, "contentdeskExport")
         
         # Transform to MASCH
         print("   - Transform to MASCH")
