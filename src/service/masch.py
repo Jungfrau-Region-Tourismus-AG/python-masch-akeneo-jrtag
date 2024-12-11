@@ -247,6 +247,7 @@ def postImagestoMasch(akeneoProducts):
         sku = product['identifier']
         filepath = "catalog/"+image
         file = getObjectUrl(filepath)
+        print(file)
 
         url = MASCH_URL + "/api/cn/push_record_pictures.php"
         payload = {'user_login': MASCH_USER,
@@ -261,6 +262,8 @@ def postImagestoMasch(akeneoProducts):
         headers = {
             'Content-Type': 'multipart/form-data'
         }
+        payload = json.dumps(payload)
+        debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschImagePayload", payload)
         response = requests.request("POST", url, headers=headers, data=payload, files=files)
         print(response.status_code)
         print(response.json())
@@ -269,6 +272,7 @@ def postObjecttoMasch(product):
     url = MASCH_URL + MASCH_PUSH_URL
     headers = {'Content-Type': 'application/json'}
     payload = json.dumps(product)
+    debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschPayload", payload)
     response = requests.request("PATCH", url, headers=headers, data=payload)
     print(response.status_code)
     #print(response.text)
