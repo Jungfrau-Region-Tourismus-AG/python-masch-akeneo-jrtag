@@ -19,7 +19,7 @@ def checkContentdeskProductsbyDatetime(products):
     for item in products:
         # string to datetime
         print("    * CHECK Product: "+item['identifier'])
-        end_time = datetime.datetime.now()
+        end_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
         start_time = end_time - datetime.timedelta(minutes=10)
         updatedDateStr = item['updated']
         updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
