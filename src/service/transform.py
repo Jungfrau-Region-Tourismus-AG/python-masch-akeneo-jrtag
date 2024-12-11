@@ -315,7 +315,7 @@ def transform(data, indexAkeneo):
     importProduct = {}
     if item['record_id'] == None:
       continue
-    print("    - CHECK: "+item['record_id']+" - "+item['record_name'])
+    print("    - CHECK: "+str(item['record_id'])+" - "+item['record_name'])
     #if item['record_id'] in indexAkeneo:
     if str(item['record_id']) in hashMasch:
       print("     - Record ID in Akeneo")

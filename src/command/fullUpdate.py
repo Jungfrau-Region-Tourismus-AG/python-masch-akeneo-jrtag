@@ -1,4 +1,5 @@
 
+import datetime
 import sys
 sys.path.append("..")
 
@@ -7,6 +8,7 @@ from service.transform import transform, transformAkeneotoMasch, createHashAkene
 from service.load import load
 import json
 import service.debug as debug
+import service.objectStorage as objectStorage
 
 def __main__():
   print("STARTING")
@@ -21,6 +23,11 @@ def __main__():
   # Convert hashMasch to JSON
   #hashMasch_json = json.dumps(hashMasch, indent=4)
   #debug.addToFileFull("fullUpdate", "ziggy", "export", "maschId", "hashMasch", hashMasch_json)
+  
+  print("   - Backup to Object Storage")
+  current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+  str_current_datetime = str(current_datetime)
+  objectStorage.exportProduct(extractDataAkeneo, 'export/contentdesk/fullUpdate/'+str_current_datetime, "contentdeskExport")
   
   print("TRANSFORMING")
   #transformAkeneotoMaschData = transformAkeneotoMasch(extractDataAkeneo)
