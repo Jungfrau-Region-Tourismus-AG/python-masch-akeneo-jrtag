@@ -45,11 +45,11 @@ def checkContentdeskProductsbyDatetime(products):
             if updatedDate != maschUpdated:
                 print("     - Add record to Update")
                 time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
-                if time_difference > 5:
-                    print("     - Time difference is greater than 5 minutes")
+                if time_difference > 2:
+                    print("     - Time difference is greater than 2 minutes")
                     recentRecords.append(item)
                 else:
-                    print("     - Time difference is not greater than 5 minutes")
+                    print("     - Time difference is not greater than 2 minutes")
             else:
                 print("     - Updated Date is equal to Masch Updated Date")
     return recentRecords
