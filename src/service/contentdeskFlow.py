@@ -24,9 +24,13 @@ def checkContentdeskProductsbyDatetime(products):
         updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
         updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
         
-        maschUpdatedStr = item['values']['maschUpdated'][0]['data']
-        maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
-        maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
+        if 'values' in item:
+            if 'maschUpdated' in item['values']:
+                maschUpdatedStr = item['values']['maschUpdated'][0]['data']
+                maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
+                maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
+            else:
+                maschUpdated = datetime.timedelta(days=-1)
 
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
