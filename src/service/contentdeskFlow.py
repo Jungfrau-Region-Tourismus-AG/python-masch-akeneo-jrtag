@@ -41,7 +41,7 @@ def checkContentdeskProductsbyDatetime(products):
             print("    - COMPARE")
             print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
             print("    - Updated: " + updatedDate)
-            print("    - Masch Updated: " + maschUpdated)
+            print("    - Masch Updated: " + str(maschUpdated))
             if updatedDate != maschUpdated:
                 print("     - Add record to Update")
                 time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)

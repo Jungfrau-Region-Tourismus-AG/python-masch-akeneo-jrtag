@@ -99,8 +99,9 @@ def transformAkeneotoMasch(akeneoProducts):
         #print(product['identifier'])
         transformedProduct = {}
         if "maschId" in product["values"]:
-            transformedProduct["record_name"] = product["values"]['maschName'][0]['data']
             transformedProduct["record_id"] = product["values"]['maschId'][0]['data']
+        if "maschName" in product["values"]:
+            transformedProduct["record_name"] = product["values"]['maschName'][0]['data']
         transformedProduct["created"] = product["created"]
         transformedProduct["last_modifield"] = product["updated"]
         transformedProduct["external_uid"] = product['identifier']
