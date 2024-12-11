@@ -72,7 +72,7 @@ def contentdeskFlow():
     else:
         # Backup to Object Storage
         print("   - Backup to Object Storage")
-        current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+        current_datetime = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
         str_current_datetime = str(current_datetime)
         objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/'+str_current_datetime, "contentdeskExport")
         
