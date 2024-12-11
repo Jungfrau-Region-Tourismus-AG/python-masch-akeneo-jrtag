@@ -70,7 +70,7 @@ def contentdeskFlow():
     if len(recentRecords) == 0:
         print("   - No new records to update.")
     else:
-                # Backup to Object Storage
+        # Backup to Object Storage
         print("   - Backup to Object Storage")
         current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
         str_current_datetime = str(current_datetime)

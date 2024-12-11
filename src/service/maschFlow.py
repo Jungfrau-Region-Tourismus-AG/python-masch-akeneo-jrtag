@@ -7,6 +7,7 @@ import service.debug as debug
 import service.contentdesk as contentdesk
 import service.contentdeskFlow as contentdeskFlow
 import service.masch as masch
+import service.objectStorage as objectStorage
 from service.transform import transform, transformAkeneotoMasch
 
 def getProductbyMaschId(maschId, extractDataAkeneo):
@@ -65,6 +66,12 @@ def maschFlow():
             if len(recentRecords) == 0:
                 print("   - No new records to update.")
             else:
+                # Backup to Object Storage
+                print("   - Backup to Object Storage")
+                current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+                str_current_datetime = str(current_datetime)
+                objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/'+str_current_datetime, "maschExport")
+                
                 print("   - TRANSFORMING to Contentdesk")
                 transformData = transform(maschRecords, extractDataAkeneo)
                 debug.addToFileFull("worker", env, "export", "maschId", "transformDataAkeneo", transformData)
