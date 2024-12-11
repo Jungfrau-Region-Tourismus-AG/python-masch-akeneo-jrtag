@@ -275,6 +275,7 @@ def postObjecttoMasch(product):
     debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschPayload", payload)
     response = requests.request("PATCH", url, headers=headers, data=payload)
     print(response.status_code)
+    print(response)
     #print(response.text)
     #print(json.decoder(r.json()))
     # get response body
