@@ -12,6 +12,7 @@ sys.path.append("..")
 import service.debug as debug
 import service.masch as masch
 import service.contentdesk as contentdesk
+import service.objectStorage as objectStorage
 
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
@@ -73,6 +74,12 @@ def contentdeskFlow():
         print("   - Transform to MASCH")
         transformDataMASCH = masch.transformAkeneotoMasch(recentRecords)
         debug.addToFileFull("worker", env, "export", "maschId", "transformDataMASCH", transformDataMASCH)
+        
+        # Backup to Object Storage
+        print("   - Backup to Object Storage")
+        current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+        str_current_datetime = str(current_datetime)
+        objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/'+str_current_datetime, "contentdeskExport")
         
         # Update to MASCH
         print("   - Update to MASCH")

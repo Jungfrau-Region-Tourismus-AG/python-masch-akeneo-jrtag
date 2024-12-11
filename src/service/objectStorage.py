@@ -32,6 +32,9 @@ def putObject(data, filename):
         ACL='public-read',
         ContentType='application/json')
     
+def exportProduct(product, path, filename):
+    putObject(product, path+"/"+filename+".json")
+    
 def loadProduct(product):
     putObject(product, OBJECTSTORAGE_BUCKET, OBJECTSTORAGE_EXPORT_PATH_PRODUCTS+product['identifier']+"/index.json")
 
