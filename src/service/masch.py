@@ -251,7 +251,8 @@ def postImagestoMasch(akeneoProducts):
             file = getObjectUrl(filepath)
             print(file)
             target_fields = 'teaser_and_content_banner_picture_winter'
-            response = postMediaFilePictures(filepath, maschName, target_fields)
+            response = postMediaFilePictures(file, maschName, target_fields)
+            print("Upload Image")
             print(response)
         else:
             print("No Image to Upload")
@@ -280,10 +281,10 @@ def loadObjectstoMasch(products):
     print("DONE")
     return response
 
-def getMediaFileBodyGallery(filePath, maschName, captions, descriptions):
-    file = open(filePath, 'rb').read()
+def getMediaFileBodyGallery(file, maschName, captions, descriptions):
+    #file = open(filePath, 'rb').read()
     image_base64 = base64.b64encode(file)
-    mimetype = mimetypes.guess_type(filePath)[0]
+    mimetype = mimetypes.guess_type(file)[0]
     payload = collections.OrderedDict({
         "user_login": MASCH_USER,
         "user_password": MASCH_PASSWORD,
@@ -296,9 +297,12 @@ def getMediaFileBodyGallery(filePath, maschName, captions, descriptions):
     return payload
 
 def getMediaFileBodyPictures(filePath, maschName, target_fields):
+    file = requests.get(filePath).content
+    #print(file)
+
     file = open(filePath, 'rb').read()
     image_base64 = base64.b64encode(file)
-    mimetype = mimetypes.guess_type(filePath)[0]
+    mimetype = mimetypes.guess_type(file)[0]
     payload = collections.OrderedDict({
         "user_login": MASCH_USER,
         "user_password": MASCH_PASSWORD,

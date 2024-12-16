@@ -110,8 +110,8 @@ def setValueDict(data, locale = None, scope = None):
   #print("setValueDict")
   dataValue = []
   for key, value in data.items():
-      print(key)
-      print(value)
+      #print(key)
+      #print(value)
       if locale is not None:
         if key == 'de':
           deValue = {}
@@ -144,8 +144,10 @@ def setValueList(data, locale = None, scope = None):
   #print("setValueList")
   dataValue = []
   for key, value in data.items():
-      print(key)
-      print(value)
+      print("Check setValueList")
+      #print(key + " - " + value)
+      #print(key)
+      #print(value)
 
 def setValueFloat(data, locale = None, scope = None):
   #print("setValueFloat")
