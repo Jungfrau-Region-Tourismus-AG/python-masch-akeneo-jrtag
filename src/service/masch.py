@@ -300,9 +300,9 @@ def getMediaFileBodyPictures(filePath, maschName, target_fields):
     file = requests.get(filePath).content
     #print(file)
 
-    file = open(filePath, 'rb').read()
+    #file = open(file, 'rb').read()
     image_base64 = base64.b64encode(file)
-    mimetype = mimetypes.guess_type(file)[0]
+    mimetype = mimetypes.guess_type(filePath)[0]
     payload = collections.OrderedDict({
         "user_login": MASCH_USER,
         "user_password": MASCH_PASSWORD,
