@@ -2,6 +2,11 @@ import datetime
 import requests
 import json
 import sys
+import urllib3
+import base64
+import collections
+import mimetypes
+
 sys.path.append("..")
 
 import service.debug as debug
@@ -291,3 +296,54 @@ def loadObjectstoMasch(products):
     print("DONE")
     return response
 
+def getMediaFileBodyGallery(filePath, maschName, captions, descriptions):
+    file = open(filePath, 'rb').read()
+    image_base64 = base64.b64encode(file)
+    mimetype = mimetypes.guess_type(filePath)[0]
+    payload = collections.OrderedDict({
+        "user_login": MASCH_USER,
+        "user_password": MASCH_PASSWORD,
+        "target_record": str(maschName),
+        "target_gallery": str(maschName),
+        'pictures[]': (mimetype.replace("/", "."), base64.b64decode(image_base64)),
+        "captions[]": captions,
+        "descriptions[]": descriptions,
+    })
+    return payload
+
+def getMediaFileBodyPictures(filePath, maschName, target_fields):
+    file = open(filePath, 'rb').read()
+    image_base64 = base64.b64encode(file)
+    mimetype = mimetypes.guess_type(filePath)[0]
+    payload = collections.OrderedDict({
+        "user_login": MASCH_USER,
+        "user_password": MASCH_PASSWORD,
+        "target_record": str(maschName),
+        'pictures[]': (mimetype.replace("/", "."), base64.b64decode(image_base64)),
+        "target_fields[]": target_fields
+    })
+    return payload
+
+def postMediaRequest(query, data):
+    url = MASCH_URL + query
+    (content, content_type) = urllib3.filepost.encode_multipart_formdata(data)
+    headers = {'Content-Type': content_type}
+    r = requests.post(url, headers=headers, data=content)
+    if r:
+        return r.status_code
+    else:
+        print('An error has occurred.')
+        print(r.status_code)
+        print(r.json())
+        return False
+    r.close()
+    
+def postMediaFileGallery(filePath, maschName, captions, descriptions):
+    body = getMediaFileBodyGallery(filePath, maschName, captions, descriptions)
+    query = '/api/cn/push_gallery_pictures.php'
+    return postMediaRequest(query, body)
+
+def postMediaFilePictures(filePath, maschName, target_fields):
+    body = getMediaFileBodyPictures(filePath, maschName, target_fields)
+    query = '/api/cn/push_record_pictures.php'
+    return postMediaRequest(query, body)
