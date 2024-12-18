@@ -16,6 +16,7 @@ from service.objectStorage import getObject, putObject, countFilesInFolder, fold
 
 from os import getenv
 from dotenv import find_dotenv, load_dotenv
+from bs4 import BeautifulSoup
 load_dotenv(find_dotenv())
 
 MASCH_URL = getenv('MASCH_URL')
@@ -136,6 +137,15 @@ def transformAkeneotoMasch(akeneoProducts):
             transformedProduct["fields"].append(disambiguatingDescription)
         # blog_table_description / description
         if "description" in product["values"]:
+            
+            productDescriptionDE = getValuebyLanguageScope(product["values"]['description'], "de_CH", "ecommerce")
+            productDescriptionEN = getValuebyLanguageScope(product["values"]['description'], "en_US", "ecommerce")
+            productDescriptionFR = getValuebyLanguageScope(product["values"]['description'], "fr_FR", "ecommerce")
+            
+            productDescriptionDE = BeautifulSoup(productDescriptionDE, "html.parser").get_text(separator="\n")
+            productDescriptionEN = BeautifulSoup(productDescriptionEN, "html.parser").get_text(separator="\n")
+            productDescriptionFR = BeautifulSoup(productDescriptionFR, "html.parser").get_text(separator="\n")
+            
             description = {}
             description['field_name'] = "blog_table_description"
             description['field_type'] = "multiline_text"
