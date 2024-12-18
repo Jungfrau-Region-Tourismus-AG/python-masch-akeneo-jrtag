@@ -150,9 +150,9 @@ def transformAkeneotoMasch(akeneoProducts):
             description['field_name'] = "blog_table_description"
             description['field_type'] = "multiline_text"
             description['field_value'] = {}
-            description['field_value']['de'] = getValuebyLanguageScope(product["values"]['description'], "de_CH", "ecommerce")
-            description['field_value']['en'] = getValuebyLanguageScope(product["values"]['description'], "en_US", "ecommerce")
-            description['field_value']['fr'] = getValuebyLanguageScope(product["values"]['description'], "fr_FR", "ecommerce")
+            description['field_value']['de'] = productDescriptionDE
+            description['field_value']['en'] = productDescriptionEN
+            description['field_value']['fr'] = productDescriptionFR
             transformedProduct["fields"].append(description)
         # blog_seo_latitude / latitude
         if "latitude" in product["values"]:
@@ -272,6 +272,7 @@ def postObjecttoMasch(product):
     url = MASCH_URL + MASCH_PUSH_URL
     headers = {'Content-Type': 'application/json'}
     payload = json.dumps(product)
+    debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschPayloadProduct", product)
     debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschPayload", payload)
     response = requests.request("PATCH", url, headers=headers, data=payload)
     print(response.status_code)
