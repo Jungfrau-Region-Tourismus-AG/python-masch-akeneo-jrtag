@@ -179,10 +179,10 @@ def getFieldsValuebyKey(key, data):
   #print(key)
   for field in data['fields']:
     if field["field_name"] == key:
-      if not field["system_field_value"]:
+      if not field["field_value"]:
         return ''
       else:
-        return field["system_field_value"]
+        return field["field_value"]
 
 def checkifValidUrl(url_string):
   #print("checkifValidUrl")
