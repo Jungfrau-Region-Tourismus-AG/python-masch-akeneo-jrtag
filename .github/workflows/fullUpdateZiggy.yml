@@ -60,14 +60,14 @@ jobs:
       - name: Install akeneo
         run: pip install -i https://test.pypi.org/simple/ akeneo
       - name: Run Script
-        working-directory: ./src
+        working-directory: ./src/command
         run: python fullUpdate.py
       - name: Run Script Image
-        working-directory: ./src
+        working-directory: ./src/command
         run: python imageFullUpdate.py
       - name: Run Script Image Summer
-        working-directory: ./src
+        working-directory: ./src/command
         run: python imageSummerFullUpdate.py
       - name: Run Script Image Winter
-        working-directory: ./src
+        working-directory: ./src/command
         run: python imageWinterFullUpdate.py
