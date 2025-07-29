@@ -8,7 +8,7 @@ from service.transform import transform, transformAkeneotoMasch, createHashAkene
 from service.load import load
 import json
 import service.debug as debug
-import service.objectStorage as objectStorage
+#import service.objectStorage as objectStorage
 
 def __main__():
   print("STARTING")
@@ -27,7 +27,7 @@ def __main__():
   print("   - Backup to Object Storage")
   current_datetime = datetime.datetime.now().strftime("%Y-%m-%d %H-%M-%S")
   str_current_datetime = str(current_datetime)
-  objectStorage.exportProduct(extractDataAkeneo, 'export/contentdesk/fullUpdate/'+str_current_datetime, "contentdeskExport")
+  #objectStorage.exportProduct(extractDataAkeneo, 'export/contentdesk/fullUpdate/'+str_current_datetime, "contentdeskExport")
   
   print("TRANSFORMING")
   #transformAkeneotoMaschData = transformAkeneotoMasch(extractDataAkeneo)
