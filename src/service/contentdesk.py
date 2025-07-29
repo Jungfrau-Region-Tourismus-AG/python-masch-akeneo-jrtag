@@ -33,6 +33,14 @@ def getContentdeskUpdatedProducts():
     contentdeskRecords = target.getProductBySearch(search)
     return contentdeskRecords
 
+def getContentdeskallMASCHProducts():
+    target = Akeneo(AKENEO_HOST, AKENEO_CLIENT_ID, AKENEO_CLIENT_SECRET, AKENEO_USERNAME, AKENEO_PASSWORD)
+
+    search = '{"maschId":[{"operator":"NOT EMPTY","value":""}]}'
+    print(search)
+    contentdeskRecords = target.getProductBySearch(search)
+    return contentdeskRecords
+
 def getContentdeskProducts():
     target = Akeneo(AKENEO_HOST, AKENEO_CLIENT_ID, AKENEO_CLIENT_SECRET, AKENEO_USERNAME, AKENEO_PASSWORD)
     

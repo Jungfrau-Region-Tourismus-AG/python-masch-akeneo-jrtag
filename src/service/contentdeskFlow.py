@@ -95,3 +95,45 @@ def contentdeskFlow():
         contentdesk.updateContentdeskProducts(recentRecords)
     
     print(" - DONE: Contentdesk Flow")
+    
+    
+def contentdeskFullFlow():
+    print (" - START: Contentdesk Flow")
+    # DEBUG
+    env = 'ziggy' 
+    # CHECK
+    contentdeskRecords = contentdesk.getContentdeskallMASCHProducts()
+    debug.addToFileFull("worker", env, "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
+    
+    # FILTER by datetime
+    recentRecords = checkContentdeskProductsbyDatetime(contentdeskRecords)
+    debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
+    
+    if len(recentRecords) == 0:
+        print("   - No new records to update.")
+    else:
+        # Backup to Object Storage
+        print("   - Backup to Object Storage")
+        current_datetime = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
+        str_current_datetime = str(current_datetime)
+        objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/contentdeskFlow/'+str_current_datetime, "contentdeskExport")
+        
+        # Transform to MASCH
+        print("   - Transform to MASCH")
+        transformDataMASCH = masch.transformAkeneotoMasch(recentRecords)
+        debug.addToFileFull("worker", env, "export", "maschId", "transformDataMASCH", transformDataMASCH)
+        
+        # Update to MASCH
+        print("   - Update to MASCH")
+        masch.loadObjectstoMasch(transformDataMASCH)
+        
+        ## Update Images to MASCH - Not needed
+        print("   - POSTING IMAGES to MASCH")
+        print("   - TODO: POSTING IMAGES (Gallery) to MASCH")
+        masch.postImagestoMasch(recentRecords)
+    
+        # Update Contentesk Attribute MaschUpdated
+        print("   - Update Contentdesk Object - maschUpdated")
+        contentdesk.updateContentdeskProducts(recentRecords)
+    
+    print(" - DONE: Contentdesk Flow")
