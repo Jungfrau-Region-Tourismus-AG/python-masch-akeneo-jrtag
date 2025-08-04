@@ -53,6 +53,7 @@ def checkContentdeskProductsbyDatetime(products):
                     print("     - Time difference is not greater than 2 minutes")
             else:
                 print("     - Updated Date is equal to Masch Updated Date")
+        recentRecords.append(item)
     return recentRecords
 
 def contentdeskFlow():
@@ -106,8 +107,10 @@ def contentdeskFullFlow():
     debug.addToFileFull("worker", env, "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
     
     # FILTER by datetime
-    recentRecords = checkContentdeskProductsbyDatetime(contentdeskRecords)
-    debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
+    #recentRecords = checkContentdeskProductsbyDatetime(contentdeskRecords)
+    #debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
+    
+    recentRecords = contentdeskRecords
     
     if len(recentRecords) == 0:
         print("   - No new records to update.")
