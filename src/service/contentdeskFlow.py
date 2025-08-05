@@ -21,7 +21,7 @@ def checkContentdeskProductsbyDatetime(products):
         print("    * CHECK Product: "+item['identifier'])
         if item['identifier'] == "a8a8f873-ef6d-439e-83eb-7ce7ea777f1c":
             end_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-            start_time = end_time - datetime.timedelta(minutes=10)
+            start_time = end_time - datetime.timedelta(minutes=15)
             updatedDateStr = item['updated']
             updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
             updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
