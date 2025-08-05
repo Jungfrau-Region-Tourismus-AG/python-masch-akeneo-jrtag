@@ -271,6 +271,7 @@ def postImagestoMasch(akeneoProducts):
 def postObjecttoMasch(product):
     url = MASCH_URL + MASCH_PUSH_URL
     headers = {'Content-Type': 'application/json'}
+    print(url)
     payload = json.dumps(product)
     debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschPayloadProduct", product)
     debug.addToFileFull("worker", 'ziggy', "export", "maschId", "maschPayload", payload)
