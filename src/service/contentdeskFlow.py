@@ -19,41 +19,42 @@ def checkContentdeskProductsbyDatetime(products):
     for item in products:
         # string to datetime
         print("    * CHECK Product: "+item['identifier'])
-        end_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-        start_time = end_time - datetime.timedelta(minutes=10)
-        updatedDateStr = item['updated']
-        updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
-        updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
-        
-        if 'values' in item:
-            if 'maschUpdated' in item['values']:
-                maschUpdatedStr = item['values']['maschUpdated'][0]['data']
-                maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
-                maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
-            else:
-                maschUpdated = datetime.timedelta(days=-1)
-
-        startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
-        endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
-        
-        print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
-        if startDayTime <= updatedDate <= endDayTime:
-            print("    - Item Updated in last 10 minutes")
-            print("    - COMPARE")
-            print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
-            print("    - Updated: " + updatedDate)
-            print("    - Masch Updated: " + str(maschUpdated))
-            if updatedDate != maschUpdated:
-                print("     - Add record to Update")
-                time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
-                if time_difference > 2:
-                    print("     - Time difference is greater than 2 minutes")
-                    recentRecords.append(item)
+        if item['identifier'] == "a8a8f873-ef6d-439e-83eb-7ce7ea777f1c":
+            end_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
+            start_time = end_time - datetime.timedelta(minutes=10)
+            updatedDateStr = item['updated']
+            updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
+            updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
+            
+            if 'values' in item:
+                if 'maschUpdated' in item['values']:
+                    maschUpdatedStr = item['values']['maschUpdated'][0]['data']
+                    maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
+                    maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
                 else:
-                    print("     - Time difference is not greater than 2 minutes")
-            else:
-                print("     - Updated Date is equal to Masch Updated Date")
-        recentRecords.append(item)
+                    maschUpdated = datetime.timedelta(days=-1)
+
+            startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
+            endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
+            
+            print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
+            if startDayTime <= updatedDate <= endDayTime:
+                print("    - Item Updated in last 10 minutes")
+                print("    - COMPARE")
+                print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
+                print("    - Updated: " + updatedDate)
+                print("    - Masch Updated: " + str(maschUpdated))
+                if updatedDate != maschUpdated:
+                    print("     - Add record to Update")
+                    time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
+                    if time_difference > 2:
+                        print("     - Time difference is greater than 2 minutes")
+                        recentRecords.append(item)
+                    else:
+                        print("     - Time difference is not greater than 2 minutes")
+                else:
+                    print("     - Updated Date is equal to Masch Updated Date")
+            recentRecords.append(item)
     return recentRecords
 
 def contentdeskFlow():
