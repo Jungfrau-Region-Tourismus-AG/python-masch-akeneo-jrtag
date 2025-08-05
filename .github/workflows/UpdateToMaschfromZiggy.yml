@@ -28,7 +28,7 @@ env:
 jobs:
     build:
         environment: ziggy
-        name: Full Update to MASCH from Ziggy
+        name: Update to MASCH from Ziggy
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v3
@@ -73,5 +73,5 @@ jobs:
               run: pip install -i https://test.pypi.org/simple/ akeneo
             - name: Run Script
               working-directory: ./src/command
-              run: python UpdateToMasch.py
+              run: python UpdateToMASCH.py
   
