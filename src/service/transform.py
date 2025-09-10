@@ -2,6 +2,7 @@ from os import getenv
 from dotenv import find_dotenv, load_dotenv
 import uuid
 import validators
+import html
 import datetime
 import os
 import features as featuresChecklist
@@ -313,7 +314,8 @@ def getItembyMaschId(data, maschId):
   
 def plainTextToHTML(text):
   if text:
-    htmlText = str(BeautifulSoup(text, "html.parser"))
+    escaped = html.escape(text)          # <, >, &, " usw. sicher maskieren
+    htmlText = escaped.replace('\n', '<br>\n')
     return htmlText
   else:
     return text
