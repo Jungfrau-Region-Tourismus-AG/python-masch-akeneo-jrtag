@@ -57,7 +57,7 @@ def checkContentdeskProductsbyDatetime(products):
                         print("     - Time difference is not greater than 2 minutes")
                 else:
                     print("     - Updated Date is equal to Masch Updated Date")
-            recentRecords.append(item)
+                    
     return recentRecords
 
 def contentdeskFlow():
