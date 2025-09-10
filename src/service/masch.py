@@ -246,7 +246,7 @@ def transformAkeneotoMasch(akeneoProducts):
 
 def postImagestoMasch(akeneoProducts):
     for product in akeneoProducts:
-        print("Product")
+        print("Product - Image Upload")
         print(product['identifier'])
         if "maschName" in product["values"]:
             maschName = product["values"]['maschName'][0]['data']

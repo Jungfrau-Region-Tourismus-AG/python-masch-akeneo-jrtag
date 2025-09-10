@@ -14,6 +14,8 @@ import service.masch as masch
 import service.contentdesk as contentdesk
 import service.objectStorage as objectStorage
 
+## From Contentdesk get all products updated in last 15 minutes
+
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
     for item in products:
@@ -38,8 +40,9 @@ def checkContentdeskProductsbyDatetime(products):
             endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
             
             print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
-            if startDayTime <= updatedDate <= endDayTime:
-                print("    - Item Updated in last 10 minutes")
+            #if startDayTime <= updatedDate <= endDayTime:
+            if startDayTime <= updatedDate:
+                print("    - Item Updated in last 15 minutes")
                 print("    - COMPARE")
                 print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
                 print("    - Updated: " + updatedDate)
@@ -58,14 +61,14 @@ def checkContentdeskProductsbyDatetime(products):
     return recentRecords
 
 def contentdeskFlow():
-    print (" - START: Contentdesk Flow")
+    print (" - START: Contentdesk Flow to MASCH")
     # DEBUG
     env = 'ziggy' 
     # CHECK
     contentdeskRecords = contentdesk.getContentdeskUpdatedProducts()
     debug.addToFileFull("worker", env, "export", "maschId", "extractProductsContentdesk", contentdeskRecords)
     
-    # FILTER by datetime
+    # FILTER by datetime - last 15 minutes
     recentRecords = checkContentdeskProductsbyDatetime(contentdeskRecords)
     debug.addToFileFull("worker", env, "export", "maschId", "filterbyDatetimeProductsContentdesk", recentRecords)
     
@@ -96,7 +99,7 @@ def contentdeskFlow():
         print("   - Update Contentdesk Object - maschUpdated")
         contentdesk.updateContentdeskProducts(recentRecords)
     
-    print(" - DONE: Contentdesk Flow")
+    print(" - DONE: Contentdesk Flow to MASCH")
     
     
 def contentdeskFullFlow():

@@ -1,6 +1,18 @@
 
 
-# Flow Chart
+## Prozess
+
+* Full Update to MASCH
+* Full Update to MASCH with Images
+* Full Update to Contentdesk 
+* Delta Update daily
+* Delta Update with Images
+
+
+- [ ] Contentdesk to MASCH - Description HTML to Plain-Text
+- [ ] Contentdesk to MASCH - optimize Image upload
+
+## Flow Chart
 
 ```mermaid
 flowchart TD
