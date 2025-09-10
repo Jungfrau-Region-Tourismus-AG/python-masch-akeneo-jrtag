@@ -1,4 +1,4 @@
-name: Full Update Ziggy
+name: Full Update Ziggy - MASCH to Contentdesk
 
 on:
   workflow_dispatch:
@@ -57,6 +57,8 @@ jobs:
         run: pip install requests_oauthlib
       - name: Install validators
         run: pip install validators
+      - name: Install beautifulsoup4
+        run: pip install beautifulsoup4
       - name: Install akeneo
         run: pip install -i https://test.pypi.org/simple/ akeneo
       - name: Run Script
