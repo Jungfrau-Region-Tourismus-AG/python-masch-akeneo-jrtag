@@ -114,7 +114,7 @@ def contentdeskFlow():
     
         # Update Contentesk Attribute MaschUpdated
         print("   - Update Contentdesk Object - maschUpdated")
-        contentdesk.updateContentdeskProducts(recentRecords)
+        #contentdesk.updateContentdeskProducts(recentRecords)
     
     print(" - DONE: Contentdesk Flow to MASCH")
     
