@@ -49,8 +49,13 @@ def checkContentdeskProductsbyDatetime(products):
         startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
         endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
         
-        print("    - CHECK - Last 15 Minutes")
+        print("    - CHECK - Change/Update in last 15 Minutes")
         print (last15Minutes(item['updated']))
+        if last15Minutes(item['updated']):
+            print("     - Item Updated in last 15 minutes")
+            recentRecords.append(item)
+            continue
+        
         print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
         #if startDayTime <= updatedDate <= endDayTime:
         if startDayTime <= updatedDate:
@@ -64,7 +69,7 @@ def checkContentdeskProductsbyDatetime(products):
                 time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
                 if time_difference > 2:
                     print("     - Time difference is greater than 2 minutes")
-                    recentRecords.append(item)
+                    #recentRecords.append(item)
                 else:
                     print("     - Time difference is not greater than 2 minutes")
             else:
@@ -89,7 +94,7 @@ def contentdeskFlow():
     else:
         # Backup to Object Storage
         print("   - Backup to Object Storage")
-        current_datetime = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
+        current_datetime = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
         str_current_datetime = str(current_datetime)
         objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/contentdeskFlow/'+str_current_datetime, "contentdeskExport")
         
@@ -133,7 +138,7 @@ def contentdeskFullFlow():
     else:
         # Backup to Object Storage
         print("   - Backup to Object Storage")
-        current_datetime = (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
+        current_datetime = (datetime.now(timezone.utc) + timedelta(hours=1)).strftime("%Y-%m-%d %H-%M-%S")
         str_current_datetime = str(current_datetime)
         objectStorage.exportProduct(recentRecords, 'export/contentdesk/worker/contentdeskFlow/'+str_current_datetime, "contentdeskExport")
         
