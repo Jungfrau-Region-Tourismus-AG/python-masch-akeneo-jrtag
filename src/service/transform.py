@@ -6,6 +6,7 @@ import datetime
 import os
 import features as featuresChecklist
 from urllib.parse import urlparse
+from bs4 import BeautifulSoup
 load_dotenv(find_dotenv())
 
 AKENEO_CATEGORIES = getenv('AKENEO_CATEGORIES')
@@ -309,6 +310,13 @@ def getItembyMaschId(data, maschId):
     return data[maschId]
   else:
     return None
+  
+def plainTextToHTML(text):
+  if text:
+    htmlText = str(BeautifulSoup(text, "html.parser"))
+    return htmlText
+  else:
+    return text
 
 def transform(data, indexAkeneo):
   transformData = []
@@ -381,19 +389,19 @@ def transform(data, indexAkeneo):
     #disambiguatingDescription
     importProduct['values']['disambiguatingDescription'] = [
       {
-        "locale": "de_CH",
-        "scope": "ecommerce",
-        "data": getFieldbyLanguage('teaser_text_desktop', item, 'de')
+      "locale": "de_CH",
+      "scope": "ecommerce",
+      "data": getFieldbyLanguage('teaser_text_desktop', item, 'de')
       },
       {
-        "locale": "en_US",
-        "scope": "ecommerce",
-        "data": getFieldbyLanguage('teaser_text_desktop', item, 'en')
+      "locale": "en_US",
+      "scope": "ecommerce",
+      "data": getFieldbyLanguage('teaser_text_desktop', item, 'en')
       },
       {
-        "locale": "fr_FR",
-        "scope": "ecommerce",
-        "data": getFieldbyLanguage('teaser_text_desktop', item, 'fr')
+      "locale": "fr_FR",
+      "scope": "ecommerce",
+      "data": getFieldbyLanguage('teaser_text_desktop', item, 'fr')
       }
     ]
     # description
@@ -401,17 +409,17 @@ def transform(data, indexAkeneo):
       {
         "locale": "de_CH",
         "scope": "ecommerce",
-        "data": getFieldbyLanguage('blog_table_description', item, 'de')
+        "data": plainTextToHTML(getFieldbyLanguage('blog_table_description', item, 'de'))
       },
       {
         "locale": "en_US",
         "scope": "ecommerce",
-        "data": getFieldbyLanguage('blog_table_description', item, 'en')
+        "data": plainTextToHTML(getFieldbyLanguage('blog_table_description', item, 'en'))
       },
       {
         "locale": "fr_FR",
         "scope": "ecommerce",
-        "data": getFieldbyLanguage('blog_table_description', item, 'fr')
+        "data": plainTextToHTML(getFieldbyLanguage('blog_table_description', item, 'fr'))
       }
     ]
     # url
