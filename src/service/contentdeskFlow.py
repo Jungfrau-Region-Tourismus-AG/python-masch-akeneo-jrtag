@@ -21,9 +21,9 @@ def last15Minutes(iso_string: str) -> bool:
     updatedTime = datetime.fromisoformat(iso_string)
     nowTime = datetime.now(updatedTime.tzinfo)
     differenz = nowTime - updatedTime
-    print(f"Now Time: {nowTime}")
-    print(f"Update Time: {updatedTime}")
-    print(f"Differenz: {differenz}")
+    print(f"    - Now Time: {nowTime}")
+    print(f"    - Update Time: {updatedTime}")
+    print(f"    - Differenz: {differenz}")
 
     # True, wenn die Differenz zwischen 0 und 15 Minuten liegt
     return timedelta(0) <= differenz <= timedelta(minutes=15)
