@@ -407,6 +407,8 @@ def transform(data, indexAkeneo):
       }
     ]
     # description
+    print("Description - DE")
+    print (getFieldbyLanguage('blog_table_description', item, 'de'))
     importProduct['values']['description'] = [
       {
         "locale": "de_CH",
