@@ -1,6 +1,7 @@
 # Contentdesk Flow
 import json
 import datetime
+from datetime import datetime, timedelta, timezone
 from akeneo.akeneo import Akeneo
 
 from os import getenv
@@ -16,47 +17,58 @@ import service.objectStorage as objectStorage
 
 ## From Contentdesk get all products updated in last 15 minutes
 
+def last15Minutes(iso_string: str) -> bool:
+    updatedTime = datetime.fromisoformat(iso_string)
+    nowTime = datetime.now(updatedTime.tzinfo)
+    differenz = nowTime - updatedTime
+
+    # True, wenn die Differenz zwischen 0 und 15 Minuten liegt
+    return timedelta(0) <= differenz <= timedelta(minutes=15)
+
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
     for item in products:
         # string to datetime
         print("    * CHECK Product: "+item['identifier'])
-        if item['identifier'] == "f7be1227-d085-42a2-95f5-236b54ac14b0":
-            end_time = datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=1)
-            start_time = end_time - datetime.timedelta(minutes=15)
-            updatedDateStr = item['updated']
-            updatedDateDatetime = datetime.datetime.fromisoformat(updatedDateStr)
-            updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
-            
-            if 'values' in item:
-                if 'maschUpdated' in item['values']:
-                    maschUpdatedStr = item['values']['maschUpdated'][0]['data']
-                    maschUpdatedDatetime = datetime.datetime.fromisoformat(maschUpdatedStr)
-                    maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
-                else:
-                    maschUpdated = datetime.timedelta(days=-1)
+        #if item['identifier'] == "f7be1227-d085-42a2-95f5-236b54ac14b0":
+        end_time = datetime.now(timezone.utc) + timedelta(hours=1)
+        start_time = end_time - timedelta(minutes=15)
 
-            startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
-            endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
+        updatedDateStr = item['updated']
+        updatedDateDatetime = datetime.fromisoformat(updatedDateStr)
+        updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
             
-            print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
-            #if startDayTime <= updatedDate <= endDayTime:
-            if startDayTime <= updatedDate:
-                print("    - Item Updated in last 15 minutes")
-                print("    - COMPARE")
-                print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
-                print("    - Updated: " + updatedDate)
-                print("    - Masch Updated: " + str(maschUpdated))
-                if updatedDate != maschUpdated:
-                    print("     - Add record to Update")
-                    time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
-                    if time_difference > 2:
-                        print("     - Time difference is greater than 2 minutes")
-                        recentRecords.append(item)
-                    else:
-                        print("     - Time difference is not greater than 2 minutes")
+        if 'values' in item:
+            if 'maschUpdated' in item['values']:
+                maschUpdatedStr = item['values']['maschUpdated'][0]['data']
+                maschUpdatedDatetime = datetime.fromisoformat(maschUpdatedStr)
+                maschUpdated = maschUpdatedDatetime.strftime('%Y-%m-%d %H:%M')
+            else:
+                maschUpdated = timedelta(days=-1)
+
+        startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
+        endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
+        
+        print("    - CHECK - Last 15 Minutes")
+        print (last15Minutes(item['updated']))
+        print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
+        #if startDayTime <= updatedDate <= endDayTime:
+        if startDayTime <= updatedDate:
+            print("    - Item Updated in last 15 minutes")
+            print("    - COMPARE")
+            print("    - Start Time: " + startDayTime + " - End Time: " + endDayTime)
+            print("    - Updated: " + updatedDate)
+            print("    - Masch Updated: " + str(maschUpdated))
+            if updatedDate != maschUpdated:
+                print("     - Add record to Update")
+                time_difference = abs((updatedDateDatetime - maschUpdatedDatetime).total_seconds() / 60)
+                if time_difference > 2:
+                    print("     - Time difference is greater than 2 minutes")
+                    recentRecords.append(item)
                 else:
-                    print("     - Updated Date is equal to Masch Updated Date")
+                    print("     - Time difference is not greater than 2 minutes")
+            else:
+                print("     - Updated Date is equal to Masch Updated Date")
                     
     return recentRecords
 
