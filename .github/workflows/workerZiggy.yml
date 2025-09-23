@@ -2,8 +2,8 @@ name: Worker Ziggy
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '*/15 * * * *'
+  #schedule:
+  #  - cron: '*/15 * * * *'
 
 env:
     AKENEO_HOST: ${{ secrets.AKENEO_HOST }}
