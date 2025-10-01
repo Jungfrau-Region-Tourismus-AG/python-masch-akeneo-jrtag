@@ -28,7 +28,7 @@ def __main__():
     print("LOADING to MASCH")
     loadObjectstoMasch(transformDataMASCH)
     print("POSTING IMAGES to MASCH")
-    postImagestoMasch(productList)
+    #postImagestoMasch(productList)
 
     print ("CLEAR MASCH UPDATE LIST")
     updateList = {}

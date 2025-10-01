@@ -87,7 +87,7 @@ def contentdeskFlow():
         ## Update Images to MASCH - Not needed
         print("   - POSTING IMAGES to MASCH")
         print("   - TODO: POSTING IMAGES (Gallery) to MASCH")
-        masch.postImagestoMasch(recentRecords)
+        #masch.postImagestoMasch(recentRecords)
     
         # Update Contentesk Attribute MaschUpdated
         print("   - Update Contentdesk Object - maschUpdated")
@@ -131,7 +131,7 @@ def contentdeskFullFlow():
         ## Update Images to MASCH - Not needed
         print("   - POSTING IMAGES to MASCH")
         print("   - TODO: POSTING IMAGES (Gallery) to MASCH")
-        masch.postImagestoMasch(recentRecords)
+        #masch.postImagestoMasch(recentRecords)
     
         # Update Contentesk Attribute MaschUpdated
         print("   - Update Contentdesk Object - maschUpdated")
