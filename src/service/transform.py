@@ -315,7 +315,7 @@ def getItembyMaschId(data, maschId):
 def plainTextToHTML(text):
   if text:
     escaped = html.escape(text)
-    htmlText = escaped.replace('\r\n', '<br>\n')
+    htmlText = escaped.replace('\r\n\r\n', '<br>\n')
     return htmlText
   else:
     return text
