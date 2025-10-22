@@ -143,9 +143,9 @@ def transformAkeneotoMasch(akeneoProducts):
             productDescriptionFR = getValuebyLanguageScope(product["values"]['description'], "fr_FR", "ecommerce")
             
             ## \r\n\ to <br> conversion
-            productDescriptionDE = BeautifulSoup(productDescriptionDE, "html.parser").get_text(separator="\r\n")
-            productDescriptionEN = BeautifulSoup(productDescriptionEN, "html.parser").get_text(separator="\r\n")
-            productDescriptionFR = BeautifulSoup(productDescriptionFR, "html.parser").get_text(separator="\r\n")
+            productDescriptionDE = BeautifulSoup(productDescriptionDE, "html.parser").get_text(separator="\r\n\r\n")
+            productDescriptionEN = BeautifulSoup(productDescriptionEN, "html.parser").get_text(separator="\r\n\r\n")
+            productDescriptionFR = BeautifulSoup(productDescriptionFR, "html.parser").get_text(separator="\r\n\r\n")
             
             description = {}
             description['field_name'] = "blog_table_description"
