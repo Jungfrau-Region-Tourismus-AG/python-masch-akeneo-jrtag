@@ -1,4 +1,4 @@
-name: Full Update to MASCH from Ziggy
+name: Full Update from Ziggy to MASCH
 
 on:
   workflow_dispatch:

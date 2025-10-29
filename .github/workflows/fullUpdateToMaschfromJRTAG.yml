@@ -1,4 +1,4 @@
-name: Full Update to MASCH from JRTAG
+name: Full Update from JRTAG to MASCH
 
 on:
   workflow_dispatch:
