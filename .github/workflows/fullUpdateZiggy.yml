@@ -1,4 +1,4 @@
-name: Full Update Ziggy - MASCH to Contentdesk
+name: Full Update - MASCH to Ziggy
 
 on:
   workflow_dispatch:
