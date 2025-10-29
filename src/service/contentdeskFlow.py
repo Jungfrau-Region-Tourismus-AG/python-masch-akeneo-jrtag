@@ -31,6 +31,9 @@ def last15Minutes(iso_string: str) -> bool:
 def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
     for item in products:
+        if 'a8a8f873-ef6d-439e-83eb-7ce7ea777f1c' in item['identifier']:
+            print("    * SKIP Product: "+item['identifier'])
+            continue
         # string to datetime
         print("    * CHECK Product: "+item['identifier'])
         print("    - CHECK - Change/Update in last 15 Minutes")
