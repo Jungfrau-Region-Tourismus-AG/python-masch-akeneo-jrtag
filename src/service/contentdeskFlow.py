@@ -32,28 +32,27 @@ def checkContentdeskProductsbyDatetime(products):
     recentRecords = []
     for item in products:
         if 'a8a8f873-ef6d-439e-83eb-7ce7ea777f1c' in item['identifier']:
-            print("    * SKIP Product: "+item['identifier'])
-            continue
-        # string to datetime
-        print("    * CHECK Product: "+item['identifier'])
-        print("    - CHECK - Change/Update in last 15 Minutes")
-        print (last15Minutes(item['updated']))
-        if last15Minutes(item['updated']):
-            print("     - Item Updated in last 15 minutes")
-            recentRecords.append(item)
-            continue
-        
-        #if item['identifier'] == "f7be1227-d085-42a2-95f5-236b54ac14b0":
-        end_time = datetime.now(timezone.utc) + timedelta(hours=1)
-        start_time = end_time - timedelta(minutes=15)
 
-        updatedDateStr = item['updated']
-        updatedDateDatetime = datetime.fromisoformat(updatedDateStr)
-        updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
+            # string to datetime
+            print("    * CHECK Product: "+item['identifier'])
+            print("    - CHECK - Change/Update in last 15 Minutes")
+            print (last15Minutes(item['updated']))
+            if last15Minutes(item['updated']):
+                print("     - Item Updated in last 15 minutes")
+                recentRecords.append(item)
+                continue
+            
+            #if item['identifier'] == "f7be1227-d085-42a2-95f5-236b54ac14b0":
+            end_time = datetime.now(timezone.utc) + timedelta(hours=1)
+            start_time = end_time - timedelta(minutes=15)
 
-        startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
-        endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
-        print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
+            updatedDateStr = item['updated']
+            updatedDateDatetime = datetime.fromisoformat(updatedDateStr)
+            updatedDate = updatedDateDatetime.strftime('%Y-%m-%d %H:%M')
+
+            startDayTime = start_time.strftime('%Y-%m-%d %H:%M')
+            endDayTime = end_time.strftime('%Y-%m-%d %H:%M')
+            print("    - Updated Date Check: " + startDayTime + " <= " + updatedDate + " <= " + endDayTime)
                     
     return recentRecords
 
